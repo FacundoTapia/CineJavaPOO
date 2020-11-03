@@ -24,8 +24,6 @@ public class Cliente {
     public String toString() {
         return id + ", " + nombre + ", " + apellido + ", " + edad;
     }
-    
-    
 
     public int getId() {
         return id;

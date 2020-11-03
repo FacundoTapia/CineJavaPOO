@@ -5,7 +5,8 @@ public class Pelicula {
     private String titulo;
     private String duracion;
     private String genero;
-
+    private boolean esMas18;
+    
     public Pelicula() {}
 
     public Pelicula(String titulo, String duracion, String genero) {
@@ -14,16 +15,17 @@ public class Pelicula {
         this.genero = genero;
     }
 
-    public Pelicula(int codigo, String titulo, String duracion, String genero) {
+    public Pelicula(int codigo, String titulo, String duracion, String genero, boolean esMas18) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
+        this.esMas18 = esMas18;
     }
 
     @Override
     public String toString() {
-        return codigo + ", " + titulo + ", " + duracion + ", " + genero;
+        return "codigo=" + codigo + ", titulo=" + titulo + ", duracion=" + duracion + ", genero=" + genero + ", esMas18=" + esMas18;
     }
 
     public int getCodigo() {
@@ -56,5 +58,13 @@ public class Pelicula {
 
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public boolean isEsMas18() {
+        return esMas18;
+    }
+
+    public void setEsMas18(boolean esMas18) {
+        this.esMas18 = esMas18;
     }
 }

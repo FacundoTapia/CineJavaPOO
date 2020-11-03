@@ -1,62 +1,33 @@
 package entidades;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 public class Cartelera {
-    private int codEstreno;
-    private Date fechaEstreno;
-    private int nroSala;
-    private int codPelicula;
+    private int codDetalle;
+    private int codCartelera;
 
     public Cartelera() {}
 
-    public Cartelera(Date fechaEstreno, int nroSala, int codPelicula) {
-        this.fechaEstreno = fechaEstreno;
-        this.nroSala = nroSala;
-        this.codPelicula = codPelicula;
-    }
-
-    public Cartelera(int codEstreno, Date fechaEstreno, int nroSala, int codPelicula) {
-        this.codEstreno = codEstreno;
-        this.fechaEstreno = fechaEstreno;
-        this.nroSala = nroSala;
-        this.codPelicula = codPelicula;
+    public Cartelera(int codDetalle, int codCartelera) {
+        this.codDetalle = codDetalle;
+        this.codCartelera = codCartelera;
     }
 
     @Override
     public String toString() {
-        return codEstreno + ", " + fechaEstreno + ", " + nroSala + ", " + codPelicula;
+        return "codDetalle=" + codDetalle + ", codCartelera=" + codCartelera;
     }
 
-    public int getCodEstreno() {
-        return codEstreno;
+    public int getCodDetalle() {
+        return codDetalle;
     }
 
-    public void setCodEstreno(int codEstreno) {
-        this.codEstreno = codEstreno;
+    public void setCodDetalle(int codDetalle) {
+        this.codDetalle = codDetalle;
     }
 
-    public Date getFechaEstreno() {
-        return fechaEstreno;
+    public int getCodCartelera() {
+        return codCartelera;
     }
 
-    public void setFechaEstreno(Date fechaEstreno) {
-        this.fechaEstreno = fechaEstreno;
-    }
-
-    public int getNroSala() {
-        return nroSala;
-    }
-
-    public void setNroSala(int nroSala) {
-        this.nroSala = nroSala;
-    }
-
-    public int getCodPelicula() {
-        return codPelicula;
-    }
-
-    public void setCodPelicula(int codPelicula) {
-        this.codPelicula = codPelicula;
+    public void setCodCartelera(int codCartelera) {
+        this.codCartelera = codCartelera;
     }
 }

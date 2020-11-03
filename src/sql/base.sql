@@ -7,8 +7,9 @@ create table salas
 (
     numero int,
     tipo enum('DOSD','TRESD','CUATROD'),
-    cantAsientos int not null,
+    capacidad int not null,
     asientosDisponibles int not null,
+    transmitiendo boolean not null,
     primary key(numero)
 );
 
@@ -29,38 +30,51 @@ create table peliculas
     titulo varchar(100) not null,
     duracion time not null,
     genero varchar(30) not null,
+    esMas18 boolean not null,
     primary key(codigo)
 );
 
--- drop table cartelera;
-create table cartelera
+-- drop table detalles
+create table detalles
 (
-    codEstreno int auto_increment,
-    fechaDisponible datetime not null,
-    sala int not null,
+    codDetalle int auto_increment,
     codPelicula int not null,
-    primary key(codEstreno)
+    nroSala int not null,
+    fecha DateTime not null,
+    primary key(codDetalle)
+);
+
+-- drop table cartelera;
+create table carteleras
+(
+    codCartelera int not null,
+    codDetalle int not null,
+    primary key(codCartelera)
 );
 
 -- drop table entradas;
 create table entradas
 (
-    nroEntrada int auto_increment,
-    precio double not null,
+    nroEntrada int not null auto_increment,
     idCliente int not null,
-    codCartelera int not null,
+    datosPeli int not null,
     primary key(nroEntrada)
 );
 
-alter table cartelera
-add constraint FK_cartelera_peliculas
+alter table detalles
+add constraint FK_detalles_peliculas
 foreign key(codPelicula)
 references peliculas(codigo);
 
-alter table cartelera
-add constraint FK_cartelera_salas
-foreign key(sala)
+alter table detalles
+add constraint FK_detalles_salas
+foreign key(nroSala)
 references salas(numero);
+
+alter table carteleras
+add constraint FK_carteleras_detalles
+foreign key(codCartelera)
+references detalles(codDetalle);
 
 alter table entradas
 add constraint FK_entradas_clientes
@@ -68,6 +82,6 @@ foreign key(idCliente)
 references clientes(id);
 
 alter table entradas
-add constraint FK_entradas_cartelera
-foreign key(codCartelera)
-references cartelera(codEstreno);
+add constraint FK_entradas_detalles
+foreign key(datosPeli)
+references detalles(codDetalle);

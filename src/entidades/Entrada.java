@@ -1,26 +1,25 @@
 package entidades;
 public class Entrada {
     private int nroEntrada;
-    private double precio = 100;
     private int idCliente;
-    private int codCartelera;
+    private int datosPeli;
 
     public Entrada() {}
 
-    public Entrada(int idCliente, int codCartelera) {
+    public Entrada(int idCliente, int datosPeli) {
         this.idCliente = idCliente;
-        this.codCartelera = codCartelera;
+        this.datosPeli = datosPeli;
     }
 
-    public Entrada(int nroEntrada, int idCliente, int codCartelera) {
+    public Entrada(int nroEntrada, int idCliente, int datosPeli) {
         this.nroEntrada = nroEntrada;
         this.idCliente = idCliente;
-        this.codCartelera = codCartelera;
+        this.datosPeli = datosPeli;
     }
 
     @Override
     public String toString() {
-        return nroEntrada + ", " + precio + ", =" + idCliente + ", " + codCartelera;
+        return "nroEntrada=" + nroEntrada + ", idCliente=" + idCliente + ", datosPeli=" + datosPeli;
     }
 
     public int getNroEntrada() {
@@ -31,14 +30,6 @@ public class Entrada {
         this.nroEntrada = nroEntrada;
     }
 
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
     public int getIdCliente() {
         return idCliente;
     }
@@ -47,11 +38,11 @@ public class Entrada {
         this.idCliente = idCliente;
     }
 
-    public int getCodCartelera() {
-        return codCartelera;
+    public int getDatosPeli() {
+        return datosPeli;
     }
 
-    public void setCodCartelera(int codCartelera) {
-        this.codCartelera = codCartelera;
+    public void setDatosPeli(int datosPeli) {
+        this.datosPeli = datosPeli;
     }
 }

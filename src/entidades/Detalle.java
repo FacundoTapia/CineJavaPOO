@@ -1,32 +1,31 @@
 package entidades;
 
 import java.util.Date;
-import java.util.List;
 
-public class Detalles {
+public class Detalle {
     private int codDetalle;
     private int codPelicula;
     private int nroSala;
-    private List<Date> fechas;
+    private Date fecha;
 
-    public Detalles() {}
+    public Detalle() {}
 
-    public Detalles(int codPelicula, int nroSala, List<Date> fechas) {
+    public Detalle(int codPelicula, int nroSala, Date fecha) {
         this.codPelicula = codPelicula;
         this.nroSala = nroSala;
-        this.fechas = fechas;
+        this.fecha = fecha;
     }
 
-    public Detalles(int codDetalle, int codPelicula, int nroSala, List<Date> fechas) {
+    public Detalle(int codDetalle, int codPelicula, int nroSala, Date fecha) {
         this.codDetalle = codDetalle;
         this.codPelicula = codPelicula;
         this.nroSala = nroSala;
-        this.fechas = fechas;
+        this.fecha = fecha;
     }
 
     @Override
     public String toString() {
-        return "codDetalle=" + codDetalle + ", codPelicula=" + codPelicula + ", nroSala=" + nroSala + ", fechas=" + fechas;
+        return "codDetalle=" + codDetalle + ", codPelicula=" + codPelicula + ", nroSala=" + nroSala + ", fecha=" + fecha;
     }
 
     public int getCodDetalle() {
@@ -53,11 +52,11 @@ public class Detalles {
         this.nroSala = nroSala;
     }
 
-    public List<Date> getFechas() {
-        return fechas;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechas(List<Date> fechas) {
-        this.fechas = fechas;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

@@ -52,29 +52,7 @@ public class ClienteRepository implements I_ClienteRepository {
 
     @Override
     public Entrada comprar(Cliente cliente, Cartelera cartelera, int cant) {
-        Entrada ent = new Entrada();
-        
-        try(PreparedStatement ps = conn.prepareStatement("insert into entradas(idCliente, codCartelera) values(?, ?)",
-            PreparedStatement.RETURN_GENERATED_KEYS)){
-            
-            ps.setInt(1, cliente.getId());
-            ps.setInt(2, cartelera.getCodEstreno());
-            ps.execute();
-            
-            ResultSet rs = ps.getGeneratedKeys();
-            while (rs.next()) {
-                ent = new Entrada(
-                        rs.getInt("nroEntrada"),
-                        rs.getInt("idCliente"),
-                        rs.getInt("codCartelera")
-                );
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        return ent;
+        return new Entrada();
     }
 
     @Override

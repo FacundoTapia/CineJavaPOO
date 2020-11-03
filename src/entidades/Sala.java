@@ -2,21 +2,23 @@ package entidades;
 public class Sala {
     private int numero;
     private Enum TipoSala;
-    private int cantAsientos;
+    private int capacidad;
     private int asientosDisponibles;
+    private boolean transmitiendo;
 
     public Sala() {}
 
-    public Sala(int numero, Enum TipoSala, int cantAsientos, int asientosDisponibles) {
+    public Sala(int numero, Enum TipoSala, int capacidad, int asientosDisponibles, boolean transmitiendo) {
         this.numero = numero;
         this.TipoSala = TipoSala;
-        this.cantAsientos = cantAsientos;
+        this.capacidad = capacidad;
         this.asientosDisponibles = asientosDisponibles;
+        this.transmitiendo = transmitiendo;
     }
 
     @Override
     public String toString() {
-        return numero + ", " + TipoSala + ", " + cantAsientos + ", " + asientosDisponibles + ", ";
+        return "numero=" + numero + ", TipoSala=" + TipoSala + ", capacidad=" + capacidad + ", asientosDisponibles=" + asientosDisponibles + ", transmitiendo=" + transmitiendo;
     }
 
     public int getNumero() {
@@ -35,12 +37,12 @@ public class Sala {
         this.TipoSala = TipoSala;
     }
 
-    public int getCantAsientos() {
-        return cantAsientos;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setCantAsientos(int cantAsientos) {
-        this.cantAsientos = cantAsientos;
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
     public int getAsientosDisponibles() {
@@ -49,5 +51,13 @@ public class Sala {
 
     public void setAsientosDisponibles(int asientosDisponibles) {
         this.asientosDisponibles = asientosDisponibles;
+    }
+
+    public boolean isTransmitiendo() {
+        return transmitiendo;
+    }
+
+    public void setTransmitiendo(boolean transmitiendo) {
+        this.transmitiendo = transmitiendo;
     }
 }
