@@ -48,8 +48,17 @@ create table detalles
 create table carteleras
 (
     codCartelera int not null,
-    codDetalle int not null,
+    nombre varchar(50),
     primary key(codCartelera)
+);
+
+-- drop table relaciones
+create table relaciones
+(
+    idRelacion int auto_increment,
+    codCartelera int not null,
+    codDetalle int not null,
+    primary key(idRelacion)
 );
 
 -- drop table entradas;
@@ -71,10 +80,15 @@ add constraint FK_detalles_salas
 foreign key(nroSala)
 references salas(numero);
 
-alter table carteleras
-add constraint FK_carteleras_detalles
-foreign key(codCartelera)
+alter table relaciones
+add constraint FK_relaciones_detalles
+foreign key(codDetalle)
 references detalles(codDetalle);
+
+alter table relaciones
+add constraint FK_relaciones_carteleras
+foreign key(codCartelera)
+references carteleras(codCartelera);
 
 alter table entradas
 add constraint FK_entradas_clientes

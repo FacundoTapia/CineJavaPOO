@@ -105,20 +105,20 @@ public class TestRepositories {
         car.getAll().forEach(System.out::println);
         
         System.out.println("**************** ENTRADA *************************");
-//        
-//        I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
-//        
-//        Entrada entrada = new Entrada(cliente.getId(), cartelera.getNroSala());
-//        
-//        er.crear(entrada);
-//        
-//        System.out.println(entrada);
-//        
-//        er.borrar(entrada);
-//        
-//        System.out.println("****************************************************");
-//        
-//        er.getAll().forEach(System.out::println);
+        
+        I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
+        
+        Entrada entrada = new Entrada(6, 5);
+        
+        er.crear(entrada);
+        
+        System.out.println(entrada);
+        
+        er.borrar(entrada);
+        
+        System.out.println("****************************************************");
+        
+        er.getAll().forEach(System.out::println);
         
         
     }
