@@ -52,7 +52,7 @@ public class ClienteRepository implements I_ClienteRepository {
 
     @Override
     public Entrada comprar(Cliente cliente, Cartelera cartelera, int cant) {
-        return new Entrada();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
