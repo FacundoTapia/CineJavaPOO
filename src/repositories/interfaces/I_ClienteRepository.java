@@ -1,11 +1,8 @@
 package repositories.interfaces;
-
-import entidades.Cartelera;
 import entidades.Cliente;
 import entidades.Detalle;
 import entidades.Entrada;
 import java.util.List;
-
 public interface I_ClienteRepository {
     void registrar(Cliente cliente);
     void borrar(Cliente cliente);
