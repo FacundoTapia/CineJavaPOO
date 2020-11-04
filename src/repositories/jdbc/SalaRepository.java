@@ -19,7 +19,7 @@ public class SalaRepository implements I_SalaRepository{
     @Override
     public void crear(Sala sala) {
         if (sala == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad, asientosDisponibles, transmitiendo) values(?, ?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad, asientosDisponibles, transmitiendo) values(?, ?, ?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, sala.getNumero());
             ps.setString(2, sala.getTipoSala().toString());
@@ -67,7 +67,7 @@ public class SalaRepository implements I_SalaRepository{
                         new Sala(
                                 rs.getInt("numero"), 
                                 TipoSala.valueOf(rs.getString("tipo")),
-                                rs.getInt("cantAsientos"), 
+                                rs.getInt("capacidad"), 
                                 rs.getInt("asientosDisponibles")
                         )
                 );

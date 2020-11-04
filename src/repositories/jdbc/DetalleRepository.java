@@ -3,7 +3,10 @@ import entidades.Detalle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
 public class DetalleRepository implements I_DetalleRepository{
@@ -13,6 +16,15 @@ public class DetalleRepository implements I_DetalleRepository{
         this.conn = conn;
     }
 
+    public java.sql.Date utilDateToSqlDate(java.util.Date utilDate){
+        return new java.sql.Date(utilDate.getTime());
+    }
+    
+    public String formatoSQLFecha(java.sql.Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }    
+    
     @Override
     public void crear(Detalle detalle) {
         if(detalle == null) return;
@@ -20,7 +32,7 @@ public class DetalleRepository implements I_DetalleRepository{
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            ps.setDate(3, (java.sql.Date)detalle.getFecha());
+            ps.setTimestamp(3, Timestamp.valueOf(formatoSQLFecha(utilDateToSqlDate(detalle.getFecha()))));
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -49,7 +61,7 @@ public class DetalleRepository implements I_DetalleRepository{
         try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, fecha = ? where codDetalle = ?")){
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            ps.setDate(3, (java.sql.Date)detalle.getFecha());
+            ps.setTimestamp(3, Timestamp.valueOf(formatoSQLFecha(utilDateToSqlDate(detalle.getFecha()))));
             ps.setInt(4, detalle.getCodDetalle());
             ps.execute();
         } catch (Exception e) {
@@ -68,7 +80,7 @@ public class DetalleRepository implements I_DetalleRepository{
                                 rs.getInt("codDetalle"), 
                                 rs.getInt("codPelicula"), 
                                 rs.getInt("nroSala"), 
-                                rs.getDate("fecha")
+                                rs.getTimestamp("fecha")
                         )
                 );
             }

@@ -25,7 +25,7 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "codigo=" + codigo + ", titulo=" + titulo + ", duracion=" + duracion + ", genero=" + genero + ", esMas18=" + esMas18;
+        return codigo + ", " + titulo + ", " + duracion + ", " + genero + ", " + esMas18;
     }
 
     public int getCodigo() {

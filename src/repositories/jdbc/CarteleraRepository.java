@@ -18,16 +18,11 @@ public class CarteleraRepository implements I_CarteleraRepository {
     @Override
     public void crear(Cartelera cartelera) {
         if (cartelera == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into carteleras(codDetalle) values(?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into carteleras(codDetalle, codCartelera) values(?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, cartelera.getCodDetalle());
-            ps.execute();
-            
-            ResultSet rs = ps.getGeneratedKeys();
-            while (rs.next()) {
-                cartelera.setCodCartelera(rs.getInt(1));
-            }
-            
+            ps.setInt(2, 1);
+            ps.execute();            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +52,6 @@ public class CarteleraRepository implements I_CarteleraRepository {
             while (rs.next()) {
                 lista.add(
                     new Cartelera(
-                                    rs.getInt("codCartelera"), 
                                     rs.getInt("codDetalle")
                     )
                 );

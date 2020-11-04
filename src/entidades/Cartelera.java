@@ -1,18 +1,17 @@
 package entidades;
 public class Cartelera {
     private int codDetalle;
-    private int codCartelera;
+    private int codCartelera = 1;
 
     public Cartelera() {}
 
-    public Cartelera(int codDetalle, int codCartelera) {
+    public Cartelera(int codDetalle) {
         this.codDetalle = codDetalle;
-        this.codCartelera = codCartelera;
     }
 
     @Override
     public String toString() {
-        return "codDetalle=" + codDetalle + ", codCartelera=" + codCartelera;
+        return codCartelera + ", " + codDetalle;
     }
 
     public int getCodDetalle() {

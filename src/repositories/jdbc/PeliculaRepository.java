@@ -17,11 +17,12 @@ public class PeliculaRepository implements I_PeliculaRepository{
     @Override
     public void guardar(Pelicula pelicula) {
         if (pelicula == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into peliculas(titulo, duracion, genero) values(?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into peliculas(titulo, duracion, genero, esMas18) values(?, ?, ?, ?)",
         PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setString(1, pelicula.getTitulo());
             ps.setInt(2, pelicula.getDuracion());
             ps.setString(3, pelicula.getGenero());
+            ps.setBoolean(4, pelicula.isEsMas18());
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();

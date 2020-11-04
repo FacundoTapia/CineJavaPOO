@@ -27,34 +27,24 @@ public class TestRepositories {
     public static void main(String[] args) throws SQLException {
         I_ClienteRepository cr = new ClienteRepository(Connector.getConnection());
         
-        Cliente cliente = new Cliente("Martin", "Tapia", 21);
+        Cliente cliente = new Cliente("Facundo", "Tapia", 25);
         
         cr.registrar(cliente);
         
         System.out.println("**************** CLIENTES *************************");
-        
-        ResultSet rs = Connector.getConnection().createStatement().executeQuery("select * from clientes");
-        while (rs.next()) {
-            System.out.println(
-                    rs.getInt("id")+", "+
-                    rs.getString("nombre")+", "+
-                    rs.getString("apellido")+", "+
-                    rs.getInt("edad")
-            );
-        }
 
         cr.borrar(cr.getById(3));
         
-        System.out.println(cr.getById(8));
+        System.out.println(cr.getById(2));
         System.out.println("****************************************************");
         
         cr.getAll().forEach(System.out::println);
         
-        System.out.println("**************** PELCICULAS *************************");
+        System.out.println("**************** PELICULAS *************************");
         
         I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
         
-        Pelicula pelicula = new Pelicula("Avengers", 180, "Ficción");
+        Pelicula pelicula = new Pelicula("Avengers: Endgame", 182, "Ciencia Ficción");
         
         pr.guardar(pelicula);
         
@@ -70,11 +60,11 @@ public class TestRepositories {
         
         I_SalaRepository sr = new SalaRepository(Connector.getConnection());
         
-        Sala sala = new Sala(1, TipoSala.TRESD, 100, 100);
+        Sala sala = new Sala(4, TipoSala.DOSD, 70, 70);
         
-        sr.crear(sala);
+        //sr.crear(sala);
         
-        System.out.println(sala);
+        //System.out.println(sala);
         
         System.out.println(sr.getByNumero(1));
         
@@ -86,27 +76,35 @@ public class TestRepositories {
         
         System.out.println("**************** DETALLE *************************");
         
-//        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
-//        
-//        Detalle detalle = new Detalle(0, 0, fecha);
-//        
-//        System.out.println("**************** CARTELERA *************************");
-//        
-//        I_CarteleraRepository car = new CarteleraRepository(Connector.getConnection());
-//        
-//        Cartelera cartelera = new Cartelera(0, 0);
-//        
-//        car.crear(cartelera);
-//        
-//        System.out.println(cartelera);
-//        
-//        car.borrar(cartelera);
-//        
-//        System.out.println("****************************************************");
-//        
-//        car.getAll().forEach(System.out::println);
-//        
-//        System.out.println("**************** ENTRADA *************************");
+        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
+        
+        Date fechaDetalle = new Date(2020-1900, 11, 15, 22, 30);
+        
+        Detalle detalle = new Detalle(5, 4, fechaDetalle);
+        
+        dr.crear(detalle);
+        
+        System.out.println(detalle);
+        
+        System.out.println("****************************************************");
+        
+        dr.getAll().forEach(System.out::println);
+        
+        System.out.println("**************** CARTELERA *************************");
+        
+        I_CarteleraRepository car = new CarteleraRepository(Connector.getConnection());
+        
+        Cartelera cartelera = new Cartelera(detalle.getCodDetalle());
+        
+        //car.crear(cartelera);
+        
+        //System.out.println(cartelera);
+        
+        System.out.println("****************************************************");
+        
+        car.getAll().forEach(System.out::println);
+        
+        System.out.println("**************** ENTRADA *************************");
 //        
 //        I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
 //        

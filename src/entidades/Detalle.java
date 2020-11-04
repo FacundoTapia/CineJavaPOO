@@ -1,5 +1,6 @@
 package entidades;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Detalle {
@@ -23,9 +24,14 @@ public class Detalle {
         this.fecha = fecha;
     }
 
+    public String formatoFecha(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return sdf.format(date);
+    }
+    
     @Override
     public String toString() {
-        return "codDetalle=" + codDetalle + ", codPelicula=" + codPelicula + ", nroSala=" + nroSala + ", fecha=" + fecha;
+        return codDetalle + ", " + codPelicula + ", " + nroSala + ", " + formatoFecha(fecha);
     }
 
     public int getCodDetalle() {
