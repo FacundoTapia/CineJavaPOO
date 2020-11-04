@@ -1,2 +1,2 @@
-/src/connectors
-/sql
+/src/connectors.Connector.java
+/sql/base.sql
