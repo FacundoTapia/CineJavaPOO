@@ -1,25 +1,18 @@
 package entidades;
 public class Cartelera {
-    private int codDetalle;
-    private int codCartelera = 1;
+    private int codCartelera;
+    private String nombre;
 
     public Cartelera() {}
 
-    public Cartelera(int codDetalle) {
-        this.codDetalle = codDetalle;
+    public Cartelera(int codCartelera, String nombre) {
+        this.codCartelera = codCartelera;
+        this.nombre = nombre;
     }
 
     @Override
     public String toString() {
-        return codCartelera + ", " + codDetalle;
-    }
-
-    public int getCodDetalle() {
-        return codDetalle;
-    }
-
-    public void setCodDetalle(int codDetalle) {
-        this.codDetalle = codDetalle;
+        return codCartelera + ", " + nombre;
     }
 
     public int getCodCartelera() {
@@ -28,5 +21,13 @@ public class Cartelera {
 
     public void setCodCartelera(int codCartelera) {
         this.codCartelera = codCartelera;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

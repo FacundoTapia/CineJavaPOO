@@ -18,10 +18,10 @@ public class CarteleraRepository implements I_CarteleraRepository {
     @Override
     public void crear(Cartelera cartelera) {
         if (cartelera == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into carteleras(codDetalle, codCartelera) values(?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into carteleras(codCartelera, nombre) values(?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
-            ps.setInt(1, cartelera.getCodDetalle());
-            ps.setInt(2, 1);
+            ps.setInt(1, cartelera.getCodCartelera());
+            ps.setString(2, cartelera.getNombre());
             ps.execute();            
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,7 +41,13 @@ public class CarteleraRepository implements I_CarteleraRepository {
 
     @Override
     public void actualizar(Cartelera cartelera) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (cartelera == null) return;
+        try(PreparedStatement ps = conn.prepareStatement("update carteleras set nombre = ? where codCartelera = ?")){
+            ps.setString(1, cartelera.getNombre());
+            ps.setInt(2, cartelera.getCodCartelera());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -52,7 +58,8 @@ public class CarteleraRepository implements I_CarteleraRepository {
             while (rs.next()) {
                 lista.add(
                     new Cartelera(
-                                    rs.getInt("codDetalle")
+                                    rs.getInt("codCartelera"),
+                                    rs.getString("nombre")
                     )
                 );
             }
