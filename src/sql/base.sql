@@ -28,7 +28,7 @@ create table peliculas
 (
     codigo int auto_increment,
     titulo varchar(100) not null,
-    duracion time not null,
+    duracion int not null,
     genero varchar(30) not null,
     esMas18 boolean not null,
     primary key(codigo)
