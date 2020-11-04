@@ -3,6 +3,7 @@ public class Entrada {
     private int nroEntrada;
     private int idCliente;
     private int datosPeli;
+    private double precio = 150;
 
     public Entrada() {}
 
@@ -19,7 +20,7 @@ public class Entrada {
 
     @Override
     public String toString() {
-        return "nroEntrada=" + nroEntrada + ", idCliente=" + idCliente + ", datosPeli=" + datosPeli;
+        return "nroEntrada=" + nroEntrada + ", idCliente=" + idCliente + ", datosPeli=" + datosPeli + ", precio=" + precio;
     }
 
     public int getNroEntrada() {
@@ -44,5 +45,13 @@ public class Entrada {
 
     public void setDatosPeli(int datosPeli) {
         this.datosPeli = datosPeli;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 }

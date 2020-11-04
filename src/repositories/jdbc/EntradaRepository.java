@@ -20,11 +20,11 @@ public class EntradaRepository implements I_EntradaRepository{
     
     @Override
     public void crear(Entrada entrada) {
-        try(PreparedStatement ps = conn.prepareStatement("insert into entradas(precio, idCliente, codCartelera) values(?, ?, ?)", 
+        if(entrada == null) return;
+        try(PreparedStatement ps = conn.prepareStatement("insert into entradas(idCliente, datosPeli) values(?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS)){
-            ps.setDouble(1, entrada.getPrecio());
-            ps.setInt(2, entrada.getIdCliente());
-            ps.setInt(3, entrada.getCodCartelera());
+            ps.setInt(1, entrada.getIdCliente());
+            ps.setInt(2, entrada.getDatosPeli());
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -38,6 +38,7 @@ public class EntradaRepository implements I_EntradaRepository{
 
     @Override
     public void borrar(Entrada entrada) {
+        if(entrada == null) return;
         try(PreparedStatement ps = conn.prepareStatement("delete from entradas where nroEntrada = ?")){
             ps.setInt(1, entrada.getNroEntrada());
             ps.execute();
@@ -48,13 +49,15 @@ public class EntradaRepository implements I_EntradaRepository{
 
     @Override
     public void actualizar(Entrada entrada) {
-        try(PreparedStatement ps = conn.prepareStatement("update entradas set precio = ?, idCliente = ?, codCartelera = ? where nroEntrada = ?")){
-            ps.setDouble(1, entrada.getPrecio());
-            ps.setInt(2, entrada.getIdCliente());
-            ps.setInt(3, entrada.getCodCartelera());
+        if(entrada == null) return;
+        try(PreparedStatement ps = conn.prepareStatement("update entradas idCliente = ?, datosPeli = ?, precio = ? where nroEntrada = ?")){
+            ps.setInt(1, entrada.getIdCliente());
+            ps.setInt(2, entrada.getDatosPeli());
+            ps.setDouble(3, entrada.getPrecio());
             ps.setInt(4, entrada.getNroEntrada());
             ps.execute();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -66,9 +69,9 @@ public class EntradaRepository implements I_EntradaRepository{
             while (rs.next()) {
                 list.add(
                         new Entrada(
-                                rs.getInt("nroEntrada"), 
+                                rs.getInt("nroEntrada"),
                                 rs.getInt("idCliente"), 
-                                rs.getInt("codCartelera")
+                                rs.getInt("datosPeli")
                         )
                 );
             }
