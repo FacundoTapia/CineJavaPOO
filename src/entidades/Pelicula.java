@@ -3,19 +3,19 @@ package entidades;
 public class Pelicula {
     private int codigo;
     private String titulo;
-    private String duracion;
+    private int duracion;
     private String genero;
     private boolean esMas18;
     
     public Pelicula() {}
 
-    public Pelicula(String titulo, String duracion, String genero) {
+    public Pelicula(String titulo, int duracion, String genero) {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
     }
 
-    public Pelicula(int codigo, String titulo, String duracion, String genero, boolean esMas18) {
+    public Pelicula(int codigo, String titulo, int duracion, String genero, boolean esMas18) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.duracion = duracion;
@@ -44,11 +44,11 @@ public class Pelicula {
         this.titulo = titulo;
     }
 
-    public String getDuracion() {
+    public int getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(String duracion) {
+    public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
 

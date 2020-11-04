@@ -1,6 +1,5 @@
 package repositories.jdbc;
 import java.sql.ResultSet;
-import connectors.Connector;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import entidades.Pelicula;
@@ -21,7 +20,7 @@ public class PeliculaRepository implements I_PeliculaRepository{
         try(PreparedStatement ps = conn.prepareStatement("insert into peliculas(titulo, duracion, genero) values(?, ?, ?)",
         PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setString(1, pelicula.getTitulo());
-            ps.setString(2, pelicula.getDuracion());
+            ps.setInt(2, pelicula.getDuracion());
             ps.setString(3, pelicula.getGenero());
             ps.execute();
             
@@ -55,8 +54,9 @@ public class PeliculaRepository implements I_PeliculaRepository{
                         new Pelicula(
                                 rs.getInt("codigo"), 
                                 rs.getString("titulo"), 
-                                rs.getString("duracion"), 
-                                rs.getString("genero")
+                                rs.getInt("duracion"), 
+                                rs.getString("genero"),
+                                rs.getBoolean("esMas18")
                         )
                 );
             }
