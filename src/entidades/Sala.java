@@ -17,7 +17,7 @@ public class Sala {
 
     @Override
     public String toString() {
-        return "numero=" + numero + ", TipoSala=" + TipoSala + ", capacidad=" + capacidad + ", asientosDisponibles=" + asientosDisponibles;
+        return "numero=" + numero + ", TipoSala=" + TipoSala + ", capacidad=" + capacidad + ", asientosDisponibles=" + asientosDisponibles + ", transmitiendo=" + transmitiendo;
     }
 
     public int getNumero() {
