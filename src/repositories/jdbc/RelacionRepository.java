@@ -21,8 +21,8 @@ public class RelacionRepository implements I_RelacionRepository{
         try(PreparedStatement ps = conn.prepareStatement("insert into relaciones(codCartelera, codDetalle) values(?, ?)",
             PreparedStatement.RETURN_GENERATED_KEYS)){
             
-            ps.setInt(1, relacion.getCodDetalle());
-            ps.setInt(2, relacion.getCodCartelera());
+            ps.setInt(1, relacion.getCodCartelera());
+            ps.setInt(2, relacion.getCodDetalle());
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();

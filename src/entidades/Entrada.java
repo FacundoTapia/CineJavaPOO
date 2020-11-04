@@ -20,7 +20,7 @@ public class Entrada {
 
     @Override
     public String toString() {
-        return "nroEntrada=" + nroEntrada + ", idCliente=" + idCliente + ", datosPeli=" + datosPeli + ", precio=" + precio;
+        return nroEntrada + ", " + idCliente + ", " + datosPeli + ", " + precio;
     }
 
     public int getNroEntrada() {

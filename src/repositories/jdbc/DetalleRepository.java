@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
 public class DetalleRepository implements I_DetalleRepository{

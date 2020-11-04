@@ -6,6 +6,7 @@ import entidades.Cliente;
 import entidades.Detalle;
 import entidades.Entrada;
 import entidades.Pelicula;
+import entidades.Relacion;
 import entidades.Sala;
 import enums.TipoSala;
 import java.sql.SQLException;
@@ -15,12 +16,14 @@ import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_EntradaRepository;
 import repositories.interfaces.I_PeliculaRepository;
+import repositories.interfaces.I_RelacionRepository;
 import repositories.interfaces.I_SalaRepository;
 import repositories.jdbc.CarteleraRepository;
 import repositories.jdbc.ClienteRepository;
 import repositories.jdbc.DetalleRepository;
 import repositories.jdbc.EntradaRepository;
 import repositories.jdbc.PeliculaRepository;
+import repositories.jdbc.RelacionRepository;
 import repositories.jdbc.SalaRepository;
 
 public class TestRepositories {
@@ -35,7 +38,7 @@ public class TestRepositories {
 
         cr.borrar(cr.getById(3));
         
-        System.out.println(cr.getById(2));
+        //System.out.println(cr.getById(2));
         System.out.println("****************************************************");
         
         cr.getAll().forEach(System.out::println);
@@ -60,13 +63,13 @@ public class TestRepositories {
         
         I_SalaRepository sr = new SalaRepository(Connector.getConnection());
         
-        Sala sala = new Sala(4, TipoSala.DOSD, 70, 70);
+        Sala sala = new Sala(1, TipoSala.DOSD, 70, 70);
         
         //sr.crear(sala);
         
-        //System.out.println(sala);
+        System.out.println(sala);
         
-        System.out.println(sr.getByNumero(1));
+        //System.out.println(sr.getByNumero(1));
         
         sr.borrar(sr.getByNumero(2));
         
@@ -80,7 +83,7 @@ public class TestRepositories {
         
         Date fechaDetalle = new Date(2020-1900, 11, 15, 22, 30);
         
-        Detalle detalle = new Detalle(5, 4, fechaDetalle);
+        Detalle detalle = new Detalle(1, 1, fechaDetalle);
         
         dr.crear(detalle);
         
@@ -94,21 +97,31 @@ public class TestRepositories {
         
         I_CarteleraRepository car = new CarteleraRepository(Connector.getConnection());
         
-        Cartelera cartelera = new Cartelera(detalle.getCodDetalle());
+        Cartelera cartelera = new Cartelera(1, "Cartelera Principal");
         
         //car.crear(cartelera);
         
-        //System.out.println(cartelera);
+        System.out.println(cartelera);
+        
+        System.out.println("**************** RELACIONES *************************");
+
+        I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
+        
+        Relacion relacion = new Relacion(1, 2);
+        
+        rr.crear(relacion);
+        
+        System.out.println(relacion);
         
         System.out.println("****************************************************");
         
-        car.getAll().forEach(System.out::println);
+        rr.getAll().forEach(System.out::println);        
         
         System.out.println("**************** ENTRADA *************************");
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(6, 5);
+        Entrada entrada = new Entrada(2, 3);
         
         er.crear(entrada);
         
