@@ -23,7 +23,7 @@ public class SalaRepository implements I_SalaRepository{
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, sala.getNumero());
             ps.setString(2, sala.getTipoSala().toString());
-            ps.setInt(3, sala.getCantAsientos());
+            ps.setInt(3, sala.getCapacidad());
             ps.setInt(4, sala.getAsientosDisponibles());
             ps.execute();
         } catch (Exception e) {
@@ -42,6 +42,20 @@ public class SalaRepository implements I_SalaRepository{
         }
     }
 
+    @Override
+    public void update(Sala sala){
+        try(PreparedStatement ps = conn.prepareStatement("update salas set tipo = ?, capacidad =?, asientosDisponible = ?, transmitiendo = ? where numero = ?")){
+            ps.setString(1, sala.getTipoSala().toString());
+            ps.setInt(2, sala.getCapacidad());
+            ps.setInt(3, sala.getAsientosDisponibles());
+            ps.setBoolean(4, sala.isTransmitiendo());
+            ps.setInt(5, sala.getNumero());
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     @Override
     public List<Sala> getAll() {
         List<Sala> list = new ArrayList();
