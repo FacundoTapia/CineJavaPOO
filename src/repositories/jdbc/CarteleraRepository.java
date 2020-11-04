@@ -18,21 +18,20 @@ public class CarteleraRepository implements I_CarteleraRepository {
     public CarteleraRepository(Connection conn) {
         this.conn = conn;
     }
-    
+
     @Override
     public void crear(Cartelera cartelera) {
         if (cartelera == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into cartelera(fechaDisponible, sala, codPelicula) values(?, ?, ?)",
-            PreparedStatement.RETURN_GENERATED_KEYS)){
-            ps.setDate(1, (java.sql.Date)cartelera.getFechaEstreno());
-            ps.setInt(2, cartelera.getNroSala());
-            ps.setInt(3, cartelera.getCodPelicula());
+        try(PreparedStatement ps = conn.prepareStatement("insert into carteleras(codDetalle) values(?)",
+                PreparedStatement.RETURN_GENERATED_KEYS)){
+            ps.setInt(1, cartelera.getCodDetalle());
             ps.execute();
-
+            
             ResultSet rs = ps.getGeneratedKeys();
             while (rs.next()) {
-                cartelera.setCodEstreno(rs.getInt(1));
+                cartelera.setCodCartelera(rs.getInt(1));
             }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,8 +40,8 @@ public class CarteleraRepository implements I_CarteleraRepository {
     @Override
     public void borrar(Cartelera cartelera) {
         if (cartelera == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("delete from cartelera where codEstreno = ?")){
-            ps.setInt(1, cartelera.getCodEstreno());
+        try(PreparedStatement ps = conn.prepareStatement("delete from carteleras where codCartelera = ?")){
+            ps.setInt(1, cartelera.getCodCartelera());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,69 +50,31 @@ public class CarteleraRepository implements I_CarteleraRepository {
 
     @Override
     public void actualizar(Cartelera cartelera) {
-        if (cartelera == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("update cartelera set fechaDisponible = ?, sala = ?, codPelicula = ? where id = ?")){
-            ps.setDate(1, (java.sql.Date)cartelera.getFechaEstreno());
-            ps.setInt(2, cartelera.getNroSala());
-            ps.setInt(3, cartelera.getCodPelicula());
-            ps.setInt(4, cartelera.getCodEstreno());
-            ps.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Cartelera> getAll() {
-        List<Cartelera> list = new ArrayList();
+        List<Cartelera> lista = new ArrayList();
         
-        try(ResultSet rs = conn.createStatement().executeQuery("select * from cartelera")){
+        try(ResultSet rs = conn.createStatement().executeQuery("select * from carteleras")){
             while (rs.next()) {
-                list.add(
+                lista.add(
                     new Cartelera(
-                            rs.getInt("codEstreno"), 
-                            rs.getDate("fechaDisponible"),
-                            rs.getInt("sala"),
-                            rs.getInt("codPelicula")
+                                    rs.getInt("codCartelera"), 
+                                    rs.getInt("codDetalle")
                     )
-                );                
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        return list;
+        return lista;
     }
 
     @Override
-    public List<Cartelera> getByFecha(Date fecha) {
+    public Cartelera getByCodDetalle(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Cartelera> getBySala(Sala sala) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Cartelera> getByPelicula(Pelicula pelicula) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Cartelera getByCodEstreno(int id) {
-        Cartelera car = new Cartelera();
-        for(Cartelera c : getAll()){
-            if (c.getCodEstreno()==id) {
-                car = c;
-            }
-        }
-        return car;
-    }
-
-    @Override
-    public String formateoFecha(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        return sdf.format(date);
-    }
+    }   
 }

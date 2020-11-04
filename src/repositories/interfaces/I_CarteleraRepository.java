@@ -10,5 +10,4 @@ public interface I_CarteleraRepository {
     void actualizar(Cartelera cartelera);
     List<Cartelera> getAll();
     Cartelera getByCodDetalle(int id);
-    String formateoFecha(Date date);
 }
