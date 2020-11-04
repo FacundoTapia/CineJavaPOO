@@ -1,9 +1,7 @@
 package test;
 import connectors.Connector;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
-import java.util.Scanner;
 public class TestConnector {
     public static void main(String[] args) throws Exception {
         Connection conn = Connector.getConnection();

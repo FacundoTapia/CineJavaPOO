@@ -2,11 +2,12 @@ package repositories.jdbc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
-import entidades.Cartelera;
 import entidades.Cliente;
+import entidades.Detalle;
 import entidades.Entrada;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
 public class ClienteRepository implements I_ClienteRepository {
     private Connection conn;
@@ -51,8 +52,27 @@ public class ClienteRepository implements I_ClienteRepository {
     }
 
     @Override
-    public Entrada comprar(Cliente cliente, Cartelera cartelera, int cant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Entrada comprar(Cliente cliente, Detalle detalle, int cantidad) {
+        if (cliente == null || detalle == null) return new Entrada();
+        
+        SalaRepository sr = new SalaRepository(conn);
+        int asientosDisp = sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles();
+        
+        //si hay mayor cantidad de asientos libres de la cantidad de entradas
+        //que quiere comprar el cliente
+        if (asientosDisp > cantidad) {
+            //se genera la entrada con sus datos y los de la pelicula elegida
+            Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
+            //Reduzco la cantidad de entradas que fueron compradas
+            sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(
+                    sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles()-cantidad
+            );
+            
+            return entrada;
+        } else {
+            JOptionPane.showConfirmDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
+            return new Entrada();
+        }
     }
 
     @Override

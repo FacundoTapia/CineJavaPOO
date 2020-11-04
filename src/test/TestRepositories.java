@@ -36,6 +36,8 @@ public class TestRepositories {
         
         System.out.println("**************** CLIENTES *************************");
 
+        System.out.println(cliente);
+        
         cr.borrar(cr.getById(3));
         
         //System.out.println(cr.getById(2));
