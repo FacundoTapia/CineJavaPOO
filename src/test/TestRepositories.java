@@ -132,7 +132,5 @@ public class TestRepositories {
         System.out.println("****************************************************");
         
         er.getAll().forEach(System.out::println);
-        
-        
     }
 }
