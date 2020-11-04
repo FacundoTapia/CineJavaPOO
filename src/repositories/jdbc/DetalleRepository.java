@@ -3,6 +3,7 @@ import entidades.Detalle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
 public class DetalleRepository implements I_DetalleRepository{
@@ -14,23 +15,67 @@ public class DetalleRepository implements I_DetalleRepository{
 
     @Override
     public void crear(Detalle detalle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(detalle == null) return;
+        try(PreparedStatement ps = conn.prepareStatement("insert into detalles(codPelicula, nroSala, fecha) values(?, ?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS)){
+            ps.setInt(1, detalle.getCodPelicula());
+            ps.setInt(2, detalle.getNroSala());
+            ps.setDate(3, (java.sql.Date)detalle.getFecha());
+            ps.execute();
+            
+            ResultSet rs = ps.getGeneratedKeys();
+            while (rs.next()) {
+                detalle.setCodDetalle(rs.getInt(1));
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void borrar(Detalle detalle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(detalle == null) return;
+        try(PreparedStatement ps = conn.prepareStatement("delete from detalles where codDetalle = ?")){
+            ps.setInt(1, detalle.getCodDetalle());
+            ps.execute();
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void actualizar(Detalle detalle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(detalle == null) return;
+        try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, fecha = ? where codDetalle = ?")){
+            ps.setInt(1, detalle.getCodPelicula());
+            ps.setInt(2, detalle.getNroSala());
+            ps.setDate(3, (java.sql.Date)detalle.getFecha());
+            ps.setInt(4, detalle.getCodDetalle());
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<Detalle> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
+        List<Detalle> list = new ArrayList();
+        
+        try(ResultSet rs = conn.createStatement().executeQuery("select * from detalles")){
+            while (rs.next()) {
+                list.add(
+                        new Detalle(
+                                rs.getInt("codDetalle"), 
+                                rs.getInt("codPelicula"), 
+                                rs.getInt("nroSala"), 
+                                rs.getDate("fecha")
+                        )
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }   
 }
