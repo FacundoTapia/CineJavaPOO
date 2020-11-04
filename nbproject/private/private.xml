@@ -5,7 +5,11 @@
         <group>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/jdbc/RelacionRepository.java</file>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/sql/base.sql</file>
-            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/docs/Diagrama-Entidad-Relacion.png</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/jdbc/ClienteRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/interfaces/I_ClienteRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/jdbc/PeliculaRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/docs/der.png</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/entidades/Pelicula.java</file>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/test/TestRepositories.java</file>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/entidades/Entrada.java</file>
         </group>
