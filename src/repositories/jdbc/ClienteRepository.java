@@ -58,16 +58,16 @@ public class ClienteRepository implements I_ClienteRepository {
         SalaRepository sr = new SalaRepository(conn);
         int asientosDisp = sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles();
         
+        System.out.println("asientos disponibles de la sala: " + asientosDisp);
+        
         //si hay mayor cantidad de asientos libres de la cantidad de entradas
         //que quiere comprar el cliente
         if (asientosDisp > cantidad) {
             //se genera la entrada con sus datos y los de la pelicula elegida
             Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
             //Reduzco la cantidad de entradas que fueron compradas
-            sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(
-                    sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles()-cantidad
-            );
-            
+            sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(asientosDisp-cantidad);
+            System.out.println("Asientos disponibles despues de vender las entradas: " + asientosDisp);            
             return entrada;
         } else {
             JOptionPane.showConfirmDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
