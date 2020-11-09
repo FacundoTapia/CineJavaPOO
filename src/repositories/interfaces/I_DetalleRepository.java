@@ -8,4 +8,5 @@ public interface I_DetalleRepository {
     void borrar(Detalle detalle);
     void actualizar(Detalle detalle);
     List<Detalle> getAll();
+    Detalle getByCodDetalle(int codDetalle);
 }

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
+import repositories.interfaces.I_EntradaRepository;
+import repositories.interfaces.I_SalaRepository;
 public class ClienteRepository implements I_ClienteRepository {
     private Connection conn;
 
@@ -55,26 +57,35 @@ public class ClienteRepository implements I_ClienteRepository {
     public Entrada comprar(Cliente cliente, Detalle detalle, int cantidad) {
         if (cliente == null || detalle == null) return new Entrada();
         
-        SalaRepository sr = new SalaRepository(conn);
+        I_SalaRepository sr = new SalaRepository(conn);
         int asientosDisp = sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles();
         
         System.out.println("asientos disponibles de la sala: " + asientosDisp);
         
+        System.out.println("id cliente " + cliente.getId() + ", codDetalle " + detalle.getCodDetalle());
         //si hay mayor cantidad de asientos libres de la cantidad de entradas
         //que quiere comprar el cliente
         if (asientosDisp > cantidad) {
             //se genera la entrada con sus datos y los de la pelicula elegida
             Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
+            
+            //la envio a la bd
+            I_EntradaRepository er = new EntradaRepository(conn);
+            er.crear(entrada);
+            
             //Reduzco la cantidad de entradas que fueron compradas
-            sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(asientosDisp-cantidad);
-            System.out.println("Asientos disponibles despues de vender las entradas: " + asientosDisp);            
+            sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(asientosDisp-=cantidad);
+            System.out.println("Asientos disponibles despues de vender las entradas: " + asientosDisp);
+
+            sr.update(sr.getByNumero(detalle.getNroSala()));
+            
             return entrada;
         } else {
             JOptionPane.showConfirmDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
             return new Entrada();
         }
     }
-
+     
     @Override
     public List<Cliente> getAll() {
         List<Cliente> lista = new ArrayList();

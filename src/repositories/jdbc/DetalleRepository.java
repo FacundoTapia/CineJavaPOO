@@ -89,4 +89,15 @@ public class DetalleRepository implements I_DetalleRepository{
         
         return list;
     }   
+
+    @Override
+    public Detalle getByCodDetalle(int codDetalle) {
+        Detalle de = new Detalle();
+        for(Detalle d : getAll()){
+            if (d.getCodDetalle() == codDetalle) {
+                de = d;
+            }
+        }
+        return de;        
+    }
 }

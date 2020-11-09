@@ -45,7 +45,7 @@ public class SalaRepository implements I_SalaRepository{
 
     @Override
     public void update(Sala sala){
-        try(PreparedStatement ps = conn.prepareStatement("update salas set tipo = ?, capacidad =?, asientosDisponible = ?, transmitiendo = ? where numero = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("update salas set tipo = ?, capacidad =?, asientosDisponibles = ?, transmitiendo = ? where numero = ?")){
             ps.setString(1, sala.getTipoSala().toString());
             ps.setInt(2, sala.getCapacidad());
             ps.setInt(3, sala.getAsientosDisponibles());
