@@ -54,6 +54,6 @@ public class TestMetodos {
         
         cr.getAll().forEach(System.out::println);
         
-        System.out.println(cr.comprar(cr.getById(10), dr.getByCodDetalle(12), 1));
+        System.out.println(cr.comprar(cr.getById(10), dr.getByCodDetalle(12), 100));
     }
 }
