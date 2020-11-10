@@ -9,5 +9,5 @@ public interface I_CarteleraRepository {
     void borrar(Cartelera cartelera);
     void actualizar(Cartelera cartelera);
     List<Cartelera> getAll();
-    Cartelera getByCodDetalle(int id);
+    Cartelera getByCodCartelera(int codCartelera);
 }

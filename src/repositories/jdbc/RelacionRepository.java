@@ -1,11 +1,15 @@
 package repositories.jdbc;
 
+import entidades.Cartelera;
+import entidades.Detalle;
 import entidades.Relacion;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.util.ArrayList;
+import repositories.interfaces.I_CarteleraRepository;
+import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_RelacionRepository;
 
 public class RelacionRepository implements I_RelacionRepository{
@@ -77,5 +81,40 @@ public class RelacionRepository implements I_RelacionRepository{
         }
         
         return list;
+    }
+    
+    //Obtiene un codigo cartelera y devuelve los detalles relacionados con esa Cartelera
+    @Override
+    public List<Detalle> getDetalleByCodCartelera(int codCartelera) {
+        List<Detalle> lista = new ArrayList();
+        
+        I_DetalleRepository dr = new DetalleRepository(conn);
+        
+        for(Relacion r : getAll()){
+            if (r.getCodCartelera() == codCartelera) {
+                lista.add(
+                        dr.getByCodDetalle(r.getCodDetalle())
+                );
+            }
+        }
+        
+        return lista;
+    }
+
+    @Override
+    public List<Cartelera> getCarteleraByCodDetalle(int codDetalle) {
+        List<Cartelera> lista = new ArrayList();
+        
+        I_CarteleraRepository cr = new CarteleraRepository(conn);
+        
+        for(Relacion r : getAll()){
+            if (r.getCodDetalle() == codDetalle) {
+                lista.add(
+                        cr.getByCodCartelera(r.getCodCartelera())
+                );
+            }
+        }
+        
+        return lista;        
     }
 }

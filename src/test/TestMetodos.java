@@ -55,5 +55,15 @@ public class TestMetodos {
         cr.getAll().forEach(System.out::println);
         
         System.out.println(cr.comprar(cr.getById(10), dr.getByCodDetalle(12), 100));
+        
+        System.out.println("***************************************************");
+        
+        System.out.println("Detalles que estan en la cartelera 1");
+        rr.getDetalleByCodCartelera(1).forEach(System.out::println);
+        
+        System.out.println("***************************************************");
+        System.out.println("Carteleras que contienen el detalle 12");
+        
+        rr.getCarteleraByCodDetalle(12).forEach(System.out::println);
     }
 }

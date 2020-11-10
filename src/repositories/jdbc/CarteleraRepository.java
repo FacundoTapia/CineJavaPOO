@@ -68,10 +68,18 @@ public class CarteleraRepository implements I_CarteleraRepository {
         }
         
         return lista;
-    }
+    }  
 
     @Override
-    public Cartelera getByCodDetalle(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }   
+    public Cartelera getByCodCartelera(int codCartelera) {
+        Cartelera c = new Cartelera();
+        
+        for(Cartelera car : getAll()){
+            if (car.getCodCartelera() == codCartelera) {
+                c = car;
+            }
+        }
+        
+        return c;
+    }
 }

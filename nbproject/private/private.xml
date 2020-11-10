@@ -5,6 +5,10 @@
         <group>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/test/TestMetodos.java</file>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/jdbc/ClienteRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/jdbc/RelacionRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/interfaces/I_CarteleraRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/gui/Index.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/interfaces/I_RelacionRepository.java</file>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/test/TestRepositories.java</file>
         </group>
     </open-files>
