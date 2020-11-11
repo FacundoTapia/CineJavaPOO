@@ -58,7 +58,7 @@ create table relaciones
     idRelacion int auto_increment,
     codCartelera int not null,
     codDetalle int not null,
-    primary key(idRelacion)
+    primary key(idRelacion, codCartelera, codDetalle)
 );
 
 -- drop table entradas;
@@ -66,7 +66,7 @@ create table entradas
 (
     nroEntrada int not null auto_increment,
     idCliente int not null,
-    datosPeli int not null,
+    codCartelera int not null,
     primary key(nroEntrada)
 );
 
@@ -97,5 +97,5 @@ references clientes(id);
 
 alter table entradas
 add constraint FK_entradas_detalles
-foreign key(datosPeli)
+foreign key(codCartelera)
 references detalles(codDetalle);
