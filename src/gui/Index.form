@@ -44,12 +44,15 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cmbCartelera" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="cmbCartelera" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtCantidadEntradas" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnComprar" alignment="1" pref="121" max="32767" attributes="0"/>
+                                  <Component id="txtCantidadEntradas" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -73,7 +76,7 @@
                   <Component id="txtEdad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -84,8 +87,10 @@
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtCantidadEntradas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnComprar" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="lblPortadaPelicula" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                  <Component id="lblPortadaPelicula" min="-2" pref="250" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="69" max="32767" attributes="0"/>
           </Group>
@@ -138,7 +143,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Detalle&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPortadaPelicula">
@@ -165,6 +170,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCantidadEntradas">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnComprar">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Comprar"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

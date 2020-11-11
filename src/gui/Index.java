@@ -1,7 +1,30 @@
 package gui;
+
+import connectors.Connector;
+import entidades.Detalle;
+import repositories.interfaces.I_RelacionRepository;
+import repositories.jdbc.RelacionRepository;
+import java.sql.Connection;
+
 public class Index extends javax.swing.JFrame {
+    private Connection conn = Connector.getConnection();
+    
     public Index() {
         initComponents();
+        
+        cargarCartelera(1);
+    }
+
+    private void cargarCartelera(int codCartelera) {
+        //inicio cmbCartelera
+        cmbCartelera.removeAllItems();
+        
+        I_RelacionRepository rr = new RelacionRepository(conn);
+        
+        for(Detalle d : rr.getDetalleByCodCartelera(codCartelera)){
+            System.out.println(d);
+            cmbCartelera.addItem(d);
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -18,6 +41,7 @@ public class Index extends javax.swing.JFrame {
         lblPortadaPelicula = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtCantidadEntradas = new javax.swing.JTextField();
+        btnComprar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,6 +63,9 @@ public class Index extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Cantidad de Entradas");
+
+        btnComprar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnComprar.setText("Comprar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,11 +91,13 @@ public class Index extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(cmbCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbCartelera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCantidadEntradas)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnComprar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                    .addComponent(txtCantidadEntradas))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblPortadaPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
@@ -85,7 +114,7 @@ public class Index extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -93,7 +122,9 @@ public class Index extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblPortadaPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
@@ -133,7 +164,8 @@ public class Index extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbCartelera;
+    private javax.swing.JButton btnComprar;
+    private javax.swing.JComboBox<Detalle> cmbCartelera;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
