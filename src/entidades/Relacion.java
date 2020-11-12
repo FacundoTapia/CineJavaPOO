@@ -42,7 +42,11 @@ public class Relacion {
         return codDetalle;
     }
 
-    public void setCodDetalles(int codDetalles) {
+    /**
+     *
+     * @param codDetalle
+     */
+    public void setCodDetalle(int codDetalle) {
         this.codDetalle = codDetalle;
     }
 }

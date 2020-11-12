@@ -34,14 +34,9 @@ public class TestRepositories {
         
         cr.registrar(cliente);
         
-        System.out.println("**************** CLIENTES *************************");
-
         System.out.println(cliente);
         
-        cr.borrar(cr.getById(3));
-        
-        //System.out.println(cr.getById(2));
-        System.out.println("****************************************************");
+        System.out.println("**************** CLIENTES *************************");
         
         cr.getAll().forEach(System.out::println);
         
@@ -55,8 +50,6 @@ public class TestRepositories {
         
         System.out.println(pelicula);
         
-        pr.borrar(pr.getByCodigo(2));
-        
         System.out.println("****************************************************");
         
         pr.getAll().forEach(System.out::println);
@@ -69,11 +62,11 @@ public class TestRepositories {
         
         //sr.crear(sala);
         
-        System.out.println(sala);
+        //System.out.println(sala);
         
         //System.out.println(sr.getByNumero(1));
         
-        sr.borrar(sr.getByNumero(2));
+        //sr.borrar(sr.getByNumero(2));
         
         System.out.println("****************************************************");
         
@@ -85,7 +78,7 @@ public class TestRepositories {
         
         Date fechaDetalle = new Date(2020-1900, 11, 15, 22, 30);
         
-        Detalle detalle = new Detalle(1, 1, fechaDetalle);
+        Detalle detalle = new Detalle(4, sala.getNumero(), fechaDetalle);
         
         dr.crear(detalle);
         
@@ -109,7 +102,7 @@ public class TestRepositories {
 
         I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
         
-        Relacion relacion = new Relacion(1, 2);
+        Relacion relacion = new Relacion(1, 3);
         
         rr.crear(relacion);
         
@@ -123,7 +116,7 @@ public class TestRepositories {
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(2, 3);
+        Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
         
         er.crear(entrada);
         

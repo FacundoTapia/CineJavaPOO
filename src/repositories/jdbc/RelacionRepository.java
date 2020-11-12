@@ -21,7 +21,11 @@ public class RelacionRepository implements I_RelacionRepository{
     
     @Override
     public void crear(Relacion relacion) {
-        if(relacion == null) return;
+        if(relacion == null) {
+            System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(relacion)) {
+            System.out.println("sale por duplicado"); return;}
+        
         try(PreparedStatement ps = conn.prepareStatement("insert into relaciones(codCartelera, codDetalle) values(?, ?)",
             PreparedStatement.RETURN_GENERATED_KEYS)){
             
@@ -41,7 +45,10 @@ public class RelacionRepository implements I_RelacionRepository{
 
     @Override
     public void actualizar(Relacion relacion) {
-        if(relacion == null) return;
+        if(relacion == null) {
+            System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(relacion)) {
+            System.out.println("sale por duplicado"); return;}
         try(PreparedStatement ps = conn.prepareStatement("update relaciones set codCartelera = ?, codDetalle = ? where idRelacion = ?")){
             ps.setInt(1, relacion.getCodCartelera());
             ps.setInt(2, relacion.getCodDetalle());
@@ -117,4 +124,18 @@ public class RelacionRepository implements I_RelacionRepository{
         
         return lista;        
     }
+    
+    private boolean comprobarDuplicado(Relacion relacion) {
+        boolean yaExiste = false;
+        for(Relacion r: getAll()){
+            if (relacion.getCodCartelera() == r.getCodCartelera() && relacion.getCodDetalle() == r.getCodDetalle()) {
+                yaExiste = true;
+                break;
+            }
+        }
+        if (yaExiste) {
+            return true;
+        }
+        return false;
+    }    
 }
