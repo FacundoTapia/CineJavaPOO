@@ -26,7 +26,9 @@ public class DetalleRepository implements I_DetalleRepository{
     
     @Override
     public void crear(Detalle detalle) {
-        if(detalle == null) return;
+        if(detalle == null) {System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
+        
         try(PreparedStatement ps = conn.prepareStatement("insert into detalles(codPelicula, nroSala, fecha) values(?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, detalle.getCodPelicula());
@@ -56,7 +58,9 @@ public class DetalleRepository implements I_DetalleRepository{
 
     @Override
     public void actualizar(Detalle detalle) {
-        if(detalle == null) return;
+        if(detalle == null) {System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
+        
         try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, fecha = ? where codDetalle = ?")){
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
@@ -100,4 +104,18 @@ public class DetalleRepository implements I_DetalleRepository{
         }
         return de;        
     }
+    
+        private boolean comprobarDuplicado(Detalle detalle) {
+        boolean yaExiste = false;
+        for(Detalle d: getAll()){
+            if (detalle.getCodPelicula() == d.getCodPelicula() &&
+                detalle.getNroSala() == d.getNroSala() &&
+                detalle.getFecha().equals(d.getFecha())) 
+            {
+                yaExiste = true;
+                return true;
+            }
+        }
+        return false;
+    }  
 }

@@ -116,13 +116,11 @@ public class TestRepositories {
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
+        Entrada entrada = new Entrada(15, 10);
         
         er.crear(entrada);
         
         System.out.println(entrada);
-        
-        er.borrar(entrada);
         
         System.out.println("****************************************************");
         

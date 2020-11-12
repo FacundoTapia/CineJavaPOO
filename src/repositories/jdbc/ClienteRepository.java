@@ -20,7 +20,8 @@ public class ClienteRepository implements I_ClienteRepository {
     
     @Override
     public void registrar(Cliente cliente) {
-        if (cliente == null) return;   
+        if (cliente == null) { System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(cliente)) { System.out.println("sale por duplicado"); return;}
         try(PreparedStatement ps = conn.prepareStatement("insert into clientes(nombre, apellido, edad) values (?, ?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS))
         {
@@ -119,5 +120,20 @@ public class ClienteRepository implements I_ClienteRepository {
         }
         
         return c1;
-    }    
+    }
+    
+    private boolean comprobarDuplicado(Cliente cliente) {
+        boolean yaExiste = false;
+        for(Cliente c: getAll()){
+            if (cliente.getNombre().equalsIgnoreCase(c.getNombre()) &&
+                cliente.getApellido().equalsIgnoreCase(c.getApellido()) &&
+                cliente.getEdad() == c.getEdad())
+            {
+                yaExiste = true;
+                //System.out.println("sale por duplicado");
+                return true;
+            }
+        }
+        return false;
+    }      
 }

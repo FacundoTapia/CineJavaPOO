@@ -130,11 +130,8 @@ public class RelacionRepository implements I_RelacionRepository{
         for(Relacion r: getAll()){
             if (relacion.getCodCartelera() == r.getCodCartelera() && relacion.getCodDetalle() == r.getCodDetalle()) {
                 yaExiste = true;
-                break;
+                return true;
             }
-        }
-        if (yaExiste) {
-            return true;
         }
         return false;
     }    

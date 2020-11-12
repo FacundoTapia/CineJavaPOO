@@ -21,6 +21,7 @@ public class EntradaRepository implements I_EntradaRepository{
     @Override
     public void crear(Entrada entrada) {
         if(entrada == null) return;
+        if(comprobarDuplicado(entrada)) {System.out.println("sale por duplicado"); return;}
         try(PreparedStatement ps = conn.prepareStatement("insert into entradas(idCliente, datosPeli) values(?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, entrada.getIdCliente());
@@ -50,6 +51,8 @@ public class EntradaRepository implements I_EntradaRepository{
     @Override
     public void actualizar(Entrada entrada) {
         if(entrada == null) return;
+        if(comprobarDuplicado(entrada)) {System.out.println("sale por duplicado"); return;}
+        
         try(PreparedStatement ps = conn.prepareStatement("update entradas idCliente = ?, datosPeli = ?, precio = ? where nroEntrada = ?")){
             ps.setInt(1, entrada.getIdCliente());
             ps.setInt(2, entrada.getDatosPeli());
@@ -92,4 +95,17 @@ public class EntradaRepository implements I_EntradaRepository{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    private boolean comprobarDuplicado(Entrada entrada) {
+        boolean yaExiste = false;
+        for(Entrada e: getAll()){
+            if (entrada.getIdCliente() == e.getIdCliente() &&
+                entrada.getDatosPeli() == e.getDatosPeli())
+            {
+                yaExiste = true;
+                //System.out.println("sale por duplicado");
+                return true;
+            }
+        }
+        return false;
+    }     
 }

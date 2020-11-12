@@ -16,7 +16,8 @@ public class PeliculaRepository implements I_PeliculaRepository{
     
     @Override
     public void guardar(Pelicula pelicula) {
-        if (pelicula == null) return;
+        if (pelicula == null) {System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(pelicula)) {System.out.println("sale por duplicado"); return;}
         try(PreparedStatement ps = conn.prepareStatement("insert into peliculas(titulo, duracion, genero, esMas18) values(?, ?, ?, ?)",
         PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setString(1, pelicula.getTitulo());
@@ -78,4 +79,20 @@ public class PeliculaRepository implements I_PeliculaRepository{
         }
         return pel;
     }
+    
+    private boolean comprobarDuplicado(Pelicula pelicula) {
+        boolean yaExiste = false;
+        for(Pelicula p: getAll()){
+            if (pelicula.getTitulo().equalsIgnoreCase(p.getTitulo()) &&
+                pelicula.getDuracion() == p.getDuracion() &&
+                pelicula.getGenero().equalsIgnoreCase(p.getGenero()) &&
+                pelicula.isEsMas18() == p.isEsMas18())
+            {
+                yaExiste = true;
+                //System.out.println("sale por duplicado");
+                return true;
+            }
+        }
+        return false;
+    }     
 }
