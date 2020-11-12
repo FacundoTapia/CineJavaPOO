@@ -30,11 +30,13 @@ public class TestRepositories {
     public static void main(String[] args) throws SQLException {
         I_ClienteRepository cr = new ClienteRepository(Connector.getConnection());
         
-        Cliente cliente = new Cliente("Facundo", "Tapia", 25);
+        Cliente cliente = new Cliente(42643579, "Facundo", "Tapia", 20);
         
         cr.registrar(cliente);
         
         System.out.println(cliente);
+        
+        cr.borrar(cr.getById(2));
         
         System.out.println("**************** CLIENTES *************************");
         
@@ -62,7 +64,7 @@ public class TestRepositories {
         
         //sr.crear(sala);
         
-        //System.out.println(sala);
+        System.out.println(sala);
         
         //System.out.println(sr.getByNumero(1));
         
@@ -78,7 +80,7 @@ public class TestRepositories {
         
         Date fechaDetalle = new Date(2020-1900, 11, 15, 22, 30);
         
-        Detalle detalle = new Detalle(4, sala.getNumero(), fechaDetalle);
+        Detalle detalle = new Detalle(1, 1, fechaDetalle);
         
         dr.crear(detalle);
         
@@ -116,7 +118,7 @@ public class TestRepositories {
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(15, 10);
+        Entrada entrada = new Entrada(1, 3);
         
         er.crear(entrada);
         

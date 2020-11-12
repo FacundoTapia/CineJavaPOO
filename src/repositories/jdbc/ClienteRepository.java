@@ -22,12 +22,13 @@ public class ClienteRepository implements I_ClienteRepository {
     public void registrar(Cliente cliente) {
         if (cliente == null) { System.out.println("sale por null"); return;}
         if (comprobarDuplicado(cliente)) { System.out.println("sale por duplicado"); return;}
-        try(PreparedStatement ps = conn.prepareStatement("insert into clientes(nombre, apellido, edad) values (?, ?, ?)", 
+        try(PreparedStatement ps = conn.prepareStatement("insert into clientes(dni, nombre, apellido, edad) values (?, ?, ?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS))
         {
-            ps.setString(1, cliente.getNombre());
-            ps.setString(2, cliente.getApellido());
-            ps.setInt(3, cliente.getEdad());
+            ps.setInt(1, cliente.getDni());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getApellido());
+            ps.setInt(4, cliente.getEdad());
             ps.execute();
             
             //Obtengo el id generado por la base de datos para el registro y se lo
@@ -95,7 +96,8 @@ public class ClienteRepository implements I_ClienteRepository {
             while (rs.next()) {
                 lista.add(
                         new Cliente(
-                                rs.getInt("id"), 
+                                rs.getInt("id"),
+                                rs.getInt("dni"), 
                                 rs.getString("nombre"), 
                                 rs.getString("apellido"), 
                                 rs.getInt("edad")
@@ -125,7 +127,8 @@ public class ClienteRepository implements I_ClienteRepository {
     private boolean comprobarDuplicado(Cliente cliente) {
         boolean yaExiste = false;
         for(Cliente c: getAll()){
-            if (cliente.getNombre().equalsIgnoreCase(c.getNombre()) &&
+            if (cliente.getDni() == c.getDni() &&
+                cliente.getNombre().equalsIgnoreCase(c.getNombre()) &&
                 cliente.getApellido().equalsIgnoreCase(c.getApellido()) &&
                 cliente.getEdad() == c.getEdad())
             {

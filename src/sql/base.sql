@@ -17,10 +17,11 @@ create table salas
 create table clientes
 (
     id int auto_increment,
+    dni int not null,
     nombre varchar(25) not null,
     apellido varchar(25) not null,
     edad int not null,
-    primary key(id)
+    primary key(id, dni)
 );
 
 -- drop table peliculas
