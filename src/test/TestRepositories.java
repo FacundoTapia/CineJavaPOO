@@ -30,7 +30,7 @@ public class TestRepositories {
     public static void main(String[] args) throws SQLException {
         I_ClienteRepository cr = new ClienteRepository(Connector.getConnection());
         
-        Cliente cliente = new Cliente(42643579, "Facundo", "Tapia", 20);
+        Cliente cliente = new Cliente("Facundo", "Tapia", "tapita", "1234");
         
         cr.registrar(cliente);
         
@@ -104,7 +104,7 @@ public class TestRepositories {
 
         I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
         
-        Relacion relacion = new Relacion(1, 3);
+        Relacion relacion = new Relacion(1, 1);
         
         rr.crear(relacion);
         
@@ -118,7 +118,7 @@ public class TestRepositories {
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(1, 3);
+        Entrada entrada = new Entrada(1, 1);
         
         er.crear(entrada);
         

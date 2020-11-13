@@ -22,13 +22,13 @@ public class ClienteRepository implements I_ClienteRepository {
     public void registrar(Cliente cliente) {
         if (cliente == null) { System.out.println("sale por null"); return;}
         if (comprobarDuplicado(cliente)) { System.out.println("sale por duplicado"); return;}
-        try(PreparedStatement ps = conn.prepareStatement("insert into clientes(dni, nombre, apellido, edad) values (?, ?, ?, ?)", 
+        try(PreparedStatement ps = conn.prepareStatement("insert into clientes(nombre, apellido, usuario, password) values (?, ?, ?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS))
         {
-            ps.setInt(1, cliente.getDni());
-            ps.setString(2, cliente.getNombre());
-            ps.setString(3, cliente.getApellido());
-            ps.setInt(4, cliente.getEdad());
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setString(3, cliente.getUsuario());
+            ps.setString(4, cliente.getPassword());
             ps.execute();
             
             //Obtengo el id generado por la base de datos para el registro y se lo
@@ -97,10 +97,10 @@ public class ClienteRepository implements I_ClienteRepository {
                 lista.add(
                         new Cliente(
                                 rs.getInt("id"),
-                                rs.getInt("dni"), 
                                 rs.getString("nombre"), 
                                 rs.getString("apellido"), 
-                                rs.getInt("edad")
+                                rs.getString("usuario"), 
+                                rs.getString("password")
                         )
                 );
             }
@@ -123,14 +123,25 @@ public class ClienteRepository implements I_ClienteRepository {
         
         return c1;
     }
+
+    public Cliente getByUsuario(String usuario) {
+        Cliente c1 = new Cliente();
+        
+        for(Cliente CL: getAll()){
+            if (CL.getUsuario().equalsIgnoreCase(usuario)) {
+                c1 = CL;
+            }
+        }
+        
+        return c1;
+    }
     
     private boolean comprobarDuplicado(Cliente cliente) {
         boolean yaExiste = false;
         for(Cliente c: getAll()){
-            if (cliente.getDni() == c.getDni() &&
-                cliente.getNombre().equalsIgnoreCase(c.getNombre()) &&
+            if (cliente.getNombre().equalsIgnoreCase(c.getNombre()) &&
                 cliente.getApellido().equalsIgnoreCase(c.getApellido()) &&
-                cliente.getEdad() == c.getEdad())
+                cliente.getUsuario().equalsIgnoreCase(c.getUsuario()))
             {
                 yaExiste = true;
                 //System.out.println("sale por duplicado");
@@ -139,4 +150,17 @@ public class ClienteRepository implements I_ClienteRepository {
         }
         return false;
     }      
+    
+//    public boolean login(String usuario, String pass){
+//        if (usuario == null || pass == null) return false;
+//        
+//        try(ResultSet rs = conn.createStatement().executeQuery("select * from clientes where usuario = '" + usuario + "' and apellido = '" + pass + "'")){
+//            while (rs.next()) {
+//                rs.getString("usuario");
+//                rs.getBlob("pass");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
