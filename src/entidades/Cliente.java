@@ -1,31 +1,31 @@
 package entidades;
 public class Cliente {
     private int id;
-    private int dni;
     private String nombre;
     private String apellido;
-    private int edad;
+    private String usuario;
+    private String password;
 
     public Cliente() {}
 
-    public Cliente(int dni, String nombre, String apellido, int edad) {
-        this.dni = dni;
+    public Cliente(String nombre, String apellido, String usuario, String password) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.edad = edad;
+        this.usuario = usuario;
+        this.password = password;
     }
 
-    public Cliente(int id, int dni, String nombre, String apellido, int edad) {
+    public Cliente(int id, String nombre, String apellido, String usuario, String password) {
         this.id = id;
-        this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.edad = edad;
+        this.usuario = usuario;
+        this.password = password;
     }
 
     @Override
     public String toString() {
-        return id + ", " + dni + ", " + nombre + ", " + apellido + ", " + edad;
+        return id + ", " + nombre + ", " + apellido + ", " + usuario + ", " + password;
     }
 
     public int getId() {
@@ -34,14 +34,6 @@ public class Cliente {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
     }
 
     public String getNombre() {
@@ -60,11 +52,19 @@ public class Cliente {
         this.apellido = apellido;
     }
 
-    public int getEdad() {
-        return edad;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
