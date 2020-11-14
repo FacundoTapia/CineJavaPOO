@@ -118,4 +118,17 @@ public class DetalleRepository implements I_DetalleRepository{
         }
         return false;
     }  
+
+    @Override
+    public List<Detalle> getDetallesByPelicula(int codPelicula) {
+        List<Detalle> lista = new ArrayList();
+        
+        for(Detalle d : getAll()){
+            if (d.getCodPelicula() == codPelicula) {
+                lista.add(d);
+            }
+        }
+        
+        return lista;
+    }
 }

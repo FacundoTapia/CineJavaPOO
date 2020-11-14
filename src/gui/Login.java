@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import repositories.jdbc.ClienteRepository;
 
 public class Login extends javax.swing.JFrame {
+    public static Cliente clienteAcceso;
+    
     public Login() {
         initComponents();
         this.setLocationRelativeTo(this);
@@ -110,6 +112,8 @@ public class Login extends javax.swing.JFrame {
         if (cl.getPassword().equalsIgnoreCase(pass)) {
             JOptionPane.showMessageDialog(this, "Login exitoso!");
             
+            clienteAcceso = cl;
+            
             Index index = new Index();
             index.setVisible(true);
             this.dispose();
@@ -149,6 +153,15 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
+    public Cliente getClienteAcceso() {
+        return clienteAcceso;
+    }
+
+    private void setClienteAcceso(Cliente clienteAcceso) {
+        this.clienteAcceso = clienteAcceso;
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogIn;
     private javax.swing.JButton btnRegistro;

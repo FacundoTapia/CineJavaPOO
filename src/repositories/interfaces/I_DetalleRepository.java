@@ -9,4 +9,5 @@ public interface I_DetalleRepository {
     void actualizar(Detalle detalle);
     List<Detalle> getAll();
     Detalle getByCodDetalle(int codDetalle);
+    List<Detalle> getDetallesByPelicula(int codPelicula);
 }
