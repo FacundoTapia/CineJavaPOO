@@ -25,7 +25,7 @@ public class Detalle {
     }
 
     public String formatoFecha(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEEEEE, dd/MM HH:mm");
         return sdf.format(date);
     }
     
