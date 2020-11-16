@@ -60,7 +60,7 @@ public class TestRepositories {
         
         I_SalaRepository sr = new SalaRepository(Connector.getConnection());
         
-        Sala sala = new Sala(1, TipoSala.DOSD, 70, 70);
+        Sala sala = new Sala(1, TipoSala.DOSD, 70);
         
         //sr.crear(sala);
         

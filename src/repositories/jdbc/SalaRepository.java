@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class SalaRepository implements I_SalaRepository{
     private Connection conn;
@@ -19,16 +20,15 @@ public class SalaRepository implements I_SalaRepository{
     @Override
     public void crear(Sala sala) {
         if (sala == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad, asientosDisponibles, transmitiendo) values(?, ?, ?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad) values(?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, sala.getNumero());
             ps.setString(2, sala.getTipoSala().toString());
             ps.setInt(3, sala.getCapacidad());
-            ps.setInt(4, sala.getAsientosDisponibles());
-            ps.setBoolean(5, false);
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la creación de la sala");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -68,7 +68,8 @@ public class SalaRepository implements I_SalaRepository{
                                 rs.getInt("numero"), 
                                 TipoSala.valueOf(rs.getString("tipo")),
                                 rs.getInt("capacidad"), 
-                                rs.getInt("asientosDisponibles")
+                                rs.getInt("asientosDisponibles"),
+                                rs.getBoolean("transmitiendo")
                         )
                 );
             }            

@@ -8,8 +8,8 @@ create table salas
     numero int,
     tipo enum('DOSD','TRESD','CUATROD'),
     capacidad int not null,
-    asientosDisponibles int not null,
-    transmitiendo boolean not null,
+    asientosDisponibles int,
+    transmitiendo boolean,
     primary key(numero)
 );
 

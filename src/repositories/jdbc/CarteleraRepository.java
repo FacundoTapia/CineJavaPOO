@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_CarteleraRepository;
 
 public class CarteleraRepository implements I_CarteleraRepository {
@@ -24,7 +25,8 @@ public class CarteleraRepository implements I_CarteleraRepository {
             ps.setString(2, cartelera.getNombre());
             ps.execute();            
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un problema en la creación de la cartelera");
+            System.out.println(e.getMessage());
         }
     }
 

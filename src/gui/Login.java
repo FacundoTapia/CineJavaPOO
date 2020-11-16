@@ -124,23 +124,34 @@ public class Login extends javax.swing.JFrame {
         
         ClienteRepository cr = new ClienteRepository(Connector.getConnection());
         
-        Cliente cl = cr.getByUsuario(usuario);
-        
-        if (cl.getPassword().equalsIgnoreCase(pass)) {
-            JOptionPane.showMessageDialog(this, "Login exitoso!");
-            
-            clienteAcceso = cl;
-            
-            Index index = new Index();
-            index.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Login incorrectos. Datos invalidos");
+        for(Cliente c: cr.getAll()){
+            if (c.getUsuario().equalsIgnoreCase(usuario)) {
+                
+                Cliente cl = cr.getByUsuario(usuario);
+                
+                
+                if (cl.getPassword().equalsIgnoreCase(pass)) {
+                    JOptionPane.showMessageDialog(this, "Login exitoso!");
+
+                    clienteAcceso = cl;
+
+                    Index index = new Index();
+                    index.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Login incorrectos. Datos invalidos");
+                }                
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario ingresado no existe");
+            }
         }
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
+        // Evento Admin
+        Admin admin = new Admin();
+        admin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -8,11 +8,18 @@ public class Sala {
 
     public Sala() {}
 
-    public Sala(int numero, Enum TipoSala, int capacidad, int asientosDisponibles) {
+    public Sala(int numero, Enum TipoSala, int capacidad) {
+        this.numero = numero;
+        this.TipoSala = TipoSala;
+        this.capacidad = capacidad;
+    }
+
+    public Sala(int numero, Enum TipoSala, int capacidad, int asientosDisponibles, boolean transmitiendo) {
         this.numero = numero;
         this.TipoSala = TipoSala;
         this.capacidad = capacidad;
         this.asientosDisponibles = asientosDisponibles;
+        this.transmitiendo = transmitiendo;
     }
 
     @Override

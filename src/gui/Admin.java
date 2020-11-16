@@ -16,6 +16,7 @@ public class Admin extends javax.swing.JFrame {
      */
     public Admin() {
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -31,6 +32,8 @@ public class Admin extends javax.swing.JFrame {
         btnAgregarSala = new javax.swing.JButton();
         btnAgregarDetalle = new javax.swing.JButton();
         btnAgregarRelacion = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        btnAgregarCartelera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,20 +52,45 @@ public class Admin extends javax.swing.JFrame {
         });
 
         btnAgregarDetalle.setText("Agregar Detalle");
+        btnAgregarDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarDetalleActionPerformed(evt);
+            }
+        });
 
         btnAgregarRelacion.setText("Agregar Relacion");
+
+        jButton1.setText("Volver a Login");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnAgregarCartelera.setText("Agregar Cartelera");
+        btnAgregarCartelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCarteleraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregarRelacion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAgregarRelacion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -76,7 +104,11 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(btnAgregarDetalle)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarRelacion)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregarCartelera)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -96,6 +128,28 @@ public class Admin extends javax.swing.JFrame {
         cs.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarSalaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Evento Volver a Login
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnAgregarCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarteleraActionPerformed
+        // Evento Agregar Cartelera
+        
+        CrearCartelera cc = new CrearCartelera();
+        cc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarCarteleraActionPerformed
+
+    private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
+        // Evento Agregar Detalle
+        CrearDetalle cd = new CrearDetalle();
+        cd.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarDetalleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,9 +187,11 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarCartelera;
     private javax.swing.JButton btnAgregarDetalle;
     private javax.swing.JButton btnAgregarPelicula;
     private javax.swing.JButton btnAgregarRelacion;
     private javax.swing.JButton btnAgregarSala;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
