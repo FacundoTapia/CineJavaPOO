@@ -59,6 +59,11 @@ public class Admin extends javax.swing.JFrame {
         });
 
         btnAgregarRelacion.setText("Agregar Relacion");
+        btnAgregarRelacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarRelacionActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Volver a Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +155,13 @@ public class Admin extends javax.swing.JFrame {
         cd.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarDetalleActionPerformed
+
+    private void btnAgregarRelacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRelacionActionPerformed
+        // Evento Agregar Relacion
+         CrearRelacion cr = new CrearRelacion();
+         cr.setVisible(true);
+         this.dispose();
+    }//GEN-LAST:event_btnAgregarRelacionActionPerformed
 
     /**
      * @param args the command line arguments

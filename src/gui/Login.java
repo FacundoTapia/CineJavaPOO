@@ -141,8 +141,6 @@ public class Login extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Login incorrectos. Datos invalidos");
                 }                
-            } else {
-                JOptionPane.showMessageDialog(this, "El usuario ingresado no existe");
             }
         }
     }//GEN-LAST:event_btnLogInActionPerformed
