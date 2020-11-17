@@ -1,37 +1,35 @@
 package entidades;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Detalle {
     private int codDetalle;
     private int codPelicula;
     private int nroSala;
-    private Date fecha;
+    private LocalDate fecha;
+    private LocalTime horario;
 
     public Detalle() {}
 
-    public Detalle(int codPelicula, int nroSala, Date fecha) {
+    public Detalle(int codPelicula, int nroSala, LocalDate fecha, LocalTime horario) {
         this.codPelicula = codPelicula;
         this.nroSala = nroSala;
         this.fecha = fecha;
+        this.horario = horario;
     }
 
-    public Detalle(int codDetalle, int codPelicula, int nroSala, Date fecha) {
+    public Detalle(int codDetalle, int codPelicula, int nroSala, LocalDate fecha, LocalTime horario) {
         this.codDetalle = codDetalle;
         this.codPelicula = codPelicula;
         this.nroSala = nroSala;
         this.fecha = fecha;
+        this.horario = horario;
     }
 
-    public String formatoFecha(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEEEEE, dd/MM HH:mm");
-        return sdf.format(date);
-    }
-    
     @Override
     public String toString() {
-        return codDetalle + ", " + codPelicula + ", " + nroSala + ", " + formatoFecha(fecha);
+        return codDetalle + ", " + codPelicula + ", " + nroSala + ", " + fecha + ", " + horario;
     }
 
     public int getCodDetalle() {
@@ -58,11 +56,19 @@ public class Detalle {
         this.nroSala = nroSala;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public LocalTime getHorario() {
+        return horario;
+    }
+
+    public void setHorario(LocalTime horario) {
+        this.horario = horario;
     }
 }

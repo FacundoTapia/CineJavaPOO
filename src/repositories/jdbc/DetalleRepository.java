@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
@@ -13,16 +17,19 @@ public class DetalleRepository implements I_DetalleRepository{
 
     public DetalleRepository(Connection conn) {
         this.conn = conn;
-    }
-
-    public java.sql.Date utilDateToSqlDate(java.util.Date utilDate){
-        return new java.sql.Date(utilDate.getTime());
+    }  
+    
+    public LocalTime salvarTiempo(LocalDateTime ldt){
+        return ldt.toLocalTime();
     }
     
-    public String formatoSQLFecha(java.sql.Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
-    }    
+    public java.sql.Date LocalDateTimeConverter(LocalDateTime ldt){
+        return java.sql.Date.valueOf(ldt.toLocalDate());
+    }
+    
+    public LocalDateTime recuperarTiempo(LocalDate ld){
+        
+    }
     
     @Override
     public void crear(Detalle detalle) {
@@ -33,7 +40,7 @@ public class DetalleRepository implements I_DetalleRepository{
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            ps.setTimestamp(3, Timestamp.valueOf(formatoSQLFecha(utilDateToSqlDate(detalle.getFecha()))));
+            
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
