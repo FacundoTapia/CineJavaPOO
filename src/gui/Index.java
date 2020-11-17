@@ -9,6 +9,7 @@ import repositories.jdbc.RelacionRepository;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_PeliculaRepository;
@@ -33,18 +34,20 @@ public class Index extends javax.swing.JFrame {
         //inicio cmbCartelera
         cmbCartelera.removeAllItems();
         
-
-        
         //Mediante el codCartelera pasado por parametro, obtengo la lista
         //de los Detalles vinculados a esta cartelera. De estos extraigo
         //el codPelicula, con este busco el nombre de la pelicula, para mostrarlo
         //en el cmbCartelera
+
         for(Detalle d : rr.getDetalleByCodCartelera(codCartelera)){
-            Pelicula p = pr.getByCodigo(d.getCodPelicula());
+//            Pelicula p = pr.getByCodigo(d.getCodPelicula());
+//            
+//            String nombrePelicula = p.getTitulo();
+//            
+//            cmbCartelera.addItem(nombrePelicula);            
+
             
-            String nombrePelicula = p.getTitulo();
-            
-            cmbCartelera.addItem(nombrePelicula);            
+
         }
         
         
@@ -56,10 +59,33 @@ public class Index extends javax.swing.JFrame {
         
         int codPelicula = pr.getByTitulo(tituloSeleccionado).getCodigo();
         
+        ArrayList<LocalDate> fechasSinRepetidos = new ArrayList();
+        ArrayList<LocalTime> horariosSinRepetidos = new ArrayList();
         for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
-            cmbFechasPelicula.addItem(d.getFecha());
-            cmbHorariosPelicula.addItem(d.getHorario());
+            LocalDate ld = d.getFecha();
+            LocalTime lt = d.getHorario();
+            
+            if (!fechasSinRepetidos.contains(ld)) {
+                fechasSinRepetidos.add(ld);
+            }
+            
+            if (!horariosSinRepetidos.contains(lt)) {
+                horariosSinRepetidos.add(lt);
+            }
         }
+
+        for(LocalDate ld : fechasSinRepetidos){
+            cmbFechasPelicula.addItem(ld);
+        }
+        
+        for(LocalTime lt : horariosSinRepetidos){
+            cmbHorariosPelicula.addItem(lt);
+        }
+        
+//        for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
+//            cmbFechasPelicula.addItem(d.getFecha());
+//            cmbHorariosPelicula.addItem(d.getHorario());
+//        }
     }
     
     @SuppressWarnings("unchecked")
