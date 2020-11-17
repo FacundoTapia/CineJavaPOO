@@ -3,12 +3,8 @@ import entidades.Detalle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
@@ -19,16 +15,26 @@ public class DetalleRepository implements I_DetalleRepository{
         this.conn = conn;
     }
     
+    public java.sql.Date LocalDateConverter(LocalDate ld){
+        return java.sql.Date.valueOf(ld);
+    }
+    
+    public java.sql.Time LocalTimeConverter(LocalTime lt){
+        return java.sql.Time.valueOf(lt);
+    }
+    
     @Override
     public void crear(Detalle detalle) {
         if(detalle == null) {System.out.println("sale por null"); return;}
         if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
         
-        try(PreparedStatement ps = conn.prepareStatement("insert into detalles(codPelicula, nroSala, fecha) values(?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into detalles(codPelicula, nroSala, fecha, horario) values(?, ?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
+            
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            
+            ps.setDate(3, LocalDateConverter(detalle.getFecha()));
+            ps.setTime(4, LocalTimeConverter(detalle.getHorario()));
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -56,11 +62,12 @@ public class DetalleRepository implements I_DetalleRepository{
         if(detalle == null) {System.out.println("sale por null"); return;}
         if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
         
-        try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, fecha = ? where codDetalle = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, fecha = ?, horario = ? where codDetalle = ?")){
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            ps.setTimestamp(3, Timestamp.valueOf(formatoSQLFecha(utilDateToSqlDate(detalle.getFecha()))));
-            ps.setInt(4, detalle.getCodDetalle());
+            ps.setDate(3, LocalDateConverter(detalle.getFecha()));
+            ps.setTime(4, LocalTimeConverter(detalle.getHorario()));
+            ps.setInt(5, detalle.getCodDetalle());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,8 +84,9 @@ public class DetalleRepository implements I_DetalleRepository{
                         new Detalle(
                                 rs.getInt("codDetalle"), 
                                 rs.getInt("codPelicula"), 
-                                rs.getInt("nroSala"), 
-                                rs.getTimestamp("fecha")
+                                rs.getInt("nroSala"),
+                                rs.getDate("fecha").toLocalDate(),
+                                rs.getTime("horario").toLocalTime()
                         )
                 );
             }
@@ -105,7 +113,9 @@ public class DetalleRepository implements I_DetalleRepository{
         for(Detalle d: getAll()){
             if (detalle.getCodPelicula() == d.getCodPelicula() &&
                 detalle.getNroSala() == d.getNroSala() &&
-                detalle.getFecha().equals(d.getFecha())) 
+                d.getFecha().isEqual(detalle.getFecha()) &&
+                detalle.getHorario().equals(d.getHorario())
+                )
             {
                 yaExiste = true;
                 return true;
