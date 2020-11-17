@@ -36,7 +36,7 @@ public class TestMetodos {
         
         I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
         
-        Detalle d1 = new Detalle(13, 2, new Date(2020-1900, 11, 15, 18, 30));
+        //Detalle d1 = new Detalle(13, 2, new Date(2020-1900, 11, 15, 18, 30));
         
 //        dr.crear(d1);
         

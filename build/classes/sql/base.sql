@@ -41,7 +41,8 @@ create table detalles
     codDetalle int auto_increment,
     codPelicula int not null,
     nroSala int not null,
-    fecha DateTime not null,
+    fecha Date not null,
+    horario Time not null,
     primary key(codDetalle)
 );
 

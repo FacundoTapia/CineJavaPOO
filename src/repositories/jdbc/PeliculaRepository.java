@@ -80,6 +80,16 @@ public class PeliculaRepository implements I_PeliculaRepository{
         return pel;
     }
     
+    public Pelicula getByTitulo(String titulo){
+        Pelicula pel = new Pelicula();
+        for(Pelicula p : getAll()){
+            if (p.getTitulo().equalsIgnoreCase(titulo)) {
+                pel = p;
+            }
+        }
+        return pel;
+    }
+    
     private boolean comprobarDuplicado(Pelicula pelicula) {
         boolean yaExiste = false;
         for(Pelicula p: getAll()){

@@ -7,7 +7,9 @@ import entidades.Pelicula;
 import repositories.interfaces.I_RelacionRepository;
 import repositories.jdbc.RelacionRepository;
 import java.sql.Connection;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_PeliculaRepository;
 import repositories.jdbc.DetalleRepository;
@@ -16,6 +18,9 @@ import repositories.jdbc.PeliculaRepository;
 public class Index extends javax.swing.JFrame {
     private Cliente sesionActual;
     private Connection conn = Connector.getConnection();
+    I_RelacionRepository rr = new RelacionRepository(conn);
+    I_PeliculaRepository pr = new PeliculaRepository(conn);
+    I_DetalleRepository dr = new DetalleRepository(conn);    
     
     public Index() {
         initComponents();
@@ -28,9 +33,7 @@ public class Index extends javax.swing.JFrame {
         //inicio cmbCartelera
         cmbCartelera.removeAllItems();
         
-        I_RelacionRepository rr = new RelacionRepository(conn);
-        I_PeliculaRepository pr = new PeliculaRepository(conn);
-        I_DetalleRepository dr = new DetalleRepository(conn);
+
         
         //Mediante el codCartelera pasado por parametro, obtengo la lista
         //de los Detalles vinculados a esta cartelera. De estos extraigo
@@ -41,13 +44,24 @@ public class Index extends javax.swing.JFrame {
             
             String nombrePelicula = p.getTitulo();
             
-            cmbCartelera.addItem(nombrePelicula);
-            
-            cmbHorariosPelicula.addItem(d.formatoFecha(d.getFecha()));
+            cmbCartelera.addItem(nombrePelicula);            
         }
         
         
     }
+    
+    private void cargarCmbFechayHorario(String tituloSeleccionado){
+        cmbFechasPelicula.removeAllItems();
+        cmbHorariosPelicula.removeAllItems();
+        
+        int codPelicula = pr.getByTitulo(tituloSeleccionado).getCodigo();
+        
+        for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
+            cmbFechasPelicula.addItem(d.getFecha());
+            cmbHorariosPelicula.addItem(d.getHorario());
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,6 +86,12 @@ public class Index extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Cartelera");
+
+        cmbCartelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCarteleraActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Cantidad de Entradas");
@@ -185,6 +205,11 @@ public class Index extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void cmbCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCarteleraActionPerformed
+        // Evento Click en cmbCartelera
+        cargarCmbFechayHorario(cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
+    }//GEN-LAST:event_cmbCarteleraActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -223,8 +248,8 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnLogout;
     private javax.swing.JComboBox<String> cmbCartelera;
-    private javax.swing.JComboBox<String> cmbFechasPelicula;
-    private javax.swing.JComboBox<String> cmbHorariosPelicula;
+    private javax.swing.JComboBox<LocalDate> cmbFechasPelicula;
+    private javax.swing.JComboBox<LocalTime> cmbHorariosPelicula;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

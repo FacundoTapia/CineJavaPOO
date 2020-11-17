@@ -12,4 +12,5 @@ public interface I_PeliculaRepository {
         return getAll().stream();
     }
     Pelicula getByCodigo(int codigo);
+    Pelicula getByTitulo(String titulo);
 }

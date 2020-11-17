@@ -10,6 +10,9 @@ import entidades.Relacion;
 import entidades.Sala;
 import enums.TipoSala;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.Date;
 import repositories.interfaces.I_CarteleraRepository;
 import repositories.interfaces.I_ClienteRepository;
@@ -80,7 +83,7 @@ public class TestRepositories {
         
         Date fechaDetalle = new Date(2020-1900, 11, 15, 22, 30);
         
-        Detalle detalle = new Detalle(1, 1, fechaDetalle);
+        Detalle detalle = new Detalle(1, 1, LocalDate.of(2020, Month.NOVEMBER, 30), LocalTime.of(22, 30));
         
         dr.crear(detalle);
         
