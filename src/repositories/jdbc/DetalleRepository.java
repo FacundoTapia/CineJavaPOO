@@ -17,18 +17,6 @@ public class DetalleRepository implements I_DetalleRepository{
 
     public DetalleRepository(Connection conn) {
         this.conn = conn;
-    }  
-    
-    public LocalTime salvarTiempo(LocalDateTime ldt){
-        return ldt.toLocalTime();
-    }
-    
-    public java.sql.Date LocalDateTimeConverter(LocalDateTime ldt){
-        return java.sql.Date.valueOf(ldt.toLocalDate());
-    }
-    
-    public LocalDateTime recuperarTiempo(LocalDate ld){
-        
     }
     
     @Override
