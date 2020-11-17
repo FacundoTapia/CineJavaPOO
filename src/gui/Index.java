@@ -38,54 +38,59 @@ public class Index extends javax.swing.JFrame {
         //de los Detalles vinculados a esta cartelera. De estos extraigo
         //el codPelicula, con este busco el nombre de la pelicula, para mostrarlo
         //en el cmbCartelera
-
+        ArrayList<String> peliculasSinRepetidos = new ArrayList();
+        
         for(Detalle d : rr.getDetalleByCodCartelera(codCartelera)){
-//            Pelicula p = pr.getByCodigo(d.getCodPelicula());
-//            
-//            String nombrePelicula = p.getTitulo();
-//            
-//            cmbCartelera.addItem(nombrePelicula);            
-
+            Pelicula p = pr.getByCodigo(d.getCodPelicula());
             
-
-        }
+            String nombrePelicula = p.getTitulo();
+            
+            if (!peliculasSinRepetidos.contains(nombrePelicula)) {
+                peliculasSinRepetidos.add(nombrePelicula);
+            }
+        }   
         
-        
+        for(String st: peliculasSinRepetidos){
+            cmbCartelera.addItem(st);
+        }        
     }
     
     private void cargarCmbFechayHorario(String tituloSeleccionado){
         cmbFechasPelicula.removeAllItems();
-        cmbHorariosPelicula.removeAllItems();
+//        cmbHorariosPelicula.removeAllItems();
         
         int codPelicula = pr.getByTitulo(tituloSeleccionado).getCodigo();
         
         ArrayList<LocalDate> fechasSinRepetidos = new ArrayList();
-        ArrayList<LocalTime> horariosSinRepetidos = new ArrayList();
+//        ArrayList<LocalTime> horariosSinRepetidos = new ArrayList();
         for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
             LocalDate ld = d.getFecha();
-            LocalTime lt = d.getHorario();
+//            LocalTime lt = d.getHorario();
             
             if (!fechasSinRepetidos.contains(ld)) {
                 fechasSinRepetidos.add(ld);
             }
             
-            if (!horariosSinRepetidos.contains(lt)) {
-                horariosSinRepetidos.add(lt);
-            }
+//            if (!horariosSinRepetidos.contains(lt)) {
+//                horariosSinRepetidos.add(lt);
+//            }
         }
 
         for(LocalDate ld : fechasSinRepetidos){
             cmbFechasPelicula.addItem(ld);
         }
         
-        for(LocalTime lt : horariosSinRepetidos){
-            cmbHorariosPelicula.addItem(lt);
-        }
-        
-//        for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
-//            cmbFechasPelicula.addItem(d.getFecha());
-//            cmbHorariosPelicula.addItem(d.getHorario());
+//        for(LocalTime lt : horariosSinRepetidos){
+//            cmbHorariosPelicula.addItem(lt);
 //        }
+    }
+    
+    private void cargarCmbHorario(LocalDate fechaSeleccionada){
+        cmbHorariosPelicula.removeAllItems();
+        
+        Detalle detalle = dr.getByFecha(fechaSeleccionada);
+        
+        cmbHorariosPelicula.addItem(detalle.getHorario());
     }
     
     @SuppressWarnings("unchecked")
@@ -145,6 +150,12 @@ public class Index extends javax.swing.JFrame {
         lblUsuario.setText("Usuario");
 
         lblInfoPelicula.setText("INFO PELICULA");
+
+        cmbFechasPelicula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFechasPeliculaActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Fechas");
@@ -236,6 +247,11 @@ public class Index extends javax.swing.JFrame {
         // Evento Click en cmbCartelera
         cargarCmbFechayHorario(cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
     }//GEN-LAST:event_cmbCarteleraActionPerformed
+
+    private void cmbFechasPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaActionPerformed
+        // Evento Click en cmbFechas
+        cargarCmbHorario(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()));
+    }//GEN-LAST:event_cmbFechasPeliculaActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

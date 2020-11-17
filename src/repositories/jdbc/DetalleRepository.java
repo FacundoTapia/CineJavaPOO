@@ -136,4 +136,17 @@ public class DetalleRepository implements I_DetalleRepository{
         
         return lista;
     }
+
+    @Override
+    public Detalle getByFecha(LocalDate ld) {
+        Detalle de = new Detalle();
+        
+        for(Detalle d : getAll()){
+            if (d.getFecha().equals(ld)) {
+                de = d;
+            }
+        }
+        
+        return de;
+    }
 }

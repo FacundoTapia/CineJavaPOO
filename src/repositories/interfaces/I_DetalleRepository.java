@@ -1,6 +1,7 @@
 package repositories.interfaces;
 
 import entidades.Detalle;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface I_DetalleRepository {
@@ -10,4 +11,5 @@ public interface I_DetalleRepository {
     List<Detalle> getAll();
     Detalle getByCodDetalle(int codDetalle);
     List<Detalle> getDetallesByPelicula(int codPelicula);
+    Detalle getByFecha(LocalDate ld);
 }
