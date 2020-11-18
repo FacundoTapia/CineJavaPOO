@@ -149,6 +149,7 @@ public class Login extends javax.swing.JFrame {
         // Evento Admin
         Admin admin = new Admin();
         admin.setVisible(true);
+        
         this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
     public static void main(String args[]) {

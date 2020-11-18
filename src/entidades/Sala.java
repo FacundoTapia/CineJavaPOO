@@ -12,6 +12,7 @@ public class Sala {
         this.numero = numero;
         this.TipoSala = TipoSala;
         this.capacidad = capacidad;
+        this.asientosDisponibles = capacidad;
     }
 
     public Sala(int numero, Enum TipoSala, int capacidad, int asientosDisponibles, boolean transmitiendo) {

@@ -20,11 +20,12 @@ public class SalaRepository implements I_SalaRepository{
     @Override
     public void crear(Sala sala) {
         if (sala == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad) values(?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad, asientosDisponibles) values(?, ?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, sala.getNumero());
             ps.setString(2, sala.getTipoSala().toString());
             ps.setInt(3, sala.getCapacidad());
+            ps.setInt(4, sala.getAsientosDisponibles());
             ps.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la creación de la sala");

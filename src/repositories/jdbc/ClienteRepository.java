@@ -57,14 +57,16 @@ public class ClienteRepository implements I_ClienteRepository {
 
     @Override
     public Entrada comprar(Cliente cliente, Detalle detalle, int cantidad) {
-        if (cliente == null || detalle == null) return new Entrada();
+        if (cliente == null || detalle == null || cantidad <= 0) return new Entrada();
         
         I_SalaRepository sr = new SalaRepository(conn);
+        //guardo en una variable los asientos disponibles de la sala donde se va a emitir la pelicula
         int asientosDisp = sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles();
         
         System.out.println("asientos disponibles de la sala: " + asientosDisp);
         
         System.out.println("id cliente " + cliente.getId() + ", codDetalle " + detalle.getCodDetalle());
+        
         //si hay mayor cantidad de asientos libres de la cantidad de entradas
         //que quiere comprar el cliente
         if (asientosDisp > cantidad) {
@@ -78,7 +80,8 @@ public class ClienteRepository implements I_ClienteRepository {
             //Reduzco la cantidad de entradas que fueron compradas
             sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(asientosDisp-=cantidad);
             System.out.println("Asientos disponibles despues de vender las entradas: " + asientosDisp);
-
+            
+            //envio la actualizacion del registro a la bd
             sr.update(sr.getByNumero(detalle.getNroSala()));
             
             return entrada;

@@ -33,37 +33,40 @@ public class TestMetodos {
 //        pr.guardar(p1);
 //        
 //        pr.getAll().forEach(System.out::println);
-        
-        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
-        
-        //Detalle d1 = new Detalle(13, 2, new Date(2020-1900, 11, 15, 18, 30));
-        
+//        
+//        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
+//        
+//        Detalle d1 = new Detalle(13, 2, new Date(2020-1900, 11, 15, 18, 30));
+//        
 //        dr.crear(d1);
-        
-        dr.getAll().forEach(System.out::println);
-        
-        I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
-        
-        Relacion r1 = new Relacion(1, 12);
-        
-        //rr.crear(r1);
-        
-        //rr.getAll().forEach(System.out::println);
-        
-        I_ClienteRepository cr = new ClienteRepository(Connector.getConnection());
-        
-        cr.getAll().forEach(System.out::println);
-        
-        System.out.println(cr.comprar(cr.getById(10), dr.getByCodDetalle(12), 100));
-        
-        System.out.println("***************************************************");
-        
-        System.out.println("Detalles que estan en la cartelera 1");
-        rr.getDetalleByCodCartelera(1).forEach(System.out::println);
-        
-        System.out.println("***************************************************");
-        System.out.println("Carteleras que contienen el detalle 12");
-        
-        rr.getCarteleraByCodDetalle(12).forEach(System.out::println);
+//        
+//        dr.getAll().forEach(System.out::println);
+//        
+//        I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
+//        
+//        Relacion r1 = new Relacion(1, 12);
+//        
+//        rr.crear(r1);
+//        
+//        rr.getAll().forEach(System.out::println);
+//        
+//        I_ClienteRepository cr = new ClienteRepository(Connector.getConnection());
+//        
+//        cr.getAll().forEach(System.out::println);
+//        
+//        System.out.println(cr.comprar(cr.getById(10), dr.getByCodDetalle(12), 100));
+//        
+//        System.out.println("***************************************************");
+//        
+//        System.out.println("Detalles que estan en la cartelera 1");
+//        rr.getDetalleByCodCartelera(1).forEach(System.out::println);
+//        
+//        System.out.println("***************************************************");
+//        System.out.println("Carteleras que contienen el detalle 12");
+//        
+//        rr.getCarteleraByCodDetalle(12).forEach(System.out::println);
+
+        Sala sala = new Sala(5, TipoSala.DOSD, 100);
+        System.out.println(sala.getAsientosDisponibles());
     }
 }

@@ -3,6 +3,7 @@ package gui;
 import connectors.Connector;
 import entidades.Cliente;
 import entidades.Detalle;
+import entidades.Entrada;
 import entidades.Pelicula;
 import repositories.interfaces.I_RelacionRepository;
 import repositories.jdbc.RelacionRepository;
@@ -11,23 +12,32 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_PeliculaRepository;
+import repositories.jdbc.ClienteRepository;
 import repositories.jdbc.DetalleRepository;
 import repositories.jdbc.PeliculaRepository;
 
 public class Index extends javax.swing.JFrame {
     private Cliente sesionActual;
     private Connection conn = Connector.getConnection();
-    I_RelacionRepository rr = new RelacionRepository(conn);
-    I_PeliculaRepository pr = new PeliculaRepository(conn);
-    I_DetalleRepository dr = new DetalleRepository(conn);    
+    
+    private I_RelacionRepository rr = new RelacionRepository(conn);
+    private I_PeliculaRepository pr = new PeliculaRepository(conn);
+    private I_DetalleRepository dr = new DetalleRepository(conn);    
+    private I_ClienteRepository cr = new ClienteRepository(conn);
     
     public Index() {
         initComponents();
         this.setLocationRelativeTo(this);
-        lblUsuario.setText(Login.clienteAcceso.getUsuario());
+        obtenerSesionCliente();
         cargarCartelera(1);
+    }
+
+    private void obtenerSesionCliente() {
+        sesionActual = cr.getById(Login.clienteAcceso.getId());
+        lblUsuario.setText(sesionActual.getUsuario());
     }
 
     private void cargarCartelera(int codCartelera) {
@@ -55,34 +65,24 @@ public class Index extends javax.swing.JFrame {
         }        
     }
     
-    private void cargarCmbFechayHorario(String tituloSeleccionado){
+    private void cargarCmbFecha(String tituloSeleccionado){
         cmbFechasPelicula.removeAllItems();
-//        cmbHorariosPelicula.removeAllItems();
         
         int codPelicula = pr.getByTitulo(tituloSeleccionado).getCodigo();
         
         ArrayList<LocalDate> fechasSinRepetidos = new ArrayList();
-//        ArrayList<LocalTime> horariosSinRepetidos = new ArrayList();
+        
         for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
             LocalDate ld = d.getFecha();
-//            LocalTime lt = d.getHorario();
             
             if (!fechasSinRepetidos.contains(ld)) {
                 fechasSinRepetidos.add(ld);
             }
-            
-//            if (!horariosSinRepetidos.contains(lt)) {
-//                horariosSinRepetidos.add(lt);
-//            }
         }
 
         for(LocalDate ld : fechasSinRepetidos){
             cmbFechasPelicula.addItem(ld);
         }
-        
-//        for(LocalTime lt : horariosSinRepetidos){
-//            cmbHorariosPelicula.addItem(lt);
-//        }
     }
     
     private void cargarCmbHorario(LocalDate fechaSeleccionada){
@@ -129,6 +129,11 @@ public class Index extends javax.swing.JFrame {
 
         btnComprar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnComprar.setText("Comprar");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Horarios");
@@ -226,8 +231,8 @@ public class Index extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblInfoPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(lblInfoPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -245,13 +250,37 @@ public class Index extends javax.swing.JFrame {
 
     private void cmbCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCarteleraActionPerformed
         // Evento Click en cmbCartelera
-        cargarCmbFechayHorario(cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
+        cargarCmbFecha(cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
     }//GEN-LAST:event_cmbCarteleraActionPerformed
 
     private void cmbFechasPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaActionPerformed
         // Evento Click en cmbFechas
         cargarCmbHorario(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()));
     }//GEN-LAST:event_cmbFechasPeliculaActionPerformed
+
+    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+        // Evento Comprar Entradas
+        
+        //Obtengo el detalle necesario para la construccion de la entrada.
+        //Traigo el detalle que cumpla con la fecha y hora seleccionadas en los cmb.
+        LocalDate fechaSeleccionada = cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex());
+        LocalTime horarioSeleccionado = cmbHorariosPelicula.getItemAt(cmbHorariosPelicula.getSelectedIndex());
+        
+        System.out.println("fechaSeleccionada: " + fechaSeleccionada);
+        System.out.println("horarioSeleccionada: " + horarioSeleccionado);
+        
+        Detalle detalleEntrada = dr.getByFecha(fechaSeleccionada);
+        
+        System.out.println("detalleEntrada: " + detalleEntrada);
+        
+        if (detalleEntrada.getHorario().equals(horarioSeleccionado)) {
+            Entrada entrada  = cr.comprar(sesionActual, detalleEntrada, Integer.parseInt(txtCantidadEntradas.getText()));
+            
+            lblPortada.setText(entrada.toString());
+        } else {
+            JOptionPane.showMessageDialog(this, "Hay un error con los datos, no fue posible crear la entrad");
+        }
+    }//GEN-LAST:event_btnComprarActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
