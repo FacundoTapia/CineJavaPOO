@@ -21,7 +21,7 @@ public class EntradaRepository implements I_EntradaRepository{
     @Override
     public void crear(Entrada entrada) {
         if(entrada == null) return;
-        if(comprobarDuplicado(entrada)) {System.out.println("sale por duplicado"); return;}
+        //if(comprobarDuplicado(entrada)) {System.out.println("sale por duplicado"); return;}
         try(PreparedStatement ps = conn.prepareStatement("insert into entradas(idCliente, datosPeli) values(?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, entrada.getIdCliente());

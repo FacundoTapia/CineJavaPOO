@@ -5,6 +5,7 @@ import java.sql.Connection;
 import entidades.Cliente;
 import entidades.Detalle;
 import entidades.Entrada;
+import entidades.Sala;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -56,12 +57,16 @@ public class ClienteRepository implements I_ClienteRepository {
     }
 
     @Override
-    public Entrada comprar(Cliente cliente, Detalle detalle, int cantidad) {
-        if (cliente == null || detalle == null || cantidad <= 0) return new Entrada();
+    public List<Entrada> comprar(Cliente cliente, Detalle detalle, int cantidad) {
+        if (cliente == null || detalle == null || cantidad <= 0) return new ArrayList();
+        
+        List<Entrada> listaEntradas = new ArrayList();
         
         I_SalaRepository sr = new SalaRepository(conn);
-        //guardo en una variable los asientos disponibles de la sala donde se va a emitir la pelicula
-        int asientosDisp = sr.getByNumero(detalle.getNroSala()).getAsientosDisponibles();
+        //guardo en una variable la sala donde se va a emitir la pelicula
+        Sala sala = sr.getByNumero(detalle.getNroSala());
+        //sus asientos disponibles
+        int asientosDisp = sala.getAsientosDisponibles();
         
         System.out.println("asientos disponibles de la sala: " + asientosDisp);
         
@@ -70,24 +75,26 @@ public class ClienteRepository implements I_ClienteRepository {
         //si hay mayor cantidad de asientos libres de la cantidad de entradas
         //que quiere comprar el cliente
         if (asientosDisp > cantidad) {
-            //se genera la entrada con sus datos y los de la pelicula elegida
-            Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
-            
-            //la envio a la bd
-            I_EntradaRepository er = new EntradaRepository(conn);
-            er.crear(entrada);
-            
-            //Reduzco la cantidad de entradas que fueron compradas
-            sr.getByNumero(detalle.getNroSala()).setAsientosDisponibles(asientosDisp-=cantidad);
-            System.out.println("Asientos disponibles despues de vender las entradas: " + asientosDisp);
-            
-            //envio la actualizacion del registro a la bd
-            sr.update(sr.getByNumero(detalle.getNroSala()));
-            
-            return entrada;
+            for (int i = 0; i < cantidad; i++) {
+                //se genera la entrada con sus datos y los de la pelicula elegida
+                Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
+
+                //la envio a la bd
+                I_EntradaRepository er = new EntradaRepository(conn);
+                er.crear(entrada);
+                listaEntradas.add(entrada);
+                
+                //Reduzco la cantidad de entradas que fueron compradas
+                sala.setAsientosDisponibles(asientosDisp-=1);
+                System.out.println("Asientos disponibles despues de vender las entradas: " + sala.getAsientosDisponibles());
+
+                //envio la actualizacion del registro a la bd
+                sr.update(sala);
+            }
+            return listaEntradas;
         } else {
             JOptionPane.showConfirmDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
-            return new Entrada();
+            return new ArrayList();
         }
     }
      

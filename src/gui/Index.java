@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;
@@ -274,9 +275,11 @@ public class Index extends javax.swing.JFrame {
         System.out.println("detalleEntrada: " + detalleEntrada);
         
         if (detalleEntrada.getHorario().equals(horarioSeleccionado)) {
-            Entrada entrada  = cr.comprar(sesionActual, detalleEntrada, Integer.parseInt(txtCantidadEntradas.getText()));
+            List listaEntradasGeneradas = cr.comprar(sesionActual, detalleEntrada, Integer.parseInt(txtCantidadEntradas.getText()));
             
-            lblPortada.setText(entrada.toString());
+            listaEntradasGeneradas.forEach(System.out::println);
+            
+            lblPortada.setText(listaEntradasGeneradas.toString());
         } else {
             JOptionPane.showMessageDialog(this, "Hay un error con los datos, no fue posible crear la entrad");
         }
