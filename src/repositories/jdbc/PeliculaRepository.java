@@ -80,6 +80,7 @@ public class PeliculaRepository implements I_PeliculaRepository{
         return pel;
     }
     
+    @Override
     public Pelicula getByTitulo(String titulo){
         Pelicula pel = new Pelicula();
         for(Pelicula p : getAll()){

@@ -1,6 +1,7 @@
 package repositories.jdbc;
 import connectors.Connector;
 import entidades.Detalle;
+import entidades.Pelicula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
+import repositories.interfaces.I_PeliculaRepository;
 import repositories.interfaces.I_SalaRepository;
 public class DetalleRepository implements I_DetalleRepository{
     private Connection conn;
@@ -68,7 +70,7 @@ public class DetalleRepository implements I_DetalleRepository{
     @Override
     public void actualizar(Detalle detalle) {
         if(detalle == null) {System.out.println("sale por null"); return;}
-        if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
+        if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado actualizar"); return;}
         
         try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, entradasDisponibles = ?, fecha = ?, horario = ? where codDetalle = ?")){
             ps.setInt(1, detalle.getCodPelicula());
@@ -123,6 +125,7 @@ public class DetalleRepository implements I_DetalleRepository{
         for(Detalle d: getAll()){
             if (detalle.getCodPelicula() == d.getCodPelicula() &&
                 detalle.getNroSala() == d.getNroSala() &&
+                detalle.getEntradasDisponibles() == d.getEntradasDisponibles() &&
                 d.getFecha().isEqual(detalle.getFecha()) &&
                 detalle.getHorario().equals(d.getHorario())
                 )
@@ -148,15 +151,47 @@ public class DetalleRepository implements I_DetalleRepository{
     }
 
     @Override
-    public Detalle getByFecha(LocalDate ld) {
-        Detalle de = new Detalle();
+    public List<Detalle> getDetallesByFecha(LocalDate ld) {
+        List<Detalle> lista = new ArrayList();
         
         for(Detalle d : getAll()){
             if (d.getFecha().equals(ld)) {
-                de = d;
+                lista.add(d);
             }
         }
         
-        return de;
+        return lista;
+    }
+    
+    public List<Detalle> getDetallesByFechaYTitulo(LocalDate fecha, String titulo){
+        List<Detalle> lista = new ArrayList();
+        
+        I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
+
+        for(Detalle d: getDetallesByFecha(fecha)){
+            //Obtengo la pelicula que tiene vinculado el detalle, si tiene el mismo titulo
+            //que el pasado por parametro significa que el detalle cumple con que
+            //Esa pelicula va a ser emitida el dia que preguntaba
+            Pelicula pDetalle = pr.getByCodigo(d.getCodPelicula());
+            
+            if (pDetalle.getTitulo().equals(titulo)) {
+                lista.add(d);
+            }
+        }
+        
+        return lista;
+    }
+
+    @Override
+    public Detalle getByFechaYHorario(LocalDate ld, LocalTime lt) {
+        Detalle d = new Detalle();
+        
+        for(Detalle de : getDetallesByFecha(ld)){
+            if (de.getHorario().equals(lt)) {
+                d = de;
+            }
+        }
+        
+        return d;
     }
 }

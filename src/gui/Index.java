@@ -89,23 +89,25 @@ public class Index extends javax.swing.JFrame {
         }
     }
     
-    private void cargarCmbHorario(LocalDate fechaSeleccionada){
+    private void cargarCmbHorario(LocalDate fecha, String titulo){
         cmbHorariosPelicula.removeAllItems();
         
-        Detalle detalle = dr.getByFecha(fechaSeleccionada);
-        
-        cmbHorariosPelicula.addItem(detalle.getHorario());
+        for(Detalle d: dr.getDetallesByFechaYTitulo(fecha, titulo)){
+            cmbHorariosPelicula.addItem(d.getHorario());
+        }
     }
     
     private void cargarLblEntradasDisponibles(LocalDate fecha, LocalTime horario){
         //Obtengo el detalle mediante la fecha y comparo si existe una funcion a la hora
         //pasada
-        Detalle d =  dr.getByFecha(fecha);
-        
-        if (d.getHorario().equals(horario)) {
-            //Seteo la cantidad disponible de entradas
-            lblEntradasDisponibles.setText(String.valueOf(d.getEntradasDisponibles()));
-        }
+//        for(Detalle d: dr.getDetallesByFecha(fecha)){
+//            if (d.getHorario().equals(horario)) {
+//                //Seteo la cantidad disponible de entradas
+//                lblEntradasDisponibles.setText(String.valueOf(d.getEntradasDisponibles()));
+//            }  
+//        }
+        lblEntradasDisponibles.setText(String.valueOf(dr.getByFechaYHorario(fecha, horario).getEntradasDisponibles()));
+
     }
     
     @SuppressWarnings("unchecked")
@@ -294,7 +296,10 @@ public class Index extends javax.swing.JFrame {
     private void cmbFechasPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaActionPerformed
         // Evento Click en cmbFechas
         //System.out.println("actionPerformed: "+cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()));
-        cargarCmbHorario(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()));
+        cargarCmbHorario(
+            cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()),
+            cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex())
+        );
     }//GEN-LAST:event_cmbFechasPeliculaActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
@@ -308,7 +313,7 @@ public class Index extends javax.swing.JFrame {
         System.out.println("fechaSeleccionada: " + fechaSeleccionada);
         System.out.println("horarioSeleccionada: " + horarioSeleccionado);
         
-        Detalle detalleEntrada = dr.getByFecha(fechaSeleccionada);
+        Detalle detalleEntrada = dr.getByFechaYHorario(fechaSeleccionada, horarioSeleccionado);
         
         System.out.println("detalleEntrada: " + detalleEntrada);
         

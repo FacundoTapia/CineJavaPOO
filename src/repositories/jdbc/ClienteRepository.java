@@ -64,20 +64,23 @@ public class ClienteRepository implements I_ClienteRepository {
         
         I_DetalleRepository dr = new DetalleRepository(conn);
         
+        Detalle d = dr.getByCodDetalle(detalle.getCodDetalle());
+        System.out.println("d: " + d);        
+        
         //guardo en una variable la sala donde se va a emitir la pelicula
         //sus asientos disponibles
-        int asientosDisp = detalle.getEntradasDisponibles();
+        int asientosDisp = d.getEntradasDisponibles();
         
         System.out.println("asientos disponibles de la sala: " + asientosDisp);
         
-        System.out.println("id cliente " + cliente.getId() + ", codDetalle " + detalle.getCodDetalle());
+        System.out.println("id cliente " + cliente.getId() + ", codDetalle " + d.getCodDetalle());
         
         //si hay mayor cantidad de asientos libres de la cantidad de entradas
         //que quiere comprar el cliente
         if (asientosDisp > cantidad) {
             for (int i = 0; i < cantidad; i++) {
                 //se genera la entrada con sus datos y los de la pelicula elegida
-                Entrada entrada = new Entrada(cliente.getId(), detalle.getCodDetalle());
+                Entrada entrada = new Entrada(cliente.getId(), d.getCodDetalle());
 
                 //la envio a la bd
                 I_EntradaRepository er = new EntradaRepository(conn);
@@ -85,11 +88,12 @@ public class ClienteRepository implements I_ClienteRepository {
                 listaEntradas.add(entrada);
                 
                 //Reduzco la cantidad de entradas que fueron compradas
-                detalle.setEntradasDisponibles(asientosDisp-=1);
-                System.out.println("Asientos disponibles despues de vender las entradas: " + detalle.getEntradasDisponibles());
+                d.setEntradasDisponibles(asientosDisp-=1);
+                System.out.println("Asientos disponibles despues de vender las entradas: " + d.getEntradasDisponibles());
 
                 //envio la actualizacion del registro a la bd
-                dr.actualizar(detalle);
+                System.out.println("d despues de comprar: " + d);
+                dr.actualizar(d);
             }
             return listaEntradas;
         } else {
