@@ -5,6 +5,8 @@ import entidades.Cliente;
 import entidades.Detalle;
 import entidades.Entrada;
 import entidades.Pelicula;
+import entidades.Sala;
+import java.awt.event.ItemEvent;
 import repositories.interfaces.I_RelacionRepository;
 import repositories.jdbc.RelacionRepository;
 import java.sql.Connection;
@@ -16,9 +18,11 @@ import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_PeliculaRepository;
+import repositories.interfaces.I_SalaRepository;
 import repositories.jdbc.ClienteRepository;
 import repositories.jdbc.DetalleRepository;
 import repositories.jdbc.PeliculaRepository;
+import repositories.jdbc.SalaRepository;
 
 public class Index extends javax.swing.JFrame {
     private Cliente sesionActual;
@@ -28,6 +32,7 @@ public class Index extends javax.swing.JFrame {
     private I_PeliculaRepository pr = new PeliculaRepository(conn);
     private I_DetalleRepository dr = new DetalleRepository(conn);    
     private I_ClienteRepository cr = new ClienteRepository(conn);
+    private I_SalaRepository sr = new SalaRepository(conn);
     
     public Index() {
         initComponents();
@@ -94,6 +99,19 @@ public class Index extends javax.swing.JFrame {
         cmbHorariosPelicula.addItem(detalle.getHorario());
     }
     
+    private void cargarLblEntradasDisponibles(LocalDate fecha, LocalTime horario){
+        //Obtengo el detalle mediante la fecha y comparo si existe una funcion a la hora
+        //pasada
+        Detalle d =  dr.getByFecha(fecha);
+        
+        if (d.getHorario().equals(horario)) {
+            //me traigo la sala a partir del detalle correcto
+            Sala sala = sr.getByNumero(d.getNroSala());
+            
+            lblEntradasDisponibles.setText(String.valueOf(sala.getAsientosDisponibles()));
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,6 +130,8 @@ public class Index extends javax.swing.JFrame {
         lblInfoPelicula = new javax.swing.JLabel();
         cmbFechasPelicula = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblEntradasDisponibles = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -136,6 +156,12 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
+        cmbHorariosPelicula.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbHorariosPeliculaItemStateChanged(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Horarios");
 
@@ -157,6 +183,11 @@ public class Index extends javax.swing.JFrame {
 
         lblInfoPelicula.setText("INFO PELICULA");
 
+        cmbFechasPelicula.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbFechasPeliculaItemStateChanged(evt);
+            }
+        });
         cmbFechasPelicula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbFechasPeliculaActionPerformed(evt);
@@ -165,6 +196,8 @@ public class Index extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Fechas");
+
+        jLabel2.setText("Entradas disponibles: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,6 +220,10 @@ public class Index extends javax.swing.JFrame {
                                 .addComponent(cmbCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblInfoPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addGap(81, 81, 81)
@@ -232,7 +269,11 @@ public class Index extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addComponent(lblInfoPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -256,6 +297,7 @@ public class Index extends javax.swing.JFrame {
 
     private void cmbFechasPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaActionPerformed
         // Evento Click en cmbFechas
+        //System.out.println("actionPerformed: "+cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()));
         cargarCmbHorario(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()));
     }//GEN-LAST:event_cmbFechasPeliculaActionPerformed
 
@@ -280,10 +322,27 @@ public class Index extends javax.swing.JFrame {
             listaEntradasGeneradas.forEach(System.out::println);
             
             lblPortada.setText(listaEntradasGeneradas.toString());
+            cargarLblEntradasDisponibles(fechaSeleccionada, horarioSeleccionado);
         } else {
             JOptionPane.showMessageDialog(this, "Hay un error con los datos, no fue posible crear la entrad");
         }
     }//GEN-LAST:event_btnComprarActionPerformed
+
+    private void cmbHorariosPeliculaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbHorariosPeliculaItemStateChanged
+        // Evento Item cambio de estado
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cargarLblEntradasDisponibles(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()), 
+                                         (LocalTime)evt.getItem());
+        }
+        
+    }//GEN-LAST:event_cmbHorariosPeliculaItemStateChanged
+
+    private void cmbFechasPeliculaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaItemStateChanged
+        // Evento cambio de estado de item
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            //cargarCmbFecha(String.valueOf(evt.getItem()));
+        }
+    }//GEN-LAST:event_cmbFechasPeliculaItemStateChanged
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -325,10 +384,12 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JComboBox<LocalDate> cmbFechasPelicula;
     private javax.swing.JComboBox<LocalTime> cmbHorariosPelicula;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblEntradasDisponibles;
     private javax.swing.JLabel lblInfoPelicula;
     private javax.swing.JLabel lblPortada;
     private javax.swing.JLabel lblUsuario;
