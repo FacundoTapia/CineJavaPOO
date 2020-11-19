@@ -330,7 +330,6 @@ public class Index extends javax.swing.JFrame {
             cargarLblEntradasDisponibles(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()), 
                                          (LocalTime)evt.getItem());
         }
-        
     }//GEN-LAST:event_cmbHorariosPeliculaItemStateChanged
 
     private void cmbFechasPeliculaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaItemStateChanged
