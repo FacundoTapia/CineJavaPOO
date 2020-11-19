@@ -1,4 +1,5 @@
 package repositories.jdbc;
+import connectors.Connector;
 import entidades.Detalle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import repositories.interfaces.I_DetalleRepository;
+import repositories.interfaces.I_SalaRepository;
 public class DetalleRepository implements I_DetalleRepository{
     private Connection conn;
 
@@ -23,18 +25,24 @@ public class DetalleRepository implements I_DetalleRepository{
         return java.sql.Time.valueOf(lt);
     }
     
+    public int getCapacidadByNroSala(int nroSala){
+        I_SalaRepository sr = new SalaRepository(Connector.getConnection());
+        return sr.getByNumero(nroSala).getCapacidad();
+    }
+    
     @Override
     public void crear(Detalle detalle) {
         if(detalle == null) {System.out.println("sale por null"); return;}
         if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
         
-        try(PreparedStatement ps = conn.prepareStatement("insert into detalles(codPelicula, nroSala, fecha, horario) values(?, ?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into detalles(codPelicula, nroSala, entradasDisponibles, fecha, horario) values(?, ?, ?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            ps.setDate(3, LocalDateConverter(detalle.getFecha()));
-            ps.setTime(4, LocalTimeConverter(detalle.getHorario()));
+            ps.setInt(3, getCapacidadByNroSala(detalle.getNroSala()));
+            ps.setDate(4, LocalDateConverter(detalle.getFecha()));
+            ps.setTime(5, LocalTimeConverter(detalle.getHorario()));
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -62,12 +70,13 @@ public class DetalleRepository implements I_DetalleRepository{
         if(detalle == null) {System.out.println("sale por null"); return;}
         if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado"); return;}
         
-        try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, fecha = ?, horario = ? where codDetalle = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("update detalles set codPelicula = ?, nroSala = ?, entradasDisponibles = ?, fecha = ?, horario = ? where codDetalle = ?")){
             ps.setInt(1, detalle.getCodPelicula());
             ps.setInt(2, detalle.getNroSala());
-            ps.setDate(3, LocalDateConverter(detalle.getFecha()));
-            ps.setTime(4, LocalTimeConverter(detalle.getHorario()));
-            ps.setInt(5, detalle.getCodDetalle());
+            ps.setInt(3, detalle.getEntradasDisponibles());
+            ps.setDate(4, LocalDateConverter(detalle.getFecha()));
+            ps.setTime(5, LocalTimeConverter(detalle.getHorario()));
+            ps.setInt(6, detalle.getCodDetalle());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,6 +94,7 @@ public class DetalleRepository implements I_DetalleRepository{
                                 rs.getInt("codDetalle"), 
                                 rs.getInt("codPelicula"), 
                                 rs.getInt("nroSala"),
+                                rs.getInt("entradasDisponibles"),
                                 rs.getDate("fecha").toLocalDate(),
                                 rs.getTime("horario").toLocalTime()
                         )

@@ -20,12 +20,11 @@ public class SalaRepository implements I_SalaRepository{
     @Override
     public void crear(Sala sala) {
         if (sala == null) return;
-        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad, asientosDisponibles) values(?, ?, ?, ?)",
+        try(PreparedStatement ps = conn.prepareStatement("insert into salas(numero, tipo, capacidad) values(?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, sala.getNumero());
             ps.setString(2, sala.getTipoSala().toString());
             ps.setInt(3, sala.getCapacidad());
-            ps.setInt(4, sala.getAsientosDisponibles());
             ps.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la creación de la sala");
@@ -46,12 +45,11 @@ public class SalaRepository implements I_SalaRepository{
 
     @Override
     public void update(Sala sala){
-        try(PreparedStatement ps = conn.prepareStatement("update salas set tipo = ?, capacidad =?, asientosDisponibles = ?, transmitiendo = ? where numero = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("update salas set tipo = ?, capacidad =?, transmitiendo = ? where numero = ?")){
             ps.setString(1, sala.getTipoSala().toString());
             ps.setInt(2, sala.getCapacidad());
-            ps.setInt(3, sala.getAsientosDisponibles());
-            ps.setBoolean(4, sala.isTransmitiendo());
-            ps.setInt(5, sala.getNumero());
+            ps.setBoolean(3, sala.isTransmitiendo());
+            ps.setInt(4, sala.getNumero());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,8 +66,7 @@ public class SalaRepository implements I_SalaRepository{
                         new Sala(
                                 rs.getInt("numero"), 
                                 TipoSala.valueOf(rs.getString("tipo")),
-                                rs.getInt("capacidad"), 
-                                rs.getInt("asientosDisponibles"),
+                                rs.getInt("capacidad"),
                                 rs.getBoolean("transmitiendo")
                         )
                 );

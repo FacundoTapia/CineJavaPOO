@@ -65,8 +65,5 @@ public class TestMetodos {
 //        System.out.println("Carteleras que contienen el detalle 12");
 //        
 //        rr.getCarteleraByCodDetalle(12).forEach(System.out::println);
-
-        Sala sala = new Sala(5, TipoSala.DOSD, 100);
-        System.out.println(sala.getAsientosDisponibles());
     }
 }

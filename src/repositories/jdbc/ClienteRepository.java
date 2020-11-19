@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
+import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_EntradaRepository;
-import repositories.interfaces.I_SalaRepository;
 public class ClienteRepository implements I_ClienteRepository {
     private Connection conn;
 
@@ -62,11 +62,11 @@ public class ClienteRepository implements I_ClienteRepository {
         
         List<Entrada> listaEntradas = new ArrayList();
         
-        I_SalaRepository sr = new SalaRepository(conn);
+        I_DetalleRepository dr = new DetalleRepository(conn);
+        
         //guardo en una variable la sala donde se va a emitir la pelicula
-        Sala sala = sr.getByNumero(detalle.getNroSala());
         //sus asientos disponibles
-        int asientosDisp = sala.getAsientosDisponibles();
+        int asientosDisp = detalle.getEntradasDisponibles();
         
         System.out.println("asientos disponibles de la sala: " + asientosDisp);
         
@@ -85,11 +85,11 @@ public class ClienteRepository implements I_ClienteRepository {
                 listaEntradas.add(entrada);
                 
                 //Reduzco la cantidad de entradas que fueron compradas
-                sala.setAsientosDisponibles(asientosDisp-=1);
-                System.out.println("Asientos disponibles despues de vender las entradas: " + sala.getAsientosDisponibles());
+                detalle.setEntradasDisponibles(asientosDisp-=1);
+                System.out.println("Asientos disponibles despues de vender las entradas: " + detalle.getEntradasDisponibles());
 
                 //envio la actualizacion del registro a la bd
-                sr.update(sala);
+                dr.actualizar(detalle);
             }
             return listaEntradas;
         } else {

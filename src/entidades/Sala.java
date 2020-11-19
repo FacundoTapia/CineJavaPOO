@@ -3,7 +3,6 @@ public class Sala {
     private int numero;
     private Enum TipoSala;
     private int capacidad;
-    private int asientosDisponibles;
     private boolean transmitiendo = false;
 
     public Sala() {}
@@ -12,20 +11,18 @@ public class Sala {
         this.numero = numero;
         this.TipoSala = TipoSala;
         this.capacidad = capacidad;
-        this.asientosDisponibles = capacidad;
     }
 
-    public Sala(int numero, Enum TipoSala, int capacidad, int asientosDisponibles, boolean transmitiendo) {
+    public Sala(int numero, Enum TipoSala, int capacidad, boolean transmitiendo) {
         this.numero = numero;
         this.TipoSala = TipoSala;
         this.capacidad = capacidad;
-        this.asientosDisponibles = asientosDisponibles;
         this.transmitiendo = transmitiendo;
     }
 
     @Override
     public String toString() {
-        return numero + ", " + TipoSala + ", " + capacidad + ", " + asientosDisponibles + ", " + transmitiendo;
+        return numero + ", " + TipoSala + ", " + capacidad + ", " + transmitiendo;
     }
 
     public int getNumero() {
@@ -50,14 +47,6 @@ public class Sala {
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
-    }
-
-    public int getAsientosDisponibles() {
-        return asientosDisponibles;
-    }
-
-    public void setAsientosDisponibles(int asientosDisponibles) {
-        this.asientosDisponibles = asientosDisponibles;
     }
 
     public boolean isTransmitiendo() {

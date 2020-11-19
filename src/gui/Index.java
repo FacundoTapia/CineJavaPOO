@@ -3,9 +3,7 @@ package gui;
 import connectors.Connector;
 import entidades.Cliente;
 import entidades.Detalle;
-import entidades.Entrada;
 import entidades.Pelicula;
-import entidades.Sala;
 import java.awt.event.ItemEvent;
 import repositories.interfaces.I_RelacionRepository;
 import repositories.jdbc.RelacionRepository;
@@ -105,10 +103,8 @@ public class Index extends javax.swing.JFrame {
         Detalle d =  dr.getByFecha(fecha);
         
         if (d.getHorario().equals(horario)) {
-            //me traigo la sala a partir del detalle correcto
-            Sala sala = sr.getByNumero(d.getNroSala());
-            
-            lblEntradasDisponibles.setText(String.valueOf(sala.getAsientosDisponibles()));
+            //Seteo la cantidad disponible de entradas
+            lblEntradasDisponibles.setText(String.valueOf(d.getEntradasDisponibles()));
         }
     }
     

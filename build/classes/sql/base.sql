@@ -8,7 +8,6 @@ create table salas
     numero int,
     tipo enum('DOSD','TRESD','CUATROD'),
     capacidad int not null,
-    asientosDisponibles int,
     transmitiendo boolean,
     primary key(numero)
 );
@@ -41,6 +40,7 @@ create table detalles
     codDetalle int auto_increment,
     codPelicula int not null,
     nroSala int not null,
+    entradasDisponibles int not null,
     fecha Date not null,
     horario Time not null,
     primary key(codDetalle)
