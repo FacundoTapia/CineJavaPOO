@@ -44,6 +44,8 @@ public class CrearPelicula extends javax.swing.JFrame {
         tblPeliculas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Creacion de Peliculas");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel1.setText("Titulo");

@@ -3,7 +3,7 @@ public class Sala {
     private int numero;
     private Enum TipoSala;
     private int capacidad;
-    private boolean transmitiendo = false;
+    private boolean transmitiendo;
 
     public Sala() {}
 
@@ -11,6 +11,7 @@ public class Sala {
         this.numero = numero;
         this.TipoSala = TipoSala;
         this.capacidad = capacidad;
+        this.transmitiendo = false;
     }
 
     public Sala(int numero, Enum TipoSala, int capacidad, boolean transmitiendo) {
@@ -49,7 +50,7 @@ public class Sala {
         this.capacidad = capacidad;
     }
 
-    public boolean isTransmitiendo() {
+    public boolean getTransmitiendo() {
         return transmitiendo;
     }
 
