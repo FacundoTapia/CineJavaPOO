@@ -12,20 +12,23 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;
+import repositories.interfaces.I_EntradaRepository;
 import repositories.interfaces.I_PeliculaRepository;
 import repositories.interfaces.I_SalaRepository;
 import repositories.jdbc.ClienteRepository;
 import repositories.jdbc.DetalleRepository;
+import repositories.jdbc.EntradaRepository;
 import repositories.jdbc.PeliculaRepository;
 import repositories.jdbc.SalaRepository;
 
 public class Index extends javax.swing.JFrame {
-    private Cliente sesionActual;
+    private static Cliente sesionActual;
     private Connection conn = Connector.getConnection();
-    
     private I_RelacionRepository rr = new RelacionRepository(conn);
     private I_PeliculaRepository pr = new PeliculaRepository(conn);
     private I_DetalleRepository dr = new DetalleRepository(conn);    
@@ -42,6 +45,7 @@ public class Index extends javax.swing.JFrame {
     private void obtenerSesionCliente() {
         sesionActual = cr.getById(Login.clienteAcceso.getId());
         lblUsuario.setText(sesionActual.getUsuario());
+        btnUsuario.setText(sesionActual.getUsuario());
     }
 
     private void cargarCartelera(int codCartelera) {
@@ -130,6 +134,7 @@ public class Index extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblEntradasDisponibles = new javax.swing.JLabel();
+        btnUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -197,6 +202,15 @@ public class Index extends javax.swing.JFrame {
 
         jLabel2.setText("Entradas disponibles: ");
 
+        btnUsuario.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnUsuario.setForeground(new java.awt.Color(255, 0, 51));
+        btnUsuario.setText("Usuario");
+        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,6 +222,8 @@ public class Index extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLogout))
                     .addGroup(layout.createSequentialGroup()
@@ -236,7 +252,7 @@ public class Index extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbFechasPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(42, 42, 42)
-                        .addComponent(lblPortada, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)))
+                        .addComponent(lblPortada, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -247,11 +263,11 @@ public class Index extends javax.swing.JFrame {
                     .addComponent(btnLogout)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(lblUsuario)))
-                .addGap(45, 45, 45)
+                        .addComponent(lblUsuario)
+                        .addComponent(btnUsuario)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPortada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(cmbCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,10 +287,13 @@ public class Index extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(lblInfoPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addComponent(lblPortada, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -343,6 +362,18 @@ public class Index extends javax.swing.JFrame {
             //cargarCmbFecha(String.valueOf(evt.getItem()));
         }
     }//GEN-LAST:event_cmbFechasPeliculaItemStateChanged
+
+    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
+        // Evento Estadisticas de Cliente
+        I_EntradaRepository er = new EntradaRepository(conn);
+        
+        System.out.println(er.getByCliente(sesionActual));
+
+        InfoCliente infoCliente = new InfoCliente();
+        infoCliente.setCliente(sesionActual);
+        infoCliente.setVisible(true);
+//        this.dispose();
+    }//GEN-LAST:event_btnUsuarioActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -380,6 +411,7 @@ public class Index extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnUsuario;
     private javax.swing.JComboBox<String> cmbCartelera;
     private javax.swing.JComboBox<LocalDate> cmbFechasPelicula;
     private javax.swing.JComboBox<LocalTime> cmbHorariosPelicula;
@@ -396,7 +428,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantidadEntradas;
     // End of variables declaration//GEN-END:variables
 
-    public Cliente getSesionActual() {
+    public static Cliente getSesionActual() {
         return sesionActual;
     }
 

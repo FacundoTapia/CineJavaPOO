@@ -87,7 +87,15 @@ public class EntradaRepository implements I_EntradaRepository{
 
     @Override
     public List<Entrada> getByCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Entrada> list = new ArrayList();
+        
+        for(Entrada en : getAll()){
+            if (en.getIdCliente() == cliente.getId()) {
+                list.add(en);
+            }
+        }
+        
+        return list;
     }
 
     @Override
