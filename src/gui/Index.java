@@ -12,8 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;
@@ -372,7 +370,6 @@ public class Index extends javax.swing.JFrame {
         InfoCliente infoCliente = new InfoCliente();
         infoCliente.setCliente(sesionActual);
         infoCliente.setVisible(true);
-//        this.dispose();
     }//GEN-LAST:event_btnUsuarioActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

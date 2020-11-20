@@ -9,10 +9,11 @@ public class Pelicula {
     
     public Pelicula() {}
 
-    public Pelicula(String titulo, int duracion, String genero) {
+    public Pelicula(String titulo, int duracion, String genero, boolean esMas18) {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
+        this.esMas18 = esMas18;
     }
 
     public Pelicula(int codigo, String titulo, int duracion, String genero, boolean esMas18) {
@@ -60,7 +61,7 @@ public class Pelicula {
         this.genero = genero;
     }
 
-    public boolean isEsMas18() {
+    public boolean getEsMas18() {
         return esMas18;
     }
 

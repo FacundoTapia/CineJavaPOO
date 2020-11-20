@@ -23,7 +23,7 @@ public class PeliculaRepository implements I_PeliculaRepository{
             ps.setString(1, pelicula.getTitulo());
             ps.setInt(2, pelicula.getDuracion());
             ps.setString(3, pelicula.getGenero());
-            ps.setBoolean(4, pelicula.isEsMas18());
+            ps.setBoolean(4, pelicula.getEsMas18());
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -97,7 +97,7 @@ public class PeliculaRepository implements I_PeliculaRepository{
             if (pelicula.getTitulo().equalsIgnoreCase(p.getTitulo()) &&
                 pelicula.getDuracion() == p.getDuracion() &&
                 pelicula.getGenero().equalsIgnoreCase(p.getGenero()) &&
-                pelicula.isEsMas18() == p.isEsMas18())
+                pelicula.getEsMas18() == p.getEsMas18())
             {
                 yaExiste = true;
                 //System.out.println("sale por duplicado");
