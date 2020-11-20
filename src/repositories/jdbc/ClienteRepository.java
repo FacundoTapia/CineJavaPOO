@@ -97,7 +97,7 @@ public class ClienteRepository implements I_ClienteRepository {
             }
             return listaEntradas;
         } else {
-            JOptionPane.showConfirmDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
+            JOptionPane.showMessageDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
             return new ArrayList();
         }
     }

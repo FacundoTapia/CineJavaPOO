@@ -131,28 +131,28 @@ public class Login extends javax.swing.JFrame {
         } else {        
             //Sino recorro la lista de todos los clientes y comparo los usuarios
             //de los mismos con el ingresado
-            cr.getAll().forEach((c) -> {
+            for(Cliente c : cr.getAll()){
                 if (c.getUsuario().equalsIgnoreCase(usuario)) {
                     //Si coincide me traigo el Cliente entero a partir del usuario
                     Cliente cl = cr.getByUsuario(usuario);
                     
                     //Consulto si la pass ingresada es correcta
                     if (cl.getPassword().equalsIgnoreCase(pass)) {
-                        JOptionPane.showMessageDialog(this, "Login exitoso!");
-
                         clienteAcceso = cl;
                         //Abro la ventana principal y seteo su atributo para que 
                         //tenga los datos del Cliente que inicio sesion
                         Index index = new Index();
                         index.setVisible(true);
                         this.dispose();
+                        return;
                     } else {
                         JOptionPane.showMessageDialog(this, "Login incorrectos. Datos invalidos");
+                        return;
                     }                
                 } else {
                     JOptionPane.showMessageDialog(this, "El usuario no existe");
                 }
-            });
+            }
         }
     }//GEN-LAST:event_btnLogInActionPerformed
 
