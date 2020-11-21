@@ -49,11 +49,11 @@ public class TestRepositories {
         
         I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
         
-        Pelicula pelicula = new Pelicula("Avengers: Endgame", 182, "Ciencia Ficción");
+        //Pelicula pelicula = new Pelicula("Avengers: Endgame", 182, "Ciencia Ficción");
         
-        pr.guardar(pelicula);
+        //pr.guardar(pelicula);
         
-        System.out.println(pelicula);
+        //System.out.println(pelicula);
         
         System.out.println("****************************************************");
         

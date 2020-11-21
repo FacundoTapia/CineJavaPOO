@@ -151,6 +151,7 @@ public class Login extends javax.swing.JFrame {
                     }                
                 } else {
                     JOptionPane.showMessageDialog(this, "El usuario no existe");
+                    return;
                 }
             }
         }
@@ -158,9 +159,8 @@ public class Login extends javax.swing.JFrame {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // Evento Admin
-        Admin admin = new Admin();
+        AdminLogin admin = new AdminLogin();
         admin.setVisible(true);
-        
         this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
     public static void main(String args[]) {

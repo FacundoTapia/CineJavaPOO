@@ -72,6 +72,14 @@ create table entradas
     primary key(nroEntrada)
 );
 
+create table admin
+(
+    idAdmin int auto_increment,
+    usuario varchar(50) not null,
+    pass blob not null,
+    primary key(idAdmin)
+);
+
 alter table detalles
 add constraint FK_detalles_peliculas
 foreign key(codPelicula)
