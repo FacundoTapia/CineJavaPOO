@@ -2,8 +2,15 @@ package gui;
 
 import ar.org.centro8.curso.java.utils.swing.Table;
 import connectors.Connector;
+import entidades.Cartelera;
+import entidades.Detalle;
 import entidades.Relacion;
+import javax.swing.JOptionPane;
+import repositories.interfaces.I_CarteleraRepository;
+import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_RelacionRepository;
+import repositories.jdbc.CarteleraRepository;
+import repositories.jdbc.DetalleRepository;
 import repositories.jdbc.RelacionRepository;
 
 public class CrearRelacion extends javax.swing.JFrame {
@@ -117,6 +124,12 @@ public class CrearRelacion extends javax.swing.JFrame {
         // Evento Guardar Relacion
         I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
         
+        if (!comprobarExistencia(Integer.parseInt(txtCodCartelera.getText()),Integer.parseInt(txtCodDetalle.getText()))) 
+        {
+            JOptionPane.showMessageDialog(this, "Datos invalidos");
+            return;
+        }
+        
         Relacion relacion = new Relacion(
                 Integer.parseInt(txtCodCartelera.getText()), 
                 Integer.parseInt(txtCodDetalle.getText())
@@ -131,6 +144,34 @@ public class CrearRelacion extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private boolean comprobarExistencia(int codCartelera, int codDetalle) {
+        I_CarteleraRepository cr = new CarteleraRepository(Connector.getConnection());
+        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
+        
+        boolean carExiste = false;
+        boolean detExiste = false;
+        
+        for(Cartelera c : cr.getAll()){
+            if (c.getCodCartelera() == codCartelera) {
+                carExiste = true;
+                break;
+            }
+        }
+        
+        for(Detalle d : dr.getAll()){
+            if (d.getCodDetalle() == codDetalle) {
+                detExiste = true;
+                break;
+            }
+        }
+        
+        if (carExiste && detExiste) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */

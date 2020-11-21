@@ -36,7 +36,7 @@ public class AdminRepository {
     public void borrar(Administrador administrador){
         if (administrador == null) return;
         
-        try(PreparedStatement ps = conn.prepareStatement("delete from admin where idAmin = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("delete from admin where idAdmin = ?")){
             ps.setInt(1, administrador.getIdAdmin());
             ps.execute();
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class AdminRepository {
                         new Administrador(
                                 rs.getInt("idAdmin"), 
                                 rs.getString("usuario"), 
-                                rs.getString("password")
+                                rs.getString("pass")
                         )
                 );
             }

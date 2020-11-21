@@ -18,11 +18,25 @@ public class AdminLogin extends javax.swing.JFrame {
         String usuario = txtUsuario.getText();
         String pass = String.valueOf(txtPass.getPassword());
         
+        boolean usuarioCorrecto = false;
+        
         for(Administrador a : ar.getAll()){
             if (a.getUsuario().equalsIgnoreCase(usuario)) {
+                usuarioCorrecto = true;
                 
+                if (a.getPassword().equalsIgnoreCase(pass)) {
+                    Admin admin = new Admin();
+                    admin.setVisible(true);
+                    this.dispose();
+                    return;
+                }
+                
+            }
+            
+            if (usuarioCorrecto) {
+                JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
             } else {
-                JOptionPane.showMessageDialog(this, "");
+                JOptionPane.showMessageDialog(this, "Admin incorrecto");
             }
         }
     }

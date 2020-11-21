@@ -1,4 +1,15 @@
 package entidades;
+
+import connectors.Connector;
+import repositories.interfaces.I_DetalleRepository;
+import repositories.interfaces.I_EntradaRepository;
+import repositories.interfaces.I_PeliculaRepository;
+import repositories.interfaces.I_SalaRepository;
+import repositories.jdbc.DetalleRepository;
+import repositories.jdbc.EntradaRepository;
+import repositories.jdbc.PeliculaRepository;
+import repositories.jdbc.SalaRepository;
+
 public class Entrada {
     private int nroEntrada;
     private int idCliente;
@@ -21,6 +32,21 @@ public class Entrada {
     @Override
     public String toString() {
         return nroEntrada + ", " + idCliente + ", " + datosPeli + ", " + precio;
+    }
+    
+    public String formatoEntrada(){
+        if (this == null) return "entrada invalida";
+        
+        I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
+        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
+        I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
+        I_SalaRepository sr = new SalaRepository(Connector.getConnection());
+        
+        Detalle dEntrada = dr.getByCodDetalle(this.datosPeli);
+        Pelicula pEntrada = pr.getByCodigo(dEntrada.getCodPelicula());
+        Sala sEntrada = sr.getByNumero(dEntrada.getNroSala());
+        
+        return "nada por ahora";
     }
 
     public int getNroEntrada() {
