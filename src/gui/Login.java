@@ -125,6 +125,9 @@ public class Login extends javax.swing.JFrame {
         
         ClienteRepository cr = new ClienteRepository(Connector.getConnection());
         
+        boolean usuarioCorrecto = false;
+        boolean passCorrecta = false;
+        
         //Si la lista esta vacia
         if (cr.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Registre un cliente");
@@ -133,11 +136,17 @@ public class Login extends javax.swing.JFrame {
             //de los mismos con el ingresado
             for(Cliente c : cr.getAll()){
                 if (c.getUsuario().equalsIgnoreCase(usuario)) {
+                    System.out.println("c.getUsuario: " + c.getUsuario());
+                    System.out.println("usuario: " + usuario);
                     //Si coincide me traigo el Cliente entero a partir del usuario
+                    usuarioCorrecto = true;
+                    
                     Cliente cl = cr.getByUsuario(usuario);
                     
                     //Consulto si la pass ingresada es correcta
                     if (cl.getPassword().equalsIgnoreCase(pass)) {
+                        passCorrecta = true;
+                        
                         clienteAcceso = cl;
                         //Abro la ventana principal y seteo su atributo para que 
                         //tenga los datos del Cliente que inicio sesion
@@ -145,14 +154,14 @@ public class Login extends javax.swing.JFrame {
                         index.setVisible(true);
                         this.dispose();
                         return;
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Login incorrectos. Datos invalidos");
-                        return;
-                    }                
-                } else {
-                    JOptionPane.showMessageDialog(this, "El usuario no existe");
-                    return;
+                    }
                 }
+            }
+            
+            if (usuarioCorrecto) {
+                JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+            } else {
+                JOptionPane.showMessageDialog(this, "el usuario no existe");
             }
         }
     }//GEN-LAST:event_btnLogInActionPerformed
