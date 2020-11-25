@@ -5,6 +5,7 @@ import entidades.Cliente;
 import entidades.Detalle;
 import entidades.Pelicula;
 import entidades.Sala;
+import enums.TipoSala;
 import java.awt.event.ItemEvent;
 import repositories.interfaces.I_RelacionRepository;
 import repositories.jdbc.RelacionRepository;
@@ -114,6 +115,10 @@ public class Index extends javax.swing.JFrame {
         
         Sala sala = sr.getByNumero(de.getNroSala());
         System.out.println("tiposala: " + sala.getTipoSala());
+        
+        cmbTipoEntrada.removeAllItems();
+        
+        cmbTipoEntrada.addItem(sala.getTipoSala());
         
     }
     
@@ -478,7 +483,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbCartelera;
     private javax.swing.JComboBox<LocalDate> cmbFechasPelicula;
     private javax.swing.JComboBox<LocalTime> cmbHorariosPelicula;
-    private javax.swing.JComboBox<String> cmbTipoEntrada;
+    private javax.swing.JComboBox<Enum> cmbTipoEntrada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
