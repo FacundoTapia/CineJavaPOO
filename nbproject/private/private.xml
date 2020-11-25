@@ -4,11 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/gui/Index.java</file>
-            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/gui/CrearRelacion.java</file>
-            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/gui/Login.java</file>
-            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/entidades/Administrador.java</file>
-            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/gui/AdminLogin.java</file>
-            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/repositories/jdbc/AdminRepository.java</file>
+            <file>file:/C:/Users/Facu/Documents/NetBeansProjects/Cine/src/entidades/Sala.java</file>
         </group>
     </open-files>
 </project-private>

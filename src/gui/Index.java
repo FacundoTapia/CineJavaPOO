@@ -99,10 +99,16 @@ public class Index extends javax.swing.JFrame {
         }
     }
     
-    private void cargarLblEntradasDisponibles(LocalDate fecha, LocalTime horario){
+    private void cargarLblEntradasDisponibles(LocalDate fecha, LocalTime horario, String titulo){
         //Obtengo el detalle mediante la fecha y comparo si existe una funcion a la hora
         //pasada
-        Detalle de = dr.getByFechaYHorario(fecha, horario);
+        Detalle de = new Detalle();
+        
+        for(Detalle d : dr.getDetallesByFechaYTitulo(fecha, titulo)){
+            if (d.getHorario().equals(horario)) {
+                de = d;
+            }
+        }
         
         lblEntradasDisponibles.setText(String.valueOf(de.getEntradasDisponibles()));
         
@@ -386,7 +392,7 @@ public class Index extends javax.swing.JFrame {
             listaEntradasGeneradas.forEach(System.out::println);
             
             lblPortada.setText(listaEntradasGeneradas.toString());
-            cargarLblEntradasDisponibles(fechaSeleccionada, horarioSeleccionado);
+            cargarLblEntradasDisponibles(fechaSeleccionada, horarioSeleccionado, cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
         } else {
             JOptionPane.showMessageDialog(this, "Hay un error con los datos, no fue posible crear la entrad");
         }
@@ -396,13 +402,12 @@ public class Index extends javax.swing.JFrame {
         // Evento Item cambio de estado
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             cargarLblEntradasDisponibles(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()), 
-                                         (LocalTime)evt.getItem());
+                                         (LocalTime)evt.getItem(),
+                                         cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
             
             cargarCmbTipoEntrada(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()), 
                                                              (LocalTime)evt.getItem());
         }
-        
-        
     }//GEN-LAST:event_cmbHorariosPeliculaItemStateChanged
 
     private void cmbFechasPeliculaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFechasPeliculaItemStateChanged

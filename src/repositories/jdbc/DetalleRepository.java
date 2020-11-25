@@ -163,6 +163,7 @@ public class DetalleRepository implements I_DetalleRepository{
         return lista;
     }
     
+    @Override
     public List<Detalle> getDetallesByFechaYTitulo(LocalDate fecha, String titulo){
         List<Detalle> lista = new ArrayList();
         
