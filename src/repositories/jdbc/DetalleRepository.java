@@ -184,11 +184,38 @@ public class DetalleRepository implements I_DetalleRepository{
     }
 
     @Override
-    public Detalle getByFechaYHorario(LocalDate ld, LocalTime lt) {
+    public List<Detalle> getLikeFechaYHorario(LocalDate ld, LocalTime lt) {
+        List<Detalle> lista = new ArrayList();
+        
+        for(Detalle d: getAll()){
+            if (d.getFecha().equals(ld) && d.getHorario().equals(lt)) {
+                lista.add(d);
+            }
+        }
+        
+        return lista;
+    }
+    
+    @Override
+    public Detalle getByFechaHorarioSala(LocalDate fecha, LocalTime horario, int nroSala){
         Detalle d = new Detalle();
         
-        for(Detalle de : getDetallesByFecha(ld)){
-            if (de.getHorario().equals(lt)) {
+        for(Detalle de : getAll()){
+            if (de.getFecha().equals(fecha) && de.getHorario().equals(horario) && de.getNroSala() == nroSala) 
+            {
+                de = d;
+            }
+        }
+        
+        return d;
+    }
+    
+    @Override
+    public Detalle getByFechaTituloHorario(LocalDate fecha, LocalTime horario, String titulo){
+        Detalle d = new Detalle();
+        
+        for(Detalle de: getDetallesByFechaYTitulo(fecha, titulo)){
+            if (de.getHorario().equals(horario)) {
                 d = de;
             }
         }

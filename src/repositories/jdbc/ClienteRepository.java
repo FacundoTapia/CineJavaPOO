@@ -5,7 +5,6 @@ import java.sql.Connection;
 import entidades.Cliente;
 import entidades.Detalle;
 import entidades.Entrada;
-import entidades.Sala;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -64,16 +63,10 @@ public class ClienteRepository implements I_ClienteRepository {
         
         I_DetalleRepository dr = new DetalleRepository(conn);
         
+        //guardo en una variable el objeto detalle
         Detalle d = dr.getByCodDetalle(detalle.getCodDetalle());
-        System.out.println("d: " + d);        
         
-        //guardo en una variable la sala donde se va a emitir la pelicula
-        //sus asientos disponibles
         int asientosDisp = d.getEntradasDisponibles();
-        
-        System.out.println("asientos disponibles de la sala: " + asientosDisp);
-        
-        System.out.println("id cliente " + cliente.getId() + ", codDetalle " + d.getCodDetalle());
         
         //si hay mayor cantidad de asientos libres de la cantidad de entradas
         //que quiere comprar el cliente
@@ -89,10 +82,8 @@ public class ClienteRepository implements I_ClienteRepository {
                 
                 //Reduzco la cantidad de entradas que fueron compradas
                 d.setEntradasDisponibles(asientosDisp-=1);
-                System.out.println("Asientos disponibles despues de vender las entradas: " + d.getEntradasDisponibles());
 
                 //envio la actualizacion del registro a la bd
-                System.out.println("d despues de comprar: " + d);
                 dr.actualizar(d);
             }
             return listaEntradas;

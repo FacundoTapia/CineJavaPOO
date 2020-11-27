@@ -28,6 +28,8 @@ import repositories.jdbc.SalaRepository;
 
 public class Index extends javax.swing.JFrame {
     private static Cliente sesionActual;
+    private static Detalle detalleEntrada;
+    public static int cantidadEntradas;
     private Connection conn = Connector.getConnection();
     private I_RelacionRepository rr = new RelacionRepository(conn);
     private I_PeliculaRepository pr = new PeliculaRepository(conn);
@@ -105,6 +107,9 @@ public class Index extends javax.swing.JFrame {
     private void cargarLblEntradasDisponibles(LocalDate fecha, LocalTime horario, String titulo){
         //Obtengo el detalle mediante la fecha y comparo si existe una funcion a la hora
         //pasada
+        
+        //creo una lista donde voy a obtener todos los dettales que cumplan con
+        //el horario, fecha y titulo
         Detalle de = new Detalle();
         
         for(Detalle d : dr.getDetallesByFechaYTitulo(fecha, titulo)){
@@ -116,12 +121,8 @@ public class Index extends javax.swing.JFrame {
         lblEntradasDisponibles.setText(String.valueOf(de.getEntradasDisponibles()));
         
         Sala sala = sr.getByNumero(de.getNroSala());
-        System.out.println("tiposala: " + sala.getTipoSala());
         
-        cmbTipoEntrada.removeAllItems();
-        
-        cmbTipoEntrada.addItem(sala.getTipoSala());
-        
+        txtTipoEntrada.setText(sala.getTipoSala().toString());
     }
     
     private void cargarTxaDescripcion(String titulo){
@@ -154,7 +155,7 @@ public class Index extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txaDescripcion = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
-        cmbTipoEntrada = new javax.swing.JComboBox<>();
+        txtTipoEntrada = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -242,7 +243,14 @@ public class Index extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txaDescripcion);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel9.setText("Tipo de Entrada");
+        jLabel9.setText("Tipo entrada");
+
+        txtTipoEntrada.setEditable(false);
+        txtTipoEntrada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTipoEntradaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -256,42 +264,41 @@ public class Index extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogout))
+                        .addComponent(btnLogout)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cmbCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(81, 81, 81)
-                                        .addComponent(cmbHorariosPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel7)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(81, 81, 81)
+                                    .addComponent(cmbHorariosPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel7)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbFechasPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cmbTipoEntrada, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                            .addComponent(lblPortada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(101, 101, 101)))
-                .addContainerGap())
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbFechasPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTipoEntrada))
+                            .addComponent(btnComprar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPortada, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(200, 200, 200))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,11 +326,11 @@ public class Index extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(cmbTipoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTipoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtCantidadEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -331,12 +338,10 @@ public class Index extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(lblPortada, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                    .addComponent(lblPortada, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -370,28 +375,40 @@ public class Index extends javax.swing.JFrame {
             return;
         }
         
+        if (cmbCartelera.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione una pelicula");
+            return;
+        }
+        
         //Obtengo el detalle necesario para la construccion de la entrada.
         //Traigo el detalle que cumpla con la fecha y hora seleccionadas en los cmb.
         LocalDate fechaSeleccionada = cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex());
         LocalTime horarioSeleccionado = cmbHorariosPelicula.getItemAt(cmbHorariosPelicula.getSelectedIndex());
+        String tituloPelicula = cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex());
         
-        System.out.println("fechaSeleccionada: " + fechaSeleccionada);
-        System.out.println("horarioSeleccionada: " + horarioSeleccionado);
+        Detalle detalleEntrada = dr.getByFechaTituloHorario(fechaSeleccionada, horarioSeleccionado, tituloPelicula);
         
-        Detalle detalleEntrada = dr.getByFechaYHorario(fechaSeleccionada, horarioSeleccionado);
+        Index.detalleEntrada = detalleEntrada;
+        cantidadEntradas = Integer.parseInt(txtCantidadEntradas.getText());
         
-        System.out.println("detalleEntrada: " + detalleEntrada);
+        Compra compra = new Compra();
+        compra.setVisible(true);
         
-        if (detalleEntrada.getHorario().equals(horarioSeleccionado)) {
-            List listaEntradasGeneradas = cr.comprar(sesionActual, detalleEntrada, Integer.parseInt(txtCantidadEntradas.getText()));
-            
-            listaEntradasGeneradas.forEach(System.out::println);
-            
-            lblPortada.setText(listaEntradasGeneradas.toString());
-            cargarLblEntradasDisponibles(fechaSeleccionada, horarioSeleccionado, cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
-        } else {
-            JOptionPane.showMessageDialog(this, "Hay un error con los datos, no fue posible crear la entrad");
-        }
+        cmbCartelera.setSelectedIndex(0);
+        txtCantidadEntradas.setText("");
+        txtTipoEntrada.setText("");
+        lblEntradasDisponibles.setText("");
+        
+//        List listaEntradasGeneradas = cr.comprar(sesionActual, detalleEntrada, Integer.parseInt(txtCantidadEntradas.getText()));
+//
+//        if (listaEntradasGeneradas.isEmpty()) {
+//            return;
+//        }
+//        
+//        lblPortada.setText(listaEntradasGeneradas.toString());
+//        cargarLblEntradasDisponibles(fechaSeleccionada, 
+//                                     horarioSeleccionado, 
+//                                     cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void cmbHorariosPeliculaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbHorariosPeliculaItemStateChanged
@@ -441,6 +458,10 @@ public class Index extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadEntradasKeyTyped
+
+    private void txtTipoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoEntradaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTipoEntradaKeyTyped
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -482,7 +503,6 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbCartelera;
     private javax.swing.JComboBox<LocalDate> cmbFechasPelicula;
     private javax.swing.JComboBox<LocalTime> cmbHorariosPelicula;
-    private javax.swing.JComboBox<Enum> cmbTipoEntrada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -495,6 +515,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel lblPortada;
     private javax.swing.JTextArea txaDescripcion;
     private javax.swing.JTextField txtCantidadEntradas;
+    private javax.swing.JTextField txtTipoEntrada;
     // End of variables declaration//GEN-END:variables
 
     public static Cliente getSesionActual() {
@@ -503,5 +524,21 @@ public class Index extends javax.swing.JFrame {
 
     public void setSesionActual(Cliente sesionActual) {
         this.sesionActual = sesionActual;
+    }
+    
+    public static Detalle getDetalleEntrada() {
+        return detalleEntrada;
+    }
+
+    public static void setDetalleEntrada(Detalle aDetalleEntrada) {
+        detalleEntrada = aDetalleEntrada;
+    }    
+
+    public int getCantidadEntradas() {
+        return cantidadEntradas;
+    }
+
+    public void setCantidadEntradas(int cantidadEntradas) {
+        this.cantidadEntradas = cantidadEntradas;
     }
 }
