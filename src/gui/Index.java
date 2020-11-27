@@ -398,12 +398,6 @@ public class Index extends javax.swing.JFrame {
         txtCantidadEntradas.setText("");
         txtTipoEntrada.setText("");
         lblEntradasDisponibles.setText("");
-        
-//        List listaEntradasGeneradas = cr.comprar(sesionActual, detalleEntrada, Integer.parseInt(txtCantidadEntradas.getText()));
-//
-//        if (listaEntradasGeneradas.isEmpty()) {
-//            return;
-//        }
 //        
 //        lblPortada.setText(listaEntradasGeneradas.toString());
 //        cargarLblEntradasDisponibles(fechaSeleccionada, 
