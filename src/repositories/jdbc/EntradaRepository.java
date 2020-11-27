@@ -53,11 +53,10 @@ public class EntradaRepository implements I_EntradaRepository{
         if(entrada == null) return;
         if(comprobarDuplicado(entrada)) {System.out.println("sale por duplicado"); return;}
         
-        try(PreparedStatement ps = conn.prepareStatement("update entradas idCliente = ?, datosPeli = ?, precio = ? where nroEntrada = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("update entradas idCliente = ?, datosPeli = ? where nroEntrada = ?")){
             ps.setInt(1, entrada.getIdCliente());
             ps.setInt(2, entrada.getDatosPeli());
-            ps.setDouble(3, entrada.getPrecio());
-            ps.setInt(4, entrada.getNroEntrada());
+            ps.setInt(3, entrada.getNroEntrada());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
