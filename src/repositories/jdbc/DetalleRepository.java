@@ -271,7 +271,7 @@ public class DetalleRepository implements I_DetalleRepository{
         //Guardo la hora de inicio, duracion y hora de finalizacion de mi funcion
         LocalTime horaInicio = funcion.getHorario();
         int duracionFuncion = p.getDuracion();
-        LocalTime horaTermina = horaInicio.plus(Duration.ofMinutes(duracionFuncion));
+        LocalTime horaTermina = horaInicio.plus(Duration.ofMinutes(duracionFuncion)).plus(Duration.ofMinutes(30));
                 
         List<Detalle> funcionesAnteriores = new ArrayList();
         List<Detalle> funcionesSiguientes = new ArrayList();
@@ -302,8 +302,9 @@ public class DetalleRepository implements I_DetalleRepository{
                 //Tengo la duracion de la FuncionAnterior
                 duracionFuncionAnterior = pr.getByCodigo(d.getCodPelicula()).getDuracion();
                 
-                //Tengo la hora a la que termina la FuncionAnterior
-                horaTerminaFuncionAnterior = d.getHorario().plus(Duration.ofMinutes(duracionFuncionAnterior));
+                //Tengo la hora a la que termina la FuncionAnterior y le sumo
+                //los 30m de limpieza al terminar la funcion
+                horaTerminaFuncionAnterior = d.getHorario().plus(Duration.ofMinutes(duracionFuncionAnterior)).plus(Duration.ofMinutes(30));
                 
                 //Otra forma de obtener la hora a la que termina la FuncionAnterior
                 //horaTerminaFuncionAnterior = d.getHorario().plus(duracionFuncionAnterior, ChronoUnit.MINUTES);
