@@ -11,10 +11,11 @@ public interface I_DetalleRepository {
     void actualizar(Detalle detalle);
     List<Detalle> getAll();
     Detalle getByCodDetalle(int codDetalle);
-    List<Detalle> getLikeFechaYHorario(LocalDate ld, LocalTime lt);
-    List<Detalle> getDetallesByPelicula(int codPelicula);
-    List<Detalle> getDetallesByFecha(LocalDate ld);
-    List<Detalle> getDetallesByFechaYTitulo(LocalDate fecha, String titulo);
+    List<Detalle> getByFechaYHorario(LocalDate ld, LocalTime lt);
+    List<Detalle> getByPelicula(int codPelicula);
+    List<Detalle> getByFecha(LocalDate ld);
+    List<Detalle> getByFechaYTitulo(LocalDate fecha, String titulo);
     Detalle getByFechaHorarioSala(LocalDate fecha, LocalTime horario, int nroSala);
     Detalle getByFechaTituloHorario(LocalDate fecha, LocalTime horario, String titulo);
+    boolean comprobarDisponibilidad(Detalle funcion);
 }

@@ -33,7 +33,7 @@ public class Index extends javax.swing.JFrame {
     private Connection conn = Connector.getConnection();
     private I_RelacionRepository rr = new RelacionRepository(conn);
     private I_PeliculaRepository pr = new PeliculaRepository(conn);
-    private I_DetalleRepository dr = new DetalleRepository(conn);    
+    private DetalleRepository dr = new DetalleRepository(conn);    
     private I_ClienteRepository cr = new ClienteRepository(conn);
     private I_SalaRepository sr = new SalaRepository(conn);
     
@@ -83,7 +83,7 @@ public class Index extends javax.swing.JFrame {
         
         ArrayList<LocalDate> fechasSinRepetidos = new ArrayList();
         
-        for(Detalle d : dr.getDetallesByPelicula(codPelicula)){
+        for(Detalle d : dr.getByPelicula(codPelicula)){
             LocalDate ld = d.getFecha();
             
             if (!fechasSinRepetidos.contains(ld)) {
@@ -99,7 +99,7 @@ public class Index extends javax.swing.JFrame {
     private void cargarCmbHorario(LocalDate fecha, String titulo){
         cmbHorariosPelicula.removeAllItems();
         
-        for(Detalle d: dr.getDetallesByFechaYTitulo(fecha, titulo)){
+        for(Detalle d: dr.getByFechaYTitulo(fecha, titulo)){
             cmbHorariosPelicula.addItem(d.getHorario());
         }
     }
@@ -112,7 +112,7 @@ public class Index extends javax.swing.JFrame {
         //el horario, fecha y titulo
         Detalle de = new Detalle();
         
-        for(Detalle d : dr.getDetallesByFechaYTitulo(fecha, titulo)){
+        for(Detalle d : dr.getByFechaYTitulo(fecha, titulo)){
             if (d.getHorario().equals(horario)) {
                 de = d;
             }
@@ -389,7 +389,7 @@ public class Index extends javax.swing.JFrame {
         Detalle detalleEntrada = dr.getByFechaTituloHorario(fechaSeleccionada, horarioSeleccionado, tituloPelicula);
         
         Index.detalleEntrada = detalleEntrada;
-        cantidadEntradas = Integer.parseInt(txtCantidadEntradas.getText());
+        cantidadEntradas = Integer.parseInt(txtCantidadEntradas.getText());        
         
         Compra compra = new Compra();
         compra.setVisible(true);

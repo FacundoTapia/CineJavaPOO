@@ -20,6 +20,11 @@ public class AdminLogin extends javax.swing.JFrame {
         
         boolean usuarioCorrecto = false;
         
+        if (ar.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ningun admin registrado");
+            return;
+        }
+        
         for(Administrador a : ar.getAll()){
             if (a.getUsuario().equalsIgnoreCase(usuario)) {
                 usuarioCorrecto = true;
@@ -51,6 +56,7 @@ public class AdminLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,6 +74,14 @@ public class AdminLogin extends javax.swing.JFrame {
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+
+        btnCrear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
             }
         });
 
@@ -94,7 +108,9 @@ public class AdminLogin extends javax.swing.JFrame {
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
-                                .addComponent(btnLogin)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCrear)
+                                    .addComponent(btnLogin))))))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,7 +128,9 @@ public class AdminLogin extends javax.swing.JFrame {
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(btnLogin)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCrear)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -122,6 +140,18 @@ public class AdminLogin extends javax.swing.JFrame {
         // Evento Logueo
         comprobarAcceso();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        // Evento Crear
+        AdminRepository ar = new AdminRepository(Connector.getConnection());
+        Administrador administrador = new Administrador("root", "root");
+        
+        ar.crear(administrador);
+        
+        if (administrador.getIdAdmin() != 0) {
+            JOptionPane.showMessageDialog(this, "Registro de admin default exitoso");
+        }
+    }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,6 +189,7 @@ public class AdminLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

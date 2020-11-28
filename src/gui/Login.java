@@ -136,8 +136,6 @@ public class Login extends javax.swing.JFrame {
             //de los mismos con el ingresado
             for(Cliente c : cr.getAll()){
                 if (c.getUsuario().equalsIgnoreCase(usuario)) {
-                    System.out.println("c.getUsuario: " + c.getUsuario());
-                    System.out.println("usuario: " + usuario);
                     //Si coincide me traigo el Cliente entero a partir del usuario
                     usuarioCorrecto = true;
                     

@@ -34,6 +34,7 @@ public class Admin extends javax.swing.JFrame {
         btnAgregarRelacion = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnAgregarCartelera = new javax.swing.JButton();
+        btnAgregarCartelera1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,6 +80,13 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarCartelera1.setText("Estado Salas");
+        btnAgregarCartelera1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCartelera1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,6 +98,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAgregarCartelera1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarRelacion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,7 +119,9 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(btnAgregarRelacion)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarCartelera)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregarCartelera1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -162,6 +173,10 @@ public class Admin extends javax.swing.JFrame {
          this.dispose();
     }//GEN-LAST:event_btnAgregarRelacionActionPerformed
 
+    private void btnAgregarCartelera1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCartelera1ActionPerformed
+        // Evento Estado Salas
+    }//GEN-LAST:event_btnAgregarCartelera1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,6 +214,7 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCartelera;
+    private javax.swing.JButton btnAgregarCartelera1;
     private javax.swing.JButton btnAgregarDetalle;
     private javax.swing.JButton btnAgregarPelicula;
     private javax.swing.JButton btnAgregarRelacion;

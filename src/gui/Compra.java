@@ -311,6 +311,8 @@ public class Compra extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Compra procesada exitosamente, podes visualizar tus entradas compradas en la ventana principal");
         }
+        
+        this.dispose();
     }//GEN-LAST:event_btnConfirmarCompraActionPerformed
 
     public static void main(String args[]) {

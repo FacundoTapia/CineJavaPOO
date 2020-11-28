@@ -219,8 +219,6 @@ public class CrearDetalle extends javax.swing.JFrame {
         
         dr.crear(detalle);
         
-        
-        
         txtCodPelicula.setText("");
         txtNroSala.setText("");
         txtAño.setText("");

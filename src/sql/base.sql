@@ -31,7 +31,7 @@ create table peliculas
     duracion int not null,
     genero varchar(30) not null,
     esMas18 boolean not null,
-    descripcion varchar(500) not null,
+    descripcion varchar(1000) not null,
     primary key(codigo)
 );
 
