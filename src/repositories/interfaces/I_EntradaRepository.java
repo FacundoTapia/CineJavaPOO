@@ -9,6 +9,7 @@ public interface I_EntradaRepository {
     void crear(Entrada entrada);
     void borrar(Entrada entrada);
     void actualizar(Entrada entrada);
+    Entrada getById(int id);
     List<Entrada> getAll();
     List<Entrada> getByCliente(Cliente cliente);
     List<Entrada> getByCartelera(Cartelera cartelera);

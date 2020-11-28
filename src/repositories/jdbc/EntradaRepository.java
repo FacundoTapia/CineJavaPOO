@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 
 public class EntradaRepository implements I_EntradaRepository{
@@ -44,7 +45,8 @@ public class EntradaRepository implements I_EntradaRepository{
             ps.setInt(1, entrada.getNroEntrada());
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -84,6 +86,19 @@ public class EntradaRepository implements I_EntradaRepository{
         return list;
     }
 
+    @Override
+    public Entrada getById(int id){
+        Entrada entrada = new Entrada();
+        
+        for(Entrada e: getAll()){
+            if (e.getNroEntrada() == id) {
+                entrada = e;
+            }
+        }
+        
+        return entrada;
+    }
+    
     @Override
     public List<Entrada> getByCliente(Cliente cliente) {
         List<Entrada> list = new ArrayList();

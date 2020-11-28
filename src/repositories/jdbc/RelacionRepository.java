@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_CarteleraRepository;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.interfaces.I_RelacionRepository;
@@ -64,8 +65,10 @@ public class RelacionRepository implements I_RelacionRepository{
         if(relacion == null) return;
         try(PreparedStatement ps = conn.prepareStatement("delete from relaciones where idRelacion = ?")){
             ps.setInt(1, relacion.getIdRelacion());
+            ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
+            System.out.println(e.getMessage());
         }
     }
 

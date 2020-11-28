@@ -37,7 +37,8 @@ public class CarteleraRepository implements I_CarteleraRepository {
             ps.setInt(1, cartelera.getCodCartelera());
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
+            System.out.println(e.getMessage());            
         }
     }
 

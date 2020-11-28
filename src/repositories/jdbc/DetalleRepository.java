@@ -69,6 +69,8 @@ public class DetalleRepository implements I_DetalleRepository{
             ps.setInt(1, detalle.getCodDetalle());
             ps.execute();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
+            System.out.println(e.getMessage());            
         }
     }
 

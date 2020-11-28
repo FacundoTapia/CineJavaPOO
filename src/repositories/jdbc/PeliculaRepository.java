@@ -5,6 +5,7 @@ import java.sql.Connection;
 import entidades.Pelicula;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_PeliculaRepository;
 
 public class PeliculaRepository implements I_PeliculaRepository{
@@ -43,7 +44,8 @@ public class PeliculaRepository implements I_PeliculaRepository{
             ps.setInt(1, pelicula.getCodigo());
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
+            System.out.println(e.getMessage());
         }
     }
 

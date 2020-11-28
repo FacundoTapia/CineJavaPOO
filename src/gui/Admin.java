@@ -16,6 +16,8 @@ public class Admin extends javax.swing.JFrame {
         btnAgregarRelacion = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnAgregarCartelera = new javax.swing.JButton();
+        btnEntradas = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +63,20 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        btnEntradas.setText("Entradas");
+        btnEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntradasActionPerformed(evt);
+            }
+        });
+
+        btnClientes.setText("Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,6 +88,8 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarRelacion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -92,7 +110,11 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(btnAgregarRelacion)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarCartelera)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEntradas)
+                .addGap(18, 18, 18)
+                .addComponent(btnClientes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -144,6 +166,20 @@ public class Admin extends javax.swing.JFrame {
          this.dispose();
     }//GEN-LAST:event_btnAgregarRelacionActionPerformed
 
+    private void btnEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradasActionPerformed
+        // Evento Ir a Entradas
+        Entradas entradas = new Entradas();
+        entradas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEntradasActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        // Evento Ir a Clientes
+        Clientes clientes = new Clientes();
+        clientes.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClientesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -185,6 +221,8 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarPelicula;
     private javax.swing.JButton btnAgregarRelacion;
     private javax.swing.JButton btnAgregarSala;
+    private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnEntradas;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
