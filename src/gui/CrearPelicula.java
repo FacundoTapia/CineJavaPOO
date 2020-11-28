@@ -82,7 +82,6 @@ public class CrearPelicula extends javax.swing.JFrame {
             }
         });
 
-        tblPeliculas.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(tblPeliculas);
 
         txaDescripcion.setColumns(20);
@@ -223,7 +222,21 @@ public class CrearPelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        // Evento Borrar 
+        int filaSeleccionada = tblPeliculas.getSelectedRow();
+        if (filaSeleccionada == -1) return;
+        
+        //Obtengo el valor del id ya que paso la fila seleccionada, el valor
+        //de la primer columna que es el id
+        int id = (int)tblPeliculas.getValueAt(filaSeleccionada, 0);
+        
+        if (JOptionPane.showConfirmDialog(this, "Desea borrar la pelicula id:"+id+"?")!=0) return;
+        
+        I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
+        
+        pr.borrar(pr.getByCodigo(id));
+        
+        cargarElementos();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**

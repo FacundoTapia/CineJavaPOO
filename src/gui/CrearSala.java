@@ -4,6 +4,7 @@ import ar.org.centro8.curso.java.utils.swing.Table;
 import connectors.Connector;
 import entidades.Sala;
 import enums.TipoSala;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_SalaRepository;
 import repositories.jdbc.SalaRepository;
 
@@ -12,10 +13,14 @@ public class CrearSala extends javax.swing.JFrame {
     public CrearSala() {
         initComponents();
         this.setLocationRelativeTo(this);
+        cargarElementos();
+    }
+
+    private void cargarElementos(){
         cargarCmbTipo();
         cargarTabla();
     }
-
+    
     private void cargarCmbTipo() {
         cmbTipoSala.removeAllItems();
         
@@ -44,6 +49,7 @@ public class CrearSala extends javax.swing.JFrame {
         btnVolverAdmin = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSalas = new javax.swing.JTable();
+        btnBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +79,14 @@ public class CrearSala extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(tblSalas);
 
+        btnBorrar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,7 +108,8 @@ public class CrearSala extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(cmbTipoSala, 0, 89, Short.MAX_VALUE)
-                                .addComponent(txtNumero)))))
+                                .addComponent(txtNumero)))
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -118,6 +133,8 @@ public class CrearSala extends javax.swing.JFrame {
                             .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBorrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnVolverAdmin))
                     .addGroup(layout.createSequentialGroup()
@@ -148,7 +165,7 @@ public class CrearSala extends javax.swing.JFrame {
         
         txtNumero.requestFocus();
         
-        cargarTabla();
+        cargarElementos();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnVolverAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAdminActionPerformed
@@ -157,6 +174,21 @@ public class CrearSala extends javax.swing.JFrame {
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverAdminActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // Evento Borrar
+        int fila = tblSalas.getSelectedRow();
+        if (fila == -1) return;
+        
+        int id = (int)tblSalas.getValueAt(fila, 0);
+        
+        if (JOptionPane.showConfirmDialog(this, "Desea borrar la sala id:"+id+"?")!=0) return;
+        
+        I_SalaRepository sr = new SalaRepository(Connector.getConnection());
+        sr.borrar(sr.getByNumero(id));
+        
+        cargarElementos();
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,6 +226,7 @@ public class CrearSala extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnVolverAdmin;
     private javax.swing.JComboBox<TipoSala> cmbTipoSala;

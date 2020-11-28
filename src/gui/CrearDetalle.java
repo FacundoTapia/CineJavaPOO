@@ -7,6 +7,7 @@ import entidades.Detalle;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import javax.swing.JOptionPane;
 import repositories.interfaces.I_DetalleRepository;
 import repositories.jdbc.DetalleRepository;
 
@@ -15,6 +16,10 @@ public class CrearDetalle extends javax.swing.JFrame {
     public CrearDetalle() {
         initComponents();
         this.setLocationRelativeTo(this);
+        cargarElementos();
+    }
+    
+    private void cargarElementos(){
         cargarCmbMes();
         cargarTabla();
     }
@@ -60,6 +65,7 @@ public class CrearDetalle extends javax.swing.JFrame {
         cmbMes = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalles = new javax.swing.JTable();
+        btnBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +107,14 @@ public class CrearDetalle extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(tblDetalles);
 
+        btnBorrar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,7 +124,7 @@ public class CrearDetalle extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(12, 12, 12))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -146,7 +160,9 @@ public class CrearDetalle extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,6 +195,8 @@ public class CrearDetalle extends javax.swing.JFrame {
                     .addComponent(txtMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(23, 23, 23))
@@ -228,8 +246,23 @@ public class CrearDetalle extends javax.swing.JFrame {
         txtMinutos.setText("");
         txtCodPelicula.requestFocus();
         
-        cargarTabla();
+        cargarElementos();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // Evento Borrar
+        int fila = tblDetalles.getSelectedRow();
+        if (fila == -1) return;
+        
+        int id = (int)tblDetalles.getValueAt(fila, 0);
+        
+        if (JOptionPane.showConfirmDialog(this, "Desea borrar el detalle id:"+id+"?")!=0) return;
+        
+        I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
+        dr.borrar(dr.getByCodDetalle(id));
+        
+        cargarElementos();
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,6 +300,7 @@ public class CrearDetalle extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<Month> cmbMes;
     private javax.swing.JButton jButton1;

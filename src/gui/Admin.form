@@ -31,7 +31,6 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnAgregarCartelera1" min="-2" pref="170" max="-2" attributes="0"/>
                   <Component id="btnAgregarRelacion" min="-2" pref="170" max="-2" attributes="0"/>
                   <Component id="btnAgregarDetalle" min="-2" pref="170" max="-2" attributes="0"/>
                   <Component id="btnAgregarSala" min="-2" pref="170" max="-2" attributes="0"/>
@@ -55,9 +54,7 @@
               <Component id="btnAgregarRelacion" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnAgregarCartelera" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnAgregarCartelera1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="60" max="32767" attributes="0"/>
+              <EmptySpace pref="101" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -67,7 +64,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnAgregarPelicula">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Pelicula"/>
+        <Property name="text" type="java.lang.String" value="Peliculas"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarPeliculaActionPerformed"/>
@@ -75,7 +72,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarSala">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Sala"/>
+        <Property name="text" type="java.lang.String" value="Salas"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarSalaActionPerformed"/>
@@ -83,7 +80,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarDetalle">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Detalle"/>
+        <Property name="text" type="java.lang.String" value="Detalles"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarDetalleActionPerformed"/>
@@ -91,7 +88,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarRelacion">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Relacion"/>
+        <Property name="text" type="java.lang.String" value="Relaciones"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarRelacionActionPerformed"/>
@@ -107,18 +104,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarCartelera">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Cartelera"/>
+        <Property name="text" type="java.lang.String" value="Cartelera"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCarteleraActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnAgregarCartelera1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Estado Salas"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCartelera1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

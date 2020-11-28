@@ -135,4 +135,17 @@ public class RelacionRepository implements I_RelacionRepository{
         }
         return false;
     }    
+    
+    @Override
+    public Relacion getByIdRelacion(int idRelacion){
+        Relacion relacion = new Relacion();
+        
+        for(Relacion r : getAll()){
+            if (r.getIdRelacion() == idRelacion) {
+                relacion = r;
+            }
+        }
+        
+        return relacion;
+    }
 }
