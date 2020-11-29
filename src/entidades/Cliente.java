@@ -5,6 +5,7 @@ public class Cliente {
     private String apellido;
     private String usuario;
     private String password;
+    private String codigoRecuperacion;
 
     public Cliente() {}
 
@@ -15,12 +16,29 @@ public class Cliente {
         this.password = password;
     }
 
+    public Cliente(String nombre, String apellido, String usuario, String password, String codigoRecuperacion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.usuario = usuario;
+        this.password = password;
+        this.codigoRecuperacion = codigoRecuperacion;
+    }
+    
     public Cliente(int id, String nombre, String apellido, String usuario, String password) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.usuario = usuario;
         this.password = password;
+    }
+
+    public Cliente(int id, String nombre, String apellido, String usuario, String password, String codigoRecuperacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.usuario = usuario;
+        this.password = password;
+        this.codigoRecuperacion = codigoRecuperacion;
     }
 
     @Override
@@ -66,5 +84,13 @@ public class Cliente {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCodigoRecuperacion() {
+        return codigoRecuperacion;
+    }
+
+    public void setCodigoRecuperacion(String codigoRecuperacion) {
+        this.codigoRecuperacion = codigoRecuperacion;
     }
 }

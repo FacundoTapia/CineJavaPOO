@@ -1,4 +1,5 @@
 package repositories.jdbc;
+import ar.org.centro8.curso.java.utils.swing.CodigoAlfanumerico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -22,13 +23,20 @@ public class ClienteRepository implements I_ClienteRepository {
     public void registrar(Cliente cliente) {
         if (cliente == null) { System.out.println("sale por null"); return;}
         if (comprobarDuplicado(cliente)) { System.out.println("sale por duplicado"); return;}
-        try(PreparedStatement ps = conn.prepareStatement("insert into clientes(nombre, apellido, usuario, password) values (?, ?, ?, ?)", 
+        
+        //Genero el codigo alfanumerico que va a servir para validar el 
+        //cambio de contraseña en un futuro de ser necesario
+        CodigoAlfanumerico cd = new CodigoAlfanumerico();
+        String codigo = cd.generar();
+        
+        try(PreparedStatement ps = conn.prepareStatement("insert into clientes(nombre, apellido, usuario, password, codigoRecuperacion) values (?, ?, ?, ?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS))
         {
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellido());
             ps.setString(3, cliente.getUsuario());
             ps.setString(4, cliente.getPassword());
+            ps.setString(5, codigo);
             ps.execute();
             
             //Obtengo el id generado por la base de datos para el registro y se lo
@@ -51,7 +59,24 @@ public class ClienteRepository implements I_ClienteRepository {
             ps.setInt(1, cliente.getId());
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al borrar el cliente");
+        }
+    }
+    
+    @Override
+    public void cambiarContraseña(Cliente cliente, String codigo){
+        if (cliente == null) return;
+        if (cliente.getCodigoRecuperacion().equals(codigo)) {
+            
+            try(PreparedStatement ps = conn.prepareStatement("update clientes set password = ? where id = ?")){
+                ps.setString(1, cliente.getUsuario());
+                ps.setInt(2, cliente.getId());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al cambiar la contraseña");
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "El codigo de recuperacion es invalido");
         }
     }
 
@@ -105,7 +130,8 @@ public class ClienteRepository implements I_ClienteRepository {
                                 rs.getString("nombre"), 
                                 rs.getString("apellido"), 
                                 rs.getString("usuario"), 
-                                rs.getString("password")
+                                rs.getString("password"),
+                                rs.getString("codigoRecuperacion")
                         )
                 );
             }
@@ -129,6 +155,7 @@ public class ClienteRepository implements I_ClienteRepository {
         return c1;
     }
 
+    @Override
     public Cliente getByUsuario(String usuario) {
         Cliente c1 = new Cliente();
         
@@ -154,18 +181,5 @@ public class ClienteRepository implements I_ClienteRepository {
             }
         }
         return false;
-    }      
-    
-//    public boolean login(String usuario, String pass){
-//        if (usuario == null || pass == null) return false;
-//        
-//        try(ResultSet rs = conn.createStatement().executeQuery("select * from clientes where usuario = '" + usuario + "' and apellido = '" + pass + "'")){
-//            while (rs.next()) {
-//                rs.getString("usuario");
-//                rs.getBlob("pass");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    }
 }

@@ -149,7 +149,7 @@ public class Registro extends javax.swing.JFrame {
                     return;
                 }
                 
-                JOptionPane.showMessageDialog(this, "Registro exitoso!");
+                JOptionPane.showMessageDialog(this, "Registro exitoso, su codigo de recuperacion es " + cl.getCodigoRecuperacion() + " GUARDELO EN UN LUGAR SEGURO");
                 
                 Login login = new Login();
                 login.setVisible(true);

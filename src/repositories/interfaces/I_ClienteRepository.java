@@ -6,6 +6,8 @@ import java.util.List;
 public interface I_ClienteRepository {
     void registrar(Cliente cliente);
     void borrar(Cliente cliente);
+    void cambiarContraseña(Cliente cliente, String codigo);
+    Cliente getByUsuario(String usuario);
     List<Entrada> comprar(Cliente cliente, Detalle detalle, int cantidad);
     List<Cliente> getAll();
     Cliente getById(int id);

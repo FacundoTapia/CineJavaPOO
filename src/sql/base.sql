@@ -20,6 +20,7 @@ create table clientes
     apellido varchar(40) not null,
     usuario varchar(40) not null,
     password blob not null,
+    codigoRecuperacion varchar(10) not null,
     primary key(id)
 );
 

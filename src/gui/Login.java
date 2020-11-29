@@ -188,7 +188,9 @@ public class Login extends javax.swing.JFrame {
 
     private void btnRecuperarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecuperarContraseñaActionPerformed
         // Evento recuperar contraseña
-        
+        RecuperacionContraseña rc = new RecuperacionContraseña();
+        rc.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRecuperarContraseñaActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
