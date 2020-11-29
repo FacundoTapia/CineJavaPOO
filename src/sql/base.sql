@@ -21,7 +21,7 @@ create table clientes
     usuario varchar(40) not null,
     password blob not null,
     codigoRecuperacion varchar(10) not null,
-    primary key(id)
+    primary key(id, codigoRecuperacion)
 );
 
 -- drop table peliculas

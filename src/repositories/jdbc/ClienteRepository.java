@@ -29,6 +29,8 @@ public class ClienteRepository implements I_ClienteRepository {
         CodigoAlfanumerico cd = new CodigoAlfanumerico();
         String codigo = cd.generar();
         
+        cliente.setCodigoRecuperacion(codigo);
+        
         try(PreparedStatement ps = conn.prepareStatement("insert into clientes(nombre, apellido, usuario, password, codigoRecuperacion) values (?, ?, ?, ?, ?)", 
                 PreparedStatement.RETURN_GENERATED_KEYS))
         {
@@ -36,7 +38,7 @@ public class ClienteRepository implements I_ClienteRepository {
             ps.setString(2, cliente.getApellido());
             ps.setString(3, cliente.getUsuario());
             ps.setString(4, cliente.getPassword());
-            ps.setString(5, codigo);
+            ps.setString(5, cliente.getCodigoRecuperacion());
             ps.execute();
             
             //Obtengo el id generado por la base de datos para el registro y se lo
@@ -69,12 +71,14 @@ public class ClienteRepository implements I_ClienteRepository {
         if (cliente.getCodigoRecuperacion().equals(codigo)) {
             
             try(PreparedStatement ps = conn.prepareStatement("update clientes set password = ? where id = ?")){
-                ps.setString(1, cliente.getUsuario());
+                ps.setString(1, cliente.getPassword());
                 ps.setInt(2, cliente.getId());
+                ps.execute();
+                
+                JOptionPane.showMessageDialog(null, "Cambio de contraseña exitoso");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al cambiar la contraseña");
             }
-            
         } else {
             JOptionPane.showMessageDialog(null, "El codigo de recuperacion es invalido");
         }

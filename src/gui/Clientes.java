@@ -155,7 +155,8 @@ public class Clientes extends javax.swing.JFrame {
         cr.registrar(cliente);
         
         if (cliente.getId()!=0) {
-            JOptionPane.showMessageDialog(this, "Codigo de recuperacion: " + cliente.getCodigoRecuperacion());
+            Registro registro = new Registro();
+            registro.mostrarInfoLogin(cliente);
         }
         
         cargarElementos();
