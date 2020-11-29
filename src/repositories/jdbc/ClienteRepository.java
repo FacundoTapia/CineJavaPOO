@@ -66,8 +66,8 @@ public class ClienteRepository implements I_ClienteRepository {
     }
     
     @Override
-    public void cambiarContraseña(Cliente cliente, String codigo){
-        if (cliente == null) return;
+    public boolean cambiarContraseña(Cliente cliente, String codigo){
+        if (cliente == null) return false;
         if (cliente.getCodigoRecuperacion().equals(codigo)) {
             
             try(PreparedStatement ps = conn.prepareStatement("update clientes set password = ? where id = ?")){
@@ -76,11 +76,14 @@ public class ClienteRepository implements I_ClienteRepository {
                 ps.execute();
                 
                 JOptionPane.showMessageDialog(null, "Cambio de contraseña exitoso");
+                return true;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al cambiar la contraseña");
+                return false;
             }
         } else {
             JOptionPane.showMessageDialog(null, "El codigo de recuperacion es invalido");
+            return false;
         }
     }
 

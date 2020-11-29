@@ -1,7 +1,9 @@
 package gui;
 
+import ar.org.centro8.curso.java.utils.swing.Validator;
 import connectors.Connector;
 import entidades.Cliente;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import repositories.jdbc.ClienteRepository;
 
@@ -24,6 +26,8 @@ public class Login extends javax.swing.JFrame {
         txtPass = new javax.swing.JPasswordField();
         btnAdmin = new javax.swing.JButton();
         btnRecuperarContraseña = new javax.swing.JButton();
+        lblErrorUsuario = new javax.swing.JLabel();
+        lblErrorPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -32,6 +36,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
         jLabel2.setText("Password");
+
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
 
         btnLogIn.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
         btnLogIn.setText("Iniciar Sesión");
@@ -65,6 +75,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        lblErrorUsuario.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorUsuario.setForeground(new java.awt.Color(255, 0, 51));
+
+        lblErrorPass.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorPass.setForeground(new java.awt.Color(255, 0, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,21 +88,14 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jLabel2))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(45, 45, 45)
-                                        .addComponent(jLabel1))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 68, Short.MAX_VALUE))
+                                .addGap(112, 112, 112)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(103, 103, 103)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 105, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAdmin)))
@@ -96,7 +105,11 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnRecuperarContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblErrorUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtUsuario)
+                    .addComponent(lblErrorPass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtPass))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,17 +119,21 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblErrorUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblErrorPass, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRecuperarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(btnAdmin)
                 .addContainerGap())
         );
@@ -133,10 +150,23 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         // Evento Logeo
+        //Compruebo que los campos esten completos
+        if (txtUsuario.getText().isEmpty() || txtPass.getPassword().length<=0) {
+            JOptionPane.showMessageDialog(this, "Rellene los campos");
+            return;
+        }
+        
+        //Compruebo la longitud de la contraseña entre 8 y 20 caracteres
+        Validator validator = new Validator(txtPass);
+        if (!validator.lenght(8, 20)){
+            lblErrorPass.setText("Debe tener entre 8 y 20 caracteres");
+            txtPass.requestFocus();
+            return;
+        }
         
         //Obtengo los datos de login de los txt
         String pass = String.valueOf(txtPass.getPassword());
-        String usuario = txtUsuario.getText();
+        String usuario = txtUsuario.getText().trim();
         
         ClienteRepository cr = new ClienteRepository(Connector.getConnection());
         
@@ -145,8 +175,8 @@ public class Login extends javax.swing.JFrame {
         
         //Si la lista esta vacia
         if (cr.getAll().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Registre un cliente");
-        } else {        
+            JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
+        } else {
             //Sino recorro la lista de todos los clientes y comparo los usuarios
             //de los mismos con el ingresado
             for(Cliente c : cr.getAll()){
@@ -174,7 +204,7 @@ public class Login extends javax.swing.JFrame {
             if (usuarioCorrecto) {
                 JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
             } else {
-                JOptionPane.showMessageDialog(this, "el usuario no existe");
+                JOptionPane.showMessageDialog(this, "El usuario no existe");
             }
         }
     }//GEN-LAST:event_btnLogInActionPerformed
@@ -192,6 +222,16 @@ public class Login extends javax.swing.JFrame {
         rc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRecuperarContraseñaActionPerformed
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        // Compruebo que no hayan espacios
+        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
+            evt.consume();
+            lblErrorUsuario.setText("No se admiten espacios");
+        } else {
+            lblErrorUsuario.setText("");
+        }
+    }//GEN-LAST:event_txtUsuarioKeyTyped
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -240,6 +280,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblErrorPass;
+    private javax.swing.JLabel lblErrorUsuario;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

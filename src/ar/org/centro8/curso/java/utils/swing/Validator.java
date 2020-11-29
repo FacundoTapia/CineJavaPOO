@@ -1,4 +1,5 @@
 package ar.org.centro8.curso.java.utils.swing;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 public class Validator {
@@ -10,7 +11,7 @@ public class Validator {
  
     private boolean error(String msj){
         txt.requestFocus();
-        JOptionPane.showMessageDialog(txt, msj, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, msj, "Error", JOptionPane.ERROR_MESSAGE);
         
         return false;
     }
@@ -18,7 +19,8 @@ public class Validator {
     public boolean lenght(int min, int max){
         if (txt.getText().length()>=min && txt.getText().length()<=max) return true;
         
-        return error("El texto debe tener entre " + min + " y " + max + " caracteres!");
+        //return error("El texto debe tener entre " + min + " y " + max + " caracteres!");
+        return false;
     }   
     
     public boolean isInteger(){
@@ -37,5 +39,11 @@ public class Validator {
         
         if (valor>=min && valor<=max) return true;
         return error("El valor debe ser entre " + min + " y "+ max);
+    }
+    
+    public boolean soloLetras(KeyEvent evt){
+        char caracter = evt.getKeyChar();
+        
+        return Character.isLetter(caracter);
     }
 }

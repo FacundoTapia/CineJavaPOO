@@ -21,10 +21,4 @@ public class CodigoAlfanumerico {
         
         return sb.toString();
     }
-    
-    public static void main(String[] args) {
-        CodigoAlfanumerico ca = new CodigoAlfanumerico();
-        
-        System.out.println(ca.generar());
-    }
 }
