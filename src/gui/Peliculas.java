@@ -1,10 +1,12 @@
 package gui;
 
 import ar.org.centro8.curso.java.utils.swing.Table;
+import ar.org.centro8.curso.java.utils.swing.Validator;
 import connectors.Connector;
 import entidades.Pelicula;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -56,6 +58,8 @@ public class Peliculas extends javax.swing.JFrame {
         btnBorrar = new javax.swing.JButton();
         btnGuardar1 = new javax.swing.JButton();
         txtRutaPortada = new javax.swing.JTextField();
+        lblErrorDuracion = new javax.swing.JLabel();
+        lblErrorGenero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Creacion de Peliculas");
@@ -67,8 +71,20 @@ public class Peliculas extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setText("Duración (mins)");
 
+        txtDuracion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDuracionKeyTyped(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Genero");
+
+        txtGenero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGeneroKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setText("es +18");
@@ -117,6 +133,14 @@ public class Peliculas extends javax.swing.JFrame {
             }
         });
 
+        txtRutaPortada.setEditable(false);
+
+        lblErrorDuracion.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorDuracion.setForeground(new java.awt.Color(255, 0, 51));
+
+        lblErrorGenero.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorGenero.setForeground(new java.awt.Color(255, 0, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,10 +156,6 @@ public class Peliculas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jrbNo))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtGenero))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(txtDuracion))
@@ -150,7 +170,14 @@ public class Peliculas extends javax.swing.JFrame {
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdmin, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnGuardar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtRutaPortada))
+                    .addComponent(txtRutaPortada)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtGenero)
+                            .addComponent(lblErrorDuracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblErrorGenero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addContainerGap())
@@ -158,42 +185,44 @@ public class Peliculas extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblErrorDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addComponent(lblErrorGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jrbSi)
                             .addComponent(jrbNo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
+                        .addGap(7, 7, 7)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnGuardar1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(txtRutaPortada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnBorrar))
-                        .addGap(39, 39, 39)
-                        .addComponent(btnAdmin)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdmin))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -202,6 +231,20 @@ public class Peliculas extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // Evento Guardar Pelicula        
+        if (txtTitulo.getText().isEmpty() ||
+            txtDuracion.getText().isEmpty() ||
+            txtGenero.getText().isEmpty() ||
+            txtRutaPortada.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos");
+            return;
+        }
+        
+        Validator validator = new Validator(txtDuracion);
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "La duracion no es un numero");
+            return;
+        }
+        
         boolean esMas18 = false;
         
         if (jrbSi.isSelected()) {
@@ -211,15 +254,13 @@ public class Peliculas extends javax.swing.JFrame {
         I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
         
         Pelicula p = new Pelicula(
-                txtTitulo.getText(), 
+                txtTitulo.getText().toUpperCase(), 
                 Integer.parseInt(txtDuracion.getText()),
                 txtGenero.getText(),
                 esMas18,
                 txaDescripcion.getText(),
                 portada
         );
-        
-        
         
         try {
             pr.guardar(p);
@@ -229,7 +270,7 @@ public class Peliculas extends javax.swing.JFrame {
             txtDuracion.setText("");
             jrbNo.setSelected(true);
             txaDescripcion.setText("");
-            
+            txtRutaPortada.setText("");
             txtTitulo.requestFocus();
             
             cargarElementos();
@@ -268,6 +309,30 @@ public class Peliculas extends javax.swing.JFrame {
         cargarPortada();
         portada = txtRutaPortada.getText();
     }//GEN-LAST:event_btnGuardar1ActionPerformed
+
+    private void txtDuracionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDuracionKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorDuracion.setText("Ingresar solo minutos de duracion");
+        } else {
+            lblErrorDuracion.setText("");
+        }
+    }//GEN-LAST:event_txtDuracionKeyTyped
+
+    private void txtGeneroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGeneroKeyTyped
+        // Evento valido que solo puedan ingresarse letras en el campo
+        Validator validator = new Validator(txtGenero);
+        if (!validator.soloLetras(evt) && evt.getKeyChar() != KeyEvent.VK_BACK_SPACE){
+            evt.consume();
+            lblErrorGenero.setText("Este campo solo admite letras");
+        } else {
+            lblErrorGenero.setText("");
+        }
+    }//GEN-LAST:event_txtGeneroKeyTyped
 
     public void cargarPortada() throws HeadlessException {
         // Evento Elegir portada para la pelicula con JFileChooser
@@ -348,6 +413,8 @@ public class Peliculas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButton jrbNo;
     private javax.swing.JRadioButton jrbSi;
+    private javax.swing.JLabel lblErrorDuracion;
+    private javax.swing.JLabel lblErrorGenero;
     private javax.swing.JTable tblPeliculas;
     private javax.swing.JTextArea txaDescripcion;
     private javax.swing.JTextField txtDuracion;
