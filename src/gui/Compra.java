@@ -21,7 +21,7 @@ import repositories.jdbc.SalaRepository;
 public class Compra extends javax.swing.JFrame {
     private static Detalle datosFuncion;
     private static Cliente cliente;
-    private static int cantidadEntradas = Index.cantidadEntradas;
+    private static int cantidadEntradas; 
     
     
     public Compra() {
@@ -36,6 +36,7 @@ public class Compra extends javax.swing.JFrame {
         btgMetodosDePago.add(rbtnTarjeta);
         rbtnEfectivo.setSelected(true);
         
+        cantidadEntradas = Index.cantidadEntradas;
         datosFuncion = Index.getDetalleEntrada();
         cliente = Index.getSesionActual();
         

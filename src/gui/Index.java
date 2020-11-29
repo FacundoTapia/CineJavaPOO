@@ -1,5 +1,6 @@
 package gui;
 
+import ar.org.centro8.curso.java.utils.swing.Validator;
 import connectors.Connector;
 import entidades.Cliente;
 import entidades.Detalle;
@@ -186,6 +187,13 @@ public class Index extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Cartelera");
@@ -270,7 +278,7 @@ public class Index extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txaDescripcion);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel9.setText("Tipo entrada");
+        jLabel9.setText("Tipo Función");
 
         txtTipoEntrada.setEditable(false);
         txtTipoEntrada.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -388,9 +396,9 @@ public class Index extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblEntradasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11))
                     .addGroup(layout.createSequentialGroup()
@@ -433,10 +441,16 @@ public class Index extends javax.swing.JFrame {
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         // Evento Comprar Entradas
-        if (txtCantidadEntradas.getText().isEmpty()) {
+        if (txtCantidadEntradas.getText().isEmpty() || Integer.parseInt(txtCantidadEntradas.getText()) == 0) {
             JOptionPane.showMessageDialog(this, "Ingrese la cantidad de entradas que desea comprar");
             return;
         }
+
+        Validator validator = new Validator(txtCantidadEntradas);
+        if (!validator.isInteger(1, Integer.parseInt(lblEntradasDisponibles.getText()))){
+            JOptionPane.showMessageDialog(this, "No hay tantas entradas disponibles!");
+            return;
+        }        
         
         //Obtengo el detalle necesario para la construccion de la entrada.
         //Traigo el detalle que cumpla con la fecha y hora seleccionadas en los cmb.
@@ -444,11 +458,10 @@ public class Index extends javax.swing.JFrame {
         LocalTime horarioSeleccionado = cmbHorariosPelicula.getItemAt(cmbHorariosPelicula.getSelectedIndex());
         String tituloPelicula = cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex());
         
-        Detalle detalleEntrada = dr.getByFechaTituloHorario(fechaSeleccionada, horarioSeleccionado, tituloPelicula);
-        
-        Index.detalleEntrada = detalleEntrada;
-        cantidadEntradas = Integer.parseInt(txtCantidadEntradas.getText());        
-        
+        Detalle detEntrada = dr.getByFechaTituloHorario(fechaSeleccionada, horarioSeleccionado, tituloPelicula);        
+
+        Index.detalleEntrada = detEntrada;
+        cantidadEntradas = Integer.parseInt(txtCantidadEntradas.getText());
         Compra compra = new Compra();
         compra.setVisible(true);
         
@@ -456,11 +469,6 @@ public class Index extends javax.swing.JFrame {
         txtCantidadEntradas.setText("");
         txtTipoEntrada.setText("");
         lblEntradasDisponibles.setText("");
-//        
-//        lblPortada.setText(listaEntradasGeneradas.toString());
-//        cargarLblEntradasDisponibles(fechaSeleccionada, 
-//                                     horarioSeleccionado, 
-//                                     cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void cmbHorariosPeliculaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbHorariosPeliculaItemStateChanged
@@ -503,9 +511,6 @@ public class Index extends javax.swing.JFrame {
             cargarTxaDescripcion(titulo);
             cargarPortada(titulo, lblPortada);
         }
-
-        
-
     }//GEN-LAST:event_cmbCarteleraItemStateChanged
 
     private void txtCantidadEntradasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadEntradasKeyTyped
@@ -514,7 +519,7 @@ public class Index extends javax.swing.JFrame {
         
         if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != '\b' /*BACK_SPACE*/)  {
             evt.consume();
-        }
+        }        
     }//GEN-LAST:event_txtCantidadEntradasKeyTyped
 
     private void txtTipoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoEntradaKeyTyped
@@ -528,6 +533,13 @@ public class Index extends javax.swing.JFrame {
     private void txtDuracionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDuracionKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDuracionKeyTyped
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        //Ventana recibiendo foco
+        cargarLblEntradasDisponibles(cmbFechasPelicula.getItemAt(cmbFechasPelicula.getSelectedIndex()), 
+                                     cmbHorariosPelicula.getItemAt(cmbHorariosPelicula.getSelectedIndex()),
+                                     cmbCartelera.getItemAt(cmbCartelera.getSelectedIndex()));
+    }//GEN-LAST:event_formWindowGainedFocus
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -50,4 +50,8 @@ public class Table <E> {
             dtm.addRow(registro);
         }
     }
+    
+    public void cargarPersonalizado(){
+        
+    }
 }

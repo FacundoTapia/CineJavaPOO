@@ -38,7 +38,8 @@ public class Validator {
         int valor = Integer.parseInt(txt.getText());
         
         if (valor>=min && valor<=max) return true;
-        return error("El valor debe ser entre " + min + " y "+ max);
+        //return error("El valor debe ser entre " + min + " y "+ max);
+        return false;
     }
     
     public boolean soloLetras(KeyEvent evt){
