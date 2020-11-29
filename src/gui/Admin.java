@@ -124,7 +124,7 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnAgregarPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPeliculaActionPerformed
         // Evento Agregar Pelicula
-        CrearPelicula cp = new CrearPelicula();
+        Peliculas cp = new Peliculas();
         cp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarPeliculaActionPerformed
@@ -132,7 +132,7 @@ public class Admin extends javax.swing.JFrame {
     private void btnAgregarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSalaActionPerformed
         // Evento Agregar Sala
         
-        CrearSala cs = new CrearSala();
+        Salas cs = new Salas();
         cs.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarSalaActionPerformed
@@ -147,21 +147,21 @@ public class Admin extends javax.swing.JFrame {
     private void btnAgregarCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarteleraActionPerformed
         // Evento Agregar Cartelera
         
-        CrearCartelera cc = new CrearCartelera();
+        Carteleras cc = new Carteleras();
         cc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarCarteleraActionPerformed
 
     private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
         // Evento Agregar Detalle
-        CrearDetalle cd = new CrearDetalle();
+        Detalles cd = new Detalles();
         cd.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarDetalleActionPerformed
 
     private void btnAgregarRelacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRelacionActionPerformed
         // Evento Agregar Relacion
-         CrearRelacion cr = new CrearRelacion();
+         Relaciones cr = new Relaciones();
          cr.setVisible(true);
          this.dispose();
     }//GEN-LAST:event_btnAgregarRelacionActionPerformed
