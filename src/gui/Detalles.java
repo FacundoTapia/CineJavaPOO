@@ -2,14 +2,25 @@
 package gui;
 
 import ar.org.centro8.curso.java.utils.swing.Table;
+import ar.org.centro8.curso.java.utils.swing.Validator;
+import com.mysql.cj.result.LocalDateTimeValueFactory;
 import connectors.Connector;
 import entidades.Detalle;
+import entidades.Pelicula;
+import entidades.Sala;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_DetalleRepository;
+import repositories.interfaces.I_PeliculaRepository;
+import repositories.interfaces.I_SalaRepository;
 import repositories.jdbc.DetalleRepository;
+import repositories.jdbc.PeliculaRepository;
+import repositories.jdbc.SalaRepository;
 
 public class Detalles extends javax.swing.JFrame {
 
@@ -36,6 +47,30 @@ public class Detalles extends javax.swing.JFrame {
         I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
         
         new Table<Detalle>().cargar(tblDetalles, dr.getAll());
+    }
+    
+    private boolean comprobarExistencia(int codPelicula, int nroSala) {
+        I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
+        I_SalaRepository sr = new SalaRepository(Connector.getConnection());
+        
+        boolean salaExiste = false;
+        boolean peliculaExiste = false;
+        
+        for(Pelicula p : pr.getAll()){
+            if (p.getCodigo() == codPelicula) {
+                peliculaExiste = true;
+                break;
+            }
+        }
+        
+        for(Sala s : sr.getAll()){
+            if (s.getNumero() == nroSala) {
+                salaExiste = true;
+                break;
+            }
+        }
+        
+        return peliculaExiste && salaExiste;
     }
 
     /**
@@ -66,17 +101,41 @@ public class Detalles extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalles = new javax.swing.JTable();
         btnBorrar = new javax.swing.JButton();
+        lblErrorCodPelicula = new javax.swing.JLabel();
+        lblErrorSala = new javax.swing.JLabel();
+        lblErrorDia = new javax.swing.JLabel();
+        lblErrorAño = new javax.swing.JLabel();
+        lblErrorHora = new javax.swing.JLabel();
+        lblErrorMinutos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel1.setText("Codigo Pelicula");
 
+        txtCodPelicula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodPeliculaKeyTyped(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setText("Numero Sala");
 
+        txtNroSala.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNroSalaKeyTyped(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Dia");
+
+        txtDia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDiaKeyTyped(evt);
+            }
+        });
 
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -99,11 +158,29 @@ public class Detalles extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setText("Año");
 
+        txtAño.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAñoKeyTyped(evt);
+            }
+        });
+
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel6.setText("Hora");
 
+        txtHora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHoraKeyTyped(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel7.setText("Minutos");
+
+        txtMinutos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMinutosKeyTyped(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(tblDetalles);
 
@@ -115,57 +192,96 @@ public class Detalles extends javax.swing.JFrame {
             }
         });
 
+        lblErrorCodPelicula.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorCodPelicula.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblErrorSala.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorSala.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblErrorDia.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorDia.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblErrorAño.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorAño.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblErrorHora.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorHora.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblErrorMinutos.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorMinutos.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblErrorDia, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addComponent(lblErrorAño, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                                         .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jLabel1)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtCodPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtNroSala, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(52, 120, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbMes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(73, 73, 73))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbMes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(lblErrorSala, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                    .addGap(2, 2, 2)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                            .addComponent(jLabel1)
+                                                            .addGap(18, 18, 18)
+                                                            .addComponent(txtCodPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                            .addComponent(jLabel2)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(txtNroSala, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(lblErrorCodPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblErrorHora, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lblErrorMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -175,11 +291,15 @@ public class Detalles extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCodPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblErrorCodPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNroSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblErrorSala, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,23 +307,36 @@ public class Detalles extends javax.swing.JFrame {
                     .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblErrorDia, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblErrorAño, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblErrorHora, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblErrorMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -218,7 +351,109 @@ public class Detalles extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // Evento Guardar Detalle
-
+        if (txtCodPelicula.getText().isEmpty() ||
+            txtNroSala.getText().isEmpty() ||
+            txtDia.getText().isEmpty() ||
+            txtAño.getText().isEmpty() ||
+            txtHora.getText().isEmpty() ||
+            txtMinutos.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos");
+            return;
+        }
+        
+        if (!comprobarExistencia(
+                Integer.parseInt(txtCodPelicula.getText()), 
+                Integer.parseInt(txtNroSala.getText()))) {
+            JOptionPane.showMessageDialog(this, "Datos invalidos. Estas haciendo referencia a un objeto que no existe");
+            return;
+        }
+        
+        Validator validator = new Validator(txtCodPelicula);
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "codPelicula no es un numero!");
+            return;
+        }
+        
+        validator = new Validator(txtNroSala);
+        
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "nroSala no es un numero!");
+            return;
+        }
+        
+        validator = new Validator(txtDia);        
+        
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "Dia no es un numero!");
+            return;
+        }
+        
+        if (Integer.parseInt(txtDia.getText()) > 31) {
+            JOptionPane.showMessageDialog(this, "El dia es mayor a 31");
+            return;
+        }
+        
+        validator = new Validator(txtAño);
+        
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "Año no es un numero!");
+            return;
+        }
+        
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        System.out.println("year: " + year);
+        
+        if (Integer.parseInt(txtAño.getText()) != year) {
+            JOptionPane.showMessageDialog(this, "El año es diferente al año actual");
+            return;
+        }
+        
+        validator = new Validator(txtHora);
+        
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "Hora no es un numero!");
+            return;
+        }
+        
+        if (Integer.parseInt(txtHora.getText()) > 24) {
+            JOptionPane.showMessageDialog(this, "La hora es mayor a 24");
+            return;
+        }
+        
+        validator = new Validator(txtMinutos);
+        
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "Minutos no es un numero!");
+            return;
+        }
+        
+        if (Integer.parseInt(txtMinutos.getText()) > 60) {
+            JOptionPane.showMessageDialog(this, "Los minutos son mayores a 60");
+            return;
+        }
+        
+        //Obtengo la fecha y hora formado por todos los datos
+        LocalDateTime FechaHoraFuncion = LocalDateTime.of(
+                Integer.parseInt(txtAño.getText()),
+                cmbMes.getItemAt(cmbMes.getSelectedIndex()),
+                Integer.parseInt(txtDia.getText()),
+                Integer.parseInt(txtHora.getText()),
+                Integer.parseInt(txtMinutos.getText())
+        );
+        
+        System.out.println("FechaHoraFuncion: " + FechaHoraFuncion);
+        
+        LocalDateTime FechaHoraActual = LocalDateTime.now();
+        
+        System.out.println("FechaHoraActual: " + FechaHoraActual);
+        
+        //Valido esto de forma que no se pueda agregar una funcion para un
+        //dia u hora que ya pasó
+        if (FechaHoraFuncion.isBefore(FechaHoraActual)) {
+            JOptionPane.showMessageDialog(this, "Es una Fecha u Hora que ya pasó");
+            return;
+        }
+        
         I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
         
         Detalle detalle = new Detalle(
@@ -237,16 +472,18 @@ public class Detalles extends javax.swing.JFrame {
         
         dr.crear(detalle);
         
-        txtCodPelicula.setText("");
-        txtNroSala.setText("");
-        txtAño.setText("");
-        cmbMes.setSelectedIndex(0);
-        txtDia.setText("");
-        txtHora.setText("");
-        txtMinutos.setText("");
-        txtCodPelicula.requestFocus();
-        
-        cargarElementos();
+        if (detalle.getCodDetalle() != 0) {
+            txtCodPelicula.setText("");
+            txtNroSala.setText("");
+            txtAño.setText("");
+            cmbMes.setSelectedIndex(0);
+            txtDia.setText("");
+            txtHora.setText("");
+            txtMinutos.setText("");
+            txtCodPelicula.requestFocus();
+
+            cargarElementos();            
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -263,6 +500,84 @@ public class Detalles extends javax.swing.JFrame {
         
         cargarElementos();
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void txtCodPeliculaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodPeliculaKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorCodPelicula.setText("Ingresar solo numeros");
+        } else {
+            lblErrorCodPelicula.setText("");
+        }
+    }//GEN-LAST:event_txtCodPeliculaKeyTyped
+
+    private void txtNroSalaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroSalaKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorSala.setText("Ingresar solo numeros");
+        } else {
+            lblErrorSala.setText("");
+        }
+    }//GEN-LAST:event_txtNroSalaKeyTyped
+
+    private void txtDiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiaKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorDia.setText("Ingresar solo numeros");
+        } else {
+            lblErrorDia.setText("");
+        }
+    }//GEN-LAST:event_txtDiaKeyTyped
+
+    private void txtAñoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorAño.setText("Ingresar solo numeros");
+        } else {
+            lblErrorAño.setText("");
+        }
+    }//GEN-LAST:event_txtAñoKeyTyped
+
+    private void txtHoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorHora.setText("Ingresar solo numeros");
+        } else {
+            lblErrorHora.setText("");
+        }
+    }//GEN-LAST:event_txtHoraKeyTyped
+
+    private void txtMinutosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMinutosKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorMinutos.setText("Ingresar solo numeros");
+        } else {
+            lblErrorMinutos.setText("");
+        }
+    }//GEN-LAST:event_txtMinutosKeyTyped
 
     /**
      * @param args the command line arguments
@@ -313,6 +628,12 @@ public class Detalles extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblErrorAño;
+    private javax.swing.JLabel lblErrorCodPelicula;
+    private javax.swing.JLabel lblErrorDia;
+    private javax.swing.JLabel lblErrorHora;
+    private javax.swing.JLabel lblErrorMinutos;
+    private javax.swing.JLabel lblErrorSala;
     private javax.swing.JTable tblDetalles;
     private javax.swing.JTextField txtAño;
     private javax.swing.JTextField txtCodPelicula;
