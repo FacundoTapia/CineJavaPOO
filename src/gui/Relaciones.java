@@ -1,10 +1,12 @@
 package gui;
 
 import ar.org.centro8.curso.java.utils.swing.Table;
+import ar.org.centro8.curso.java.utils.swing.Validator;
 import connectors.Connector;
 import entidades.Cartelera;
 import entidades.Detalle;
 import entidades.Relacion;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import repositories.interfaces.I_CarteleraRepository;
 import repositories.interfaces.I_DetalleRepository;
@@ -40,12 +42,26 @@ public class Relaciones extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRelaciones = new javax.swing.JTable();
         btnBorrar = new javax.swing.JButton();
+        lblErrorCodCartelera = new javax.swing.JLabel();
+        lblErrorCodDetalle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel1.setText("Codigo Cartelera");
+
+        txtCodCartelera.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodCarteleraKeyTyped(evt);
+            }
+        });
+
+        txtCodDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodDetalleKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setText("Codigo Detalle");
@@ -75,6 +91,12 @@ public class Relaciones extends javax.swing.JFrame {
             }
         });
 
+        lblErrorCodCartelera.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorCodCartelera.setForeground(new java.awt.Color(255, 51, 0));
+
+        lblErrorCodDetalle.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lblErrorCodDetalle.setForeground(new java.awt.Color(255, 51, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,19 +104,24 @@ public class Relaciones extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnAdmin)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCodCartelera))
+                    .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(btnAdmin))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCodDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                    .addComponent(txtCodCartelera)))))
-                    .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel2)
+                                .addGap(26, 26, 26)
+                                .addComponent(txtCodDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblErrorCodCartelera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblErrorCodDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -107,19 +134,23 @@ public class Relaciones extends javax.swing.JFrame {
                         .addContainerGap(14, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(txtCodCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblErrorCodCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtCodDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblErrorCodDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAdmin)))
                 .addContainerGap())
         );
@@ -136,11 +167,27 @@ public class Relaciones extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // Evento Guardar Relacion
+        if (txtCodCartelera.getText().isEmpty() ||
+            txtCodDetalle.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos");
+            return;
+        }
+
+        Validator validator = new Validator(txtCodCartelera);
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "codCartelera no es un numero");
+        }
+        
+        validator = new Validator(txtCodDetalle);
+        if (!validator.isInteger()) {
+            JOptionPane.showMessageDialog(this, "codDetalle no es un numero");
+        }
+        
         I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
         
         if (!comprobarExistencia(Integer.parseInt(txtCodCartelera.getText()),Integer.parseInt(txtCodDetalle.getText()))) 
         {
-            JOptionPane.showMessageDialog(this, "Datos invalidos");
+            JOptionPane.showMessageDialog(this, "Datos invalidos. Alguno o los dos no existen");
             return;
         }
         
@@ -172,6 +219,32 @@ public class Relaciones extends javax.swing.JFrame {
         
         cargarTabla();
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void txtCodCarteleraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodCarteleraKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorCodCartelera.setText("Ingresar solo numeros");
+        } else {
+            lblErrorCodCartelera.setText("");
+        }
+    }//GEN-LAST:event_txtCodCarteleraKeyTyped
+
+    private void txtCodDetalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodDetalleKeyTyped
+        // Evento validar numeros
+        // Validacion de la entrada de datos
+        char caracterIngresado = evt.getKeyChar();
+        
+        if (caracterIngresado < '0' || caracterIngresado > '9' && caracterIngresado != KeyEvent.VK_BACK_SPACE /*BACK_SPACE*/)  {
+            evt.consume();
+            lblErrorCodDetalle.setText("Ingresar solo numeros");
+        } else {
+            lblErrorCodDetalle.setText("");
+        }
+    }//GEN-LAST:event_txtCodDetalleKeyTyped
 
     private boolean comprobarExistencia(int codCartelera, int codDetalle) {
         I_CarteleraRepository cr = new CarteleraRepository(Connector.getConnection());
@@ -244,6 +317,8 @@ public class Relaciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblErrorCodCartelera;
+    private javax.swing.JLabel lblErrorCodDetalle;
     private javax.swing.JTable tblRelaciones;
     private javax.swing.JTextField txtCodCartelera;
     private javax.swing.JTextField txtCodDetalle;
