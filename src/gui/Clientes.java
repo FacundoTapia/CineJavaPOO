@@ -12,6 +12,8 @@ public class Clientes extends javax.swing.JFrame {
     
     public Clientes() {
         initComponents();
+        this.setLocationRelativeTo(this);
+        cargarElementos();
     }
 
     private void cargarElementos(){
@@ -67,6 +69,11 @@ public class Clientes extends javax.swing.JFrame {
         });
 
         btnAdmin.setText("Volver a Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(tblClientes);
 
@@ -164,6 +171,13 @@ public class Clientes extends javax.swing.JFrame {
         
         cargarElementos();
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // Evento volver a admin
+        Admin admin = new Admin();
+        admin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAdminActionPerformed
 
     /**
      * @param args the command line arguments

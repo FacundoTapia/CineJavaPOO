@@ -146,7 +146,20 @@ public class AdminLogin extends javax.swing.JFrame {
         AdminRepository ar = new AdminRepository(Connector.getConnection());
         Administrador administrador = new Administrador("root", "root");
         
-        ar.crear(administrador);
+        boolean yaExiste = false;
+        
+        for(Administrador a: ar.getAll()){
+            if (a.getUsuario().equals("root")) {
+                yaExiste = true;
+                break;
+            }
+        }
+        
+        if (!yaExiste) {
+            ar.crear(administrador);
+        } else {
+            JOptionPane.showMessageDialog(this, "El admin por defecto ya esta creado");
+        }
         
         if (administrador.getIdAdmin() != 0) {
             JOptionPane.showMessageDialog(this, "Registro de admin default exitoso");
