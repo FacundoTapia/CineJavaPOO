@@ -3,7 +3,6 @@ package gui;
 
 import ar.org.centro8.curso.java.utils.swing.Table;
 import ar.org.centro8.curso.java.utils.swing.Validator;
-import com.mysql.cj.result.LocalDateTimeValueFactory;
 import connectors.Connector;
 import entidades.Detalle;
 import entidades.Pelicula;
@@ -483,6 +482,8 @@ public class Detalles extends javax.swing.JFrame {
             txtCodPelicula.requestFocus();
 
             cargarElementos();            
+        } else {
+            JOptionPane.showMessageDialog(this, "No se creo el detalle");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
