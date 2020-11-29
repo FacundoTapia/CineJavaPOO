@@ -9,6 +9,7 @@ public interface I_DetalleRepository {
     void crear(Detalle detalle);
     void borrar(Detalle detalle);
     void actualizar(Detalle detalle);
+    void actualizarEntradas(Detalle detalle);
     List<Detalle> getAll();
     Detalle getByCodDetalle(int codDetalle);
     List<Detalle> getByFechaYHorario(LocalDate ld, LocalTime lt);

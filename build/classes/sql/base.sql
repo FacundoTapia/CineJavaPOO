@@ -33,6 +33,7 @@ create table peliculas
     genero varchar(30) not null,
     esMas18 boolean not null,
     descripcion varchar(1000) not null,
+    rutaPortada varchar(200),
     primary key(codigo)
 );
 

@@ -3,12 +3,20 @@ package gui;
 import ar.org.centro8.curso.java.utils.swing.Table;
 import connectors.Connector;
 import entidades.Pelicula;
-import javax.swing.ButtonModel;
+import java.awt.HeadlessException;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import repositories.interfaces.I_PeliculaRepository;
 import repositories.jdbc.PeliculaRepository;
 
 public class CrearPelicula extends javax.swing.JFrame {
+    private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de imagen", "jpg");
+    private String portada;
+    
     public CrearPelicula() {
         initComponents();
         this.setLocationRelativeTo(this);
@@ -46,6 +54,8 @@ public class CrearPelicula extends javax.swing.JFrame {
         txaDescripcion = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         btnBorrar = new javax.swing.JButton();
+        btnGuardar1 = new javax.swing.JButton();
+        txtRutaPortada = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Creacion de Peliculas");
@@ -99,6 +109,14 @@ public class CrearPelicula extends javax.swing.JFrame {
             }
         });
 
+        btnGuardar1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnGuardar1.setText("Elegir Portada");
+        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,41 +124,44 @@ public class CrearPelicula extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAdmin)
                     .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jrbSi)
-                                .addGap(18, 18, 18)
-                                .addComponent(jrbNo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtGenero))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDuracion))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jrbSi)
+                        .addGap(18, 18, 18)
+                        .addComponent(jrbNo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtGenero))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDuracion))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdmin, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnGuardar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtRutaPortada))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -163,15 +184,16 @@ public class CrearPelicula extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(txtRutaPortada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnBorrar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdmin))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(17, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(39, 39, 39)
+                        .addComponent(btnAdmin)))
                 .addContainerGap())
         );
 
@@ -193,8 +215,11 @@ public class CrearPelicula extends javax.swing.JFrame {
                 Integer.parseInt(txtDuracion.getText()),
                 txtGenero.getText(),
                 esMas18,
-                txaDescripcion.getText()
+                txaDescripcion.getText(),
+                portada
         );
+        
+        
         
         try {
             pr.guardar(p);
@@ -239,6 +264,39 @@ public class CrearPelicula extends javax.swing.JFrame {
         cargarElementos();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
+    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+        cargarPortada();
+        portada = txtRutaPortada.getText();
+    }//GEN-LAST:event_btnGuardar1ActionPerformed
+
+    public void cargarPortada() throws HeadlessException {
+        // Evento Elegir portada para la pelicula con JFileChooser
+        
+        //Creo el file chooser y le seteo el filtro
+        JFileChooser fc = new JFileChooser();
+        fc.setFileFilter(filter);
+        
+        //Guardo el estado del fc
+        int opcion = fc.showOpenDialog(this);
+        
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            //Obtengo el nombre del archivo seleccionado
+            String nombreArchivo = fc.getSelectedFile().getPath();
+            
+            //Obtengo su ruta
+            String rutaArchivo = fc.getSelectedFile().toString();
+            
+            System.out.println("nombreArchivo: " + nombreArchivo);
+            System.out.println("rutaArchivo: " + rutaArchivo);
+            
+            ImageIcon imagen = new ImageIcon(nombreArchivo);
+            
+            txtRutaPortada.setText(nombreArchivo);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se selecciono correctamente la imagen");
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -278,6 +336,7 @@ public class CrearPelicula extends javax.swing.JFrame {
     private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardar1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -292,6 +351,7 @@ public class CrearPelicula extends javax.swing.JFrame {
     private javax.swing.JTextArea txaDescripcion;
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtGenero;
+    private javax.swing.JTextField txtRutaPortada;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

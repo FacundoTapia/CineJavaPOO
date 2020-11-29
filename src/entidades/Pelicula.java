@@ -7,6 +7,7 @@ public class Pelicula {
     private String genero;
     private boolean esMas18;
     private String descripcion;
+    private String rutaPortada;
     
     public Pelicula() {}
 
@@ -18,6 +19,15 @@ public class Pelicula {
         this.descripcion = descripcion;
     }
 
+    public Pelicula(String titulo, int duracion, String genero, boolean esMas18, String descripcion, String rutaPortada) {
+        this.titulo = titulo;
+        this.duracion = duracion;
+        this.genero = genero;
+        this.esMas18 = esMas18;
+        this.descripcion = descripcion;
+        this.rutaPortada = rutaPortada;
+    }
+
     public Pelicula(int codigo, String titulo, int duracion, String genero, boolean esMas18, String descripcion) {
         this.codigo = codigo;
         this.titulo = titulo;
@@ -25,6 +35,16 @@ public class Pelicula {
         this.genero = genero;
         this.esMas18 = esMas18;
         this.descripcion = descripcion;
+    }
+
+    public Pelicula(int codigo, String titulo, int duracion, String genero, boolean esMas18, String descripcion, String rutaPortada) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.duracion = duracion;
+        this.genero = genero;
+        this.esMas18 = esMas18;
+        this.descripcion = descripcion;
+        this.rutaPortada = rutaPortada;
     }
 
     @Override
@@ -78,5 +98,13 @@ public class Pelicula {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getRutaPortada() {
+        return rutaPortada;
+    }
+
+    public void setRutaPortada(String rutaPortada) {
+        this.rutaPortada = rutaPortada;
     }
 }

@@ -19,13 +19,15 @@ public class PeliculaRepository implements I_PeliculaRepository{
     public void guardar(Pelicula pelicula) {
         if (pelicula == null) {System.out.println("sale por null"); return;}
         if (comprobarDuplicado(pelicula)) {System.out.println("sale por duplicado"); return;}
-        try(PreparedStatement ps = conn.prepareStatement("insert into peliculas(titulo, duracion, genero, esMas18, descripcion) values(?, ?, ?, ?, ?)",
+        
+        try(PreparedStatement ps = conn.prepareStatement("insert into peliculas(titulo, duracion, genero, esMas18, descripcion, rutaPortada) values(?, ?, ?, ?, ?, ?)",
         PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setString(1, pelicula.getTitulo());
             ps.setInt(2, pelicula.getDuracion());
             ps.setString(3, pelicula.getGenero());
             ps.setBoolean(4, pelicula.getEsMas18());
             ps.setString(5, pelicula.getDescripcion());
+            ps.setString(6, pelicula.getRutaPortada());
             ps.execute();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -62,7 +64,8 @@ public class PeliculaRepository implements I_PeliculaRepository{
                                 rs.getInt("duracion"), 
                                 rs.getString("genero"),
                                 rs.getBoolean("esMas18"),
-                                rs.getString("descripcion")
+                                rs.getString("descripcion"),
+                                rs.getString("rutaPortada")
                         )
                 );
             }

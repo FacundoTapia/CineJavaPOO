@@ -94,6 +94,20 @@ public class DetalleRepository implements I_DetalleRepository{
             }
         }
     }
+    
+    @Override
+    public void actualizarEntradas(Detalle detalle){
+        if(detalle == null) {System.out.println("sale por null"); return;}
+        if (comprobarDuplicado(detalle)) {System.out.println("sale por duplicado actualizar"); return;}
+        
+        try(PreparedStatement ps = conn.prepareStatement("update detalles set entradasDisponibles = ? where codDetalle = ?")){
+            ps.setInt(1, detalle.getEntradasDisponibles());
+            ps.setInt(2, detalle.getCodDetalle());
+            ps.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al actualizar las entradas disponibles");
+        }
+    }
 
     @Override
     public List<Detalle> getAll() {

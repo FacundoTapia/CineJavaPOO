@@ -113,7 +113,7 @@ public class ClienteRepository implements I_ClienteRepository {
                 d.setEntradasDisponibles(asientosDisp-=1);
 
                 //envio la actualizacion del registro a la bd
-                dr.actualizar(d);
+                dr.actualizarEntradas(d);
             }
             return listaEntradas;
         } else {
