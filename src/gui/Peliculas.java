@@ -7,6 +7,7 @@ import entidades.Pelicula;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.nio.charset.StandardCharsets;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -353,8 +354,6 @@ public class Peliculas extends javax.swing.JFrame {
             
             System.out.println("nombreArchivo: " + nombreArchivo);
             System.out.println("rutaArchivo: " + rutaArchivo);
-            
-            ImageIcon imagen = new ImageIcon(nombreArchivo);
             
             txtRutaPortada.setText(nombreArchivo);
         } else {

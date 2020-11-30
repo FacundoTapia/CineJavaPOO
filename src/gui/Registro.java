@@ -7,6 +7,8 @@ import entidades.Cliente;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -269,7 +271,7 @@ public class Registro extends javax.swing.JFrame {
             return true;
         }
         //creo un nuevo archivo con el contenido el txaTexto
-        new FileText(file.getAbsoluteFile() + ".txt").setText(contenido);
+        new FileText(file).setText(contenido);
         return false;
     }
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed

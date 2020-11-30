@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -42,7 +44,7 @@ public class FileText implements I_File{
         
         //inicializo en un try with resource, asi resuelvo el problema
         //de no cerrar los archivos
-        try(FileReader in = new FileReader(file);){
+        try(FileReader in = new FileReader(file, StandardCharsets.ISO_8859_1);){
             //no tengo un metodo que me lea todo de golpe    
             //.read() me lee de a un caracter, lo devuelve, si devuelve -1
             //significa que se llegó al final de la lectura, por eso
@@ -72,7 +74,7 @@ public class FileText implements I_File{
         Esto es una regla común de todos los File System de los Sistemas Operativos
         */
         
-        try(FileWriter in = new FileWriter(file);){
+        try(FileWriter in = new FileWriter(file, StandardCharsets.ISO_8859_1);){
             in.write(text);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,11 +104,12 @@ public class FileText implements I_File{
             En cambio, con el metodo .lines() nos devuelve directamente el 
             Stream que es lo que necesitamos en este metodo.
             */
-            return new BufferedReader(new FileReader(file)).lines();
+            return new BufferedReader(new FileReader(file, StandardCharsets.ISO_8859_1)).lines();
+            //return (Stream<String>) Files.newBufferedReader((Path) new InputStreamReader(new FileInputStream(file.getPath())), StandardCharsets.ISO_8859_1);
             //return new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)).lines();
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
-    
 }
