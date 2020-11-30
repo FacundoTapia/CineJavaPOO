@@ -49,11 +49,11 @@ public class TestRepositories {
         
         I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
         
-        //Pelicula pelicula = new Pelicula("Avengers: Endgame", 182, "Ciencia Ficción");
+        Pelicula pelicula = new Pelicula("Avengers", 200, "Ciencia Ficcion", false, "asd", "/imagenes/avengers.jpg");
         
-        //pr.guardar(pelicula);
+        pr.guardar(pelicula);
         
-        //System.out.println(pelicula);
+        System.out.println(pelicula);
         
         System.out.println("****************************************************");
         
@@ -63,15 +63,15 @@ public class TestRepositories {
         
         I_SalaRepository sr = new SalaRepository(Connector.getConnection());
         
-        Sala sala = new Sala(1, TipoSala.DOSD, 70);
+        Sala sala = new Sala(8, TipoSala.DOSD, 70);
         
         //sr.crear(sala);
         
         System.out.println(sala);
         
-        //System.out.println(sr.getByNumero(1));
+        System.out.println(sr.getByNumero(1));
         
-        //sr.borrar(sr.getByNumero(2));
+        sr.borrar(sr.getByNumero(2));
         
         System.out.println("****************************************************");
         
@@ -80,8 +80,6 @@ public class TestRepositories {
         System.out.println("**************** DETALLE *************************");
         
         I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
-        
-        Date fechaDetalle = new Date(2020-1900, 11, 15, 22, 30);
         
         Detalle detalle = new Detalle(1, 1, LocalDate.of(2020, Month.NOVEMBER, 30), LocalTime.of(22, 30));
         
@@ -97,7 +95,7 @@ public class TestRepositories {
         
         I_CarteleraRepository car = new CarteleraRepository(Connector.getConnection());
         
-        Cartelera cartelera = new Cartelera(1, "Cartelera Principal");
+        Cartelera cartelera = new Cartelera(4, "Cartelera Recoleta");
         
         //car.crear(cartelera);
         
@@ -107,7 +105,7 @@ public class TestRepositories {
 
         I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
         
-        Relacion relacion = new Relacion(1, 1);
+        Relacion relacion = new Relacion(4, 8);
         
         rr.crear(relacion);
         
@@ -121,7 +119,7 @@ public class TestRepositories {
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(1, 1);
+        Entrada entrada = new Entrada(4, 8);
         
         er.crear(entrada);
         

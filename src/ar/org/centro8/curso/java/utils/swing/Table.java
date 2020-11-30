@@ -42,7 +42,7 @@ public class Table <E> {
                 String metodo = "get" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
                 //System.out.println(metodo);
                 try {
-                    registro[i] = e.getClass().getMethod(metodo, null).invoke(ee, null);
+                    registro[i] = e.getClass().getMethod(metodo).invoke(ee);
                 } catch (Exception ex) {ex.printStackTrace();}
             }
             

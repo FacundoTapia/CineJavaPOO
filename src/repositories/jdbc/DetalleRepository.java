@@ -111,6 +111,7 @@ public class DetalleRepository implements I_DetalleRepository{
 
     @Override
     public List<Detalle> getAll() {
+        @SuppressWarnings("unchecked")
         List<Detalle> list = new ArrayList();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from detalles")){
@@ -163,6 +164,7 @@ public class DetalleRepository implements I_DetalleRepository{
 
     @Override
     public List<Detalle> getByPelicula(int codPelicula) {
+        @SuppressWarnings("unchecked")
         List<Detalle> lista = new ArrayList();
         
         for(Detalle d : getAll()){
@@ -176,6 +178,7 @@ public class DetalleRepository implements I_DetalleRepository{
 
     @Override
     public List<Detalle> getByFecha(LocalDate ld) {
+        @SuppressWarnings("unchecked")
         List<Detalle> lista = new ArrayList();
         
         for(Detalle d : getAll()){
@@ -189,6 +192,7 @@ public class DetalleRepository implements I_DetalleRepository{
     
     @Override
     public List<Detalle> getByFechaYTitulo(LocalDate fecha, String titulo){
+        @SuppressWarnings("unchecked")
         List<Detalle> lista = new ArrayList();
         
         I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
@@ -209,6 +213,7 @@ public class DetalleRepository implements I_DetalleRepository{
 
     @Override
     public List<Detalle> getByFechaYHorario(LocalDate ld, LocalTime lt) {
+        @SuppressWarnings("unchecked")
         List<Detalle> lista = new ArrayList();
         
         for(Detalle d: getAll()){
@@ -248,6 +253,7 @@ public class DetalleRepository implements I_DetalleRepository{
     }
     
     public List<Detalle> getBySala(Sala sala){
+        @SuppressWarnings("unchecked")
         List<Detalle> list = new ArrayList();
         
         for(Detalle d: getAll()){
@@ -260,6 +266,7 @@ public class DetalleRepository implements I_DetalleRepository{
     }
     
     public List<Detalle> getBySalaFecha(Sala sala, LocalDate fecha){
+        @SuppressWarnings("unchecked")
         List<Detalle> list = new ArrayList();
         
         for(Detalle d: getBySala(sala)){
@@ -289,7 +296,9 @@ public class DetalleRepository implements I_DetalleRepository{
         int duracionFuncion = p.getDuracion();
         LocalTime horaTermina = horaInicio.plus(Duration.ofMinutes(duracionFuncion)).plus(Duration.ofMinutes(30));
                 
+        @SuppressWarnings("unchecked")
         List<Detalle> funcionesAnteriores = new ArrayList();
+        @SuppressWarnings("unchecked")
         List<Detalle> funcionesSiguientes = new ArrayList();
         
         if (getBySalaFecha(sala, funcion.getFecha()).isEmpty()) {

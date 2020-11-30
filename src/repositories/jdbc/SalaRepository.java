@@ -60,7 +60,7 @@ public class SalaRepository implements I_SalaRepository{
     
     @Override
     public List<Sala> getAll() {
-        List<Sala> list = new ArrayList();
+        List<Sala> list = new ArrayList<Sala>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from salas")){
             while (rs.next()) {

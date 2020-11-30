@@ -88,10 +88,10 @@ public class ClienteRepository implements I_ClienteRepository {
     }
 
     @Override
-    public List<Entrada> comprar(Cliente cliente, Detalle detalle, int cantidad) {
-        if (cliente == null || detalle == null || cantidad <= 0) return new ArrayList();
+    public ArrayList<Entrada> comprar(Cliente cliente, Detalle detalle, int cantidad) {
+        if (cliente == null || detalle == null || cantidad <= 0) return new ArrayList<Entrada>();
         
-        List<Entrada> listaEntradas = new ArrayList();
+        ArrayList<Entrada> listaEntradas = new ArrayList<Entrada>();
         
         I_DetalleRepository dr = new DetalleRepository(conn);
         
@@ -121,13 +121,13 @@ public class ClienteRepository implements I_ClienteRepository {
             return listaEntradas;
         } else {
             JOptionPane.showMessageDialog(null, "No hay asientos disponibles para esa cantidad de entradas");
-            return new ArrayList();
+            return new ArrayList<Entrada>();
         }
     }
      
     @Override
-    public List<Cliente> getAll() {
-        List<Cliente> lista = new ArrayList();
+    public ArrayList<Cliente> getAll() {
+        ArrayList<Cliente> lista = new ArrayList<Cliente>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from clientes")){
             while (rs.next()) {

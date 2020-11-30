@@ -225,10 +225,9 @@ public class Registro extends javax.swing.JFrame {
         int respuesta = JOptionPane.showConfirmDialog(this, "Registro exitoso!! \n"
                 + "¡¡IMPORTANTE!!\n"
                 + "Su codigo de recuperacion es " + cl.getCodigoRecuperacion() + "\n"
-                + "Desea guardarlo junto con sus datos de login en un archivo? \n"
-                + "Esto le servira para cambiar la contraseña en un futuro",
+                + "Guardelo en un lugar seguro ya que esto le servira para cambiar la contraseña en un futuro\n",
                 "CODIGO DE RECUPERACION",
-                JOptionPane.YES_NO_OPTION);
+                JOptionPane.YES_OPTION);
         
         //Dependiendo la respuesta procedo...
         switch(respuesta){
