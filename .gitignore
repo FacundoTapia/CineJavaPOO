@@ -1,2 +1,6 @@
 Connector.java
 base.sql
+
+#Ignoro las imagenes de las portadas
+*.jpg
+*.png
