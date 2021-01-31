@@ -13,13 +13,15 @@ public class Detalle {
     private int entradasDisponibles;
     private LocalDate fecha;
     private LocalTime horario;
+    
+    I_SalaRepository sr = new SalaRepository(Connector.getConnection());
 
     public Detalle() {}
 
     public Detalle(int codPelicula, int nroSala, LocalDate fecha, LocalTime horario) {
         this.codPelicula = codPelicula;
         this.nroSala = nroSala;
-        setEntradasDisponiblesByCapacidad(nroSala);
+        this.entradasDisponibles = sr.getByNumero(nroSala).getCapacidad();
         this.fecha = fecha;
         this.horario = horario;
     }
@@ -28,7 +30,7 @@ public class Detalle {
         this.codDetalle = codDetalle;
         this.codPelicula = codPelicula;
         this.nroSala = nroSala;
-        setEntradasDisponiblesByCapacidad(nroSala);
+        this.entradasDisponibles = sr.getByNumero(nroSala).getCapacidad();
         this.fecha = fecha;
         this.horario = horario;
     }
@@ -95,9 +97,9 @@ public class Detalle {
         this.horario = horario;
     }
     
-    public void setEntradasDisponiblesByCapacidad(int nroSala){
-        I_SalaRepository sr = new SalaRepository(Connector.getConnection());
-        
-        this.entradasDisponibles =  sr.getByNumero(nroSala).getCapacidad();
-    }
+//    public void setEntradasDisponiblesByCapacidad(int nroSala){
+//        I_SalaRepository sr = new SalaRepository(Connector.getConnection());
+//        
+//        this.entradasDisponibles =  sr.getByNumero(nroSala).getCapacidad();
+//    }
 }

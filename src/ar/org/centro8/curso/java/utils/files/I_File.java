@@ -117,7 +117,7 @@ public interface I_File {
      * @return 
      */
     default LinkedHashSet<String> getLinkedHashSetLines() {                                 
-        LinkedHashSet<String> set = new LinkedHashSet();
+        LinkedHashSet<String> set = new LinkedHashSet<String>();
         
         //addAll() admite una Collection, usamos nuestro metodo .getAll() que nos devuelve todo 
         //el archivo como Collection, lo almacenamos como LinkedHashSet y lo retornamos
@@ -131,7 +131,7 @@ public interface I_File {
      * @return 
      */
     default TreeSet<String> getTreeSetLines() {                         
-        TreeSet<String> set = new TreeSet();
+        TreeSet<String> set = new TreeSet<String>();
         set.addAll(getAll());
         return set;
     }

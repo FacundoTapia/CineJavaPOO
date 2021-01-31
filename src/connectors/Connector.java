@@ -9,7 +9,7 @@ public class Connector {
     private static String server = "localhost";
     private static String port = "3306";
     private static String db = "cine";
-    private static String params = "";
+    private static String params = "?useSSL=false";
     private static String user = "root";
     private static String pass = "root";
     

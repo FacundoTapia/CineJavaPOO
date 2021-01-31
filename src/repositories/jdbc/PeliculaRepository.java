@@ -53,7 +53,7 @@ public class PeliculaRepository implements I_PeliculaRepository{
 
     @Override
     public List<Pelicula> getAll() {
-        List<Pelicula> list = new ArrayList();
+        List<Pelicula> list = new ArrayList<>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from peliculas")){
             while (rs.next()) {

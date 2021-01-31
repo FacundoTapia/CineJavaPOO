@@ -45,7 +45,7 @@ public class AdminRepository {
     }
     
     public List<Administrador> getAll(){
-        List<Administrador> list = new ArrayList();
+        List<Administrador> list = new ArrayList<>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from admin")){
             while (rs.next()) {

@@ -74,7 +74,7 @@ public class RelacionRepository implements I_RelacionRepository{
 
     @Override
     public List<Relacion> getAll() {
-        List<Relacion> list = new ArrayList();
+        List<Relacion> list = new ArrayList<>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from relaciones")){
             while (rs.next()) {
@@ -96,7 +96,7 @@ public class RelacionRepository implements I_RelacionRepository{
     //Obtiene un codigo cartelera y devuelve los detalles relacionados con esa Cartelera
     @Override
     public List<Detalle> getDetalleByCodCartelera(int codCartelera) {
-        List<Detalle> lista = new ArrayList();
+        List<Detalle> lista = new ArrayList<>();
         
         I_DetalleRepository dr = new DetalleRepository(conn);
         
@@ -113,7 +113,7 @@ public class RelacionRepository implements I_RelacionRepository{
 
     @Override
     public List<Cartelera> getCarteleraByCodDetalle(int codDetalle) {
-        List<Cartelera> lista = new ArrayList();
+        List<Cartelera> lista = new ArrayList<>();
         
         I_CarteleraRepository cr = new CarteleraRepository(conn);
         

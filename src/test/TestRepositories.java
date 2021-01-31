@@ -35,11 +35,11 @@ public class TestRepositories {
         
         Cliente cliente = new Cliente("Facundo", "Tapia", "tapita", "1234");
         
-        cr.registrar(cliente);
+        //cr.registrar(cliente);
         
-        System.out.println(cliente);
+        //System.out.println(cliente);
         
-        cr.borrar(cr.getById(2));
+        //cr.borrar(cr.getById(2));
         
         System.out.println("**************** CLIENTES *************************");
         
@@ -49,11 +49,11 @@ public class TestRepositories {
         
         I_PeliculaRepository pr = new PeliculaRepository(Connector.getConnection());
         
-        Pelicula pelicula = new Pelicula("Avengers", 200, "Ciencia Ficcion", false, "asd", "/imagenes/avengers.jpg");
+        Pelicula pelicula = new Pelicula("Avengers: Endgame", 200, "Ciencia Ficcion", false, "Marvel's Movie");
         
-        pr.guardar(pelicula);
+        //pr.guardar(pelicula);
         
-        System.out.println(pelicula);
+        //System.out.println(pelicula);
         
         System.out.println("****************************************************");
         
@@ -63,15 +63,15 @@ public class TestRepositories {
         
         I_SalaRepository sr = new SalaRepository(Connector.getConnection());
         
-        Sala sala = new Sala(8, TipoSala.DOSD, 70);
+        Sala sala = new Sala(8, TipoSala.TRESD, 70);
         
         //sr.crear(sala);
         
-        System.out.println(sala);
+        //System.out.println(sala);
         
-        System.out.println(sr.getByNumero(1));
+        //System.out.println(sr.getByNumero(1));
         
-        sr.borrar(sr.getByNumero(2));
+        //sr.borrar(sr.getByNumero(2));
         
         System.out.println("****************************************************");
         
@@ -81,11 +81,11 @@ public class TestRepositories {
         
         I_DetalleRepository dr = new DetalleRepository(Connector.getConnection());
         
-        Detalle detalle = new Detalle(1, 1, LocalDate.of(2020, Month.NOVEMBER, 30), LocalTime.of(22, 30));
+        Detalle detalle = new Detalle(12, 8, LocalDate.of(2020, Month.FEBRUARY, 14), LocalTime.of(22, 30));
         
-        dr.crear(detalle);
+        //dr.crear(detalle);
         
-        System.out.println(detalle);
+        //System.out.println(detalle);
         
         System.out.println("****************************************************");
         
@@ -95,21 +95,25 @@ public class TestRepositories {
         
         I_CarteleraRepository car = new CarteleraRepository(Connector.getConnection());
         
-        Cartelera cartelera = new Cartelera(4, "Cartelera Recoleta");
+        Cartelera cartelera = new Cartelera(2, "Sucursal Palermo");
         
         //car.crear(cartelera);
         
-        System.out.println(cartelera);
+        //System.out.println(cartelera);
+        
+        System.out.println("*****************************************************");
+        
+        car.getAll().forEach(System.out::println);
         
         System.out.println("**************** RELACIONES *************************");
 
         I_RelacionRepository rr = new RelacionRepository(Connector.getConnection());
         
-        Relacion relacion = new Relacion(4, 8);
+        Relacion relacion = new Relacion(1, 13);
         
-        rr.crear(relacion);
+        //rr.crear(relacion);
         
-        System.out.println(relacion);
+        //System.out.println(relacion);
         
         System.out.println("****************************************************");
         
@@ -119,11 +123,11 @@ public class TestRepositories {
         
         I_EntradaRepository er = new EntradaRepository(Connector.getConnection());
         
-        Entrada entrada = new Entrada(4, 8);
+        Entrada entrada = new Entrada(12, 13);
         
-        er.crear(entrada);
+        //er.crear(entrada);
         
-        System.out.println(entrada);
+        //System.out.println(entrada);
         
         System.out.println("****************************************************");
         

@@ -55,7 +55,7 @@ public class CarteleraRepository implements I_CarteleraRepository {
 
     @Override
     public List<Cartelera> getAll() {
-        List<Cartelera> lista = new ArrayList();
+        List<Cartelera> lista = new ArrayList<>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from carteleras")){
             while (rs.next()) {

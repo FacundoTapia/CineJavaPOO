@@ -67,7 +67,7 @@ public class EntradaRepository implements I_EntradaRepository{
 
     @Override
     public List<Entrada> getAll() {
-        List<Entrada> list = new ArrayList();
+        List<Entrada> list = new ArrayList<>();
         
         try(ResultSet rs = conn.createStatement().executeQuery("select * from entradas")){
             while (rs.next()) {
@@ -101,7 +101,7 @@ public class EntradaRepository implements I_EntradaRepository{
     
     @Override
     public List<Entrada> getByCliente(Cliente cliente) {
-        List<Entrada> list = new ArrayList();
+        List<Entrada> list = new ArrayList<>();
         
         for(Entrada en : getAll()){
             if (en.getIdCliente() == cliente.getId()) {
