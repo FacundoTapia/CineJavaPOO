@@ -27,6 +27,7 @@ public class CarteleraRepository implements I_CarteleraRepository {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un problema en la creación de la cartelera");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo CarteleraRepository:30");
         }
     }
 
@@ -38,7 +39,8 @@ public class CarteleraRepository implements I_CarteleraRepository {
             ps.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
-            System.out.println(e.getMessage());            
+            System.out.println(e.getMessage());      
+            System.out.println("Sos un boludo CarteleraRepository:43");
         }
     }
 

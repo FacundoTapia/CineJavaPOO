@@ -69,6 +69,7 @@ public class RelacionRepository implements I_RelacionRepository{
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo RelacionRepository:71");
         }
     }
 

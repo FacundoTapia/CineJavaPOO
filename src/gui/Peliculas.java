@@ -57,7 +57,7 @@ public class Peliculas extends javax.swing.JFrame {
         txaDescripcion = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         btnBorrar = new javax.swing.JButton();
-        btnGuardar1 = new javax.swing.JButton();
+        btnElegirPortada = new javax.swing.JButton();
         txtRutaPortada = new javax.swing.JTextField();
         lblErrorDuracion = new javax.swing.JLabel();
         lblErrorGenero = new javax.swing.JLabel();
@@ -126,11 +126,11 @@ public class Peliculas extends javax.swing.JFrame {
             }
         });
 
-        btnGuardar1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnGuardar1.setText("Elegir Portada");
-        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+        btnElegirPortada.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnElegirPortada.setText("Elegir Portada");
+        btnElegirPortada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardar1ActionPerformed(evt);
+                btnElegirPortadaActionPerformed(evt);
             }
         });
 
@@ -170,7 +170,7 @@ public class Peliculas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdmin, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnGuardar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnElegirPortada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtRutaPortada)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -214,7 +214,7 @@ public class Peliculas extends javax.swing.JFrame {
                         .addGap(7, 7, 7)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGuardar1)
+                        .addComponent(btnElegirPortada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(txtRutaPortada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -278,6 +278,7 @@ public class Peliculas extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar la pelicula");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo Pelicula:281");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -306,10 +307,10 @@ public class Peliculas extends javax.swing.JFrame {
         cargarElementos();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
-    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+    private void btnElegirPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirPortadaActionPerformed
         cargarPortada();
         portada = txtRutaPortada.getText();
-    }//GEN-LAST:event_btnGuardar1ActionPerformed
+    }//GEN-LAST:event_btnElegirPortadaActionPerformed
 
     private void txtDuracionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDuracionKeyTyped
         // Evento validar numeros
@@ -335,7 +336,7 @@ public class Peliculas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtGeneroKeyTyped
 
-    public void cargarPortada() throws HeadlessException {
+    public void cargarPortada() {
         // Evento Elegir portada para la pelicula con JFileChooser
         
         //Creo el file chooser y le seteo el filtro
@@ -400,8 +401,8 @@ public class Peliculas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnElegirPortada;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnGuardar1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -26,7 +26,7 @@ public class RecuperacionContraseña extends javax.swing.JFrame {
         btnValidar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        btnValidar1 = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
         lblErrorUsuario = new javax.swing.JLabel();
         lblErrorCodigo = new javax.swing.JLabel();
         lblErrorContra = new javax.swing.JLabel();
@@ -62,11 +62,11 @@ public class RecuperacionContraseña extends javax.swing.JFrame {
             }
         });
 
-        btnValidar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnValidar1.setText("Volver");
-        btnValidar1.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnValidar1ActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
 
@@ -91,7 +91,7 @@ public class RecuperacionContraseña extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnValidar1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(115, 115, 115))))
             .addGroup(layout.createSequentialGroup()
@@ -145,7 +145,7 @@ public class RecuperacionContraseña extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnValidar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -190,12 +190,12 @@ public class RecuperacionContraseña extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnValidarActionPerformed
 
-    private void btnValidar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidar1ActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // Evento Login
         Login login = new Login();
         login.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnValidar1ActionPerformed
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
         //Compruebo que no se puedan ingresar espacios
@@ -254,7 +254,7 @@ public class RecuperacionContraseña extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnValidar;
-    private javax.swing.JButton btnValidar1;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

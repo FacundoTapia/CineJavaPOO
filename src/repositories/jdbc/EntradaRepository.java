@@ -47,6 +47,7 @@ public class EntradaRepository implements I_EntradaRepository{
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo EntradaRepository:50");
         }
     }
 

@@ -58,7 +58,7 @@ public class Index extends javax.swing.JFrame {
         //de los Detalles vinculados a esta cartelera. De estos extraigo
         //el codPelicula, con este busco el nombre de la pelicula, para mostrarlo
         //en el cmbCartelera
-        ArrayList<String> peliculasSinRepetidos = new ArrayList<String>();
+        ArrayList<String> peliculasSinRepetidos = new ArrayList<>();
         
         for(Detalle d : rr.getDetalleByCodCartelera(codCartelera)){
             Pelicula p = pr.getByCodigo(d.getCodPelicula());
@@ -80,7 +80,7 @@ public class Index extends javax.swing.JFrame {
         
         int codPelicula = pr.getByTitulo(tituloSeleccionado).getCodigo();
         
-        ArrayList<LocalDate> fechasSinRepetidos = new ArrayList<LocalDate>();
+        ArrayList<LocalDate> fechasSinRepetidos = new ArrayList<>();
         
         for(Detalle d : dr.getByPelicula(codPelicula)){
             LocalDate ld = d.getFecha();

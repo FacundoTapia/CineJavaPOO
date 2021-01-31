@@ -2,15 +2,13 @@ package ar.org.centro8.curso.java.utils.files;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -44,7 +42,7 @@ public class FileText implements I_File{
         
         //inicializo en un try with resource, asi resuelvo el problema
         //de no cerrar los archivos
-        try(FileReader in = new FileReader(file, StandardCharsets.ISO_8859_1);){
+        try(FileReader in = new FileReader(file);){
             //no tengo un metodo que me lea todo de golpe    
             //.read() me lee de a un caracter, lo devuelve, si devuelve -1
             //significa que se llegó al final de la lectura, por eso
@@ -58,6 +56,7 @@ public class FileText implements I_File{
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Sos un boludo FileText:52");
         }
         
         return sb.toString();
@@ -74,10 +73,11 @@ public class FileText implements I_File{
         Esto es una regla común de todos los File System de los Sistemas Operativos
         */
         
-        try(FileWriter in = new FileWriter(file, StandardCharsets.ISO_8859_1);){
+        try(FileWriter in = new FileWriter(file);){
             in.write(text);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Sos un boludo FileText:73");
         }
     }
 
@@ -88,6 +88,7 @@ public class FileText implements I_File{
             in.write(text);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Sos un boludo FileText:83");
         }        
     }
 
@@ -104,9 +105,16 @@ public class FileText implements I_File{
             En cambio, con el metodo .lines() nos devuelve directamente el 
             Stream que es lo que necesitamos en este metodo.
             */
-            return new BufferedReader(new FileReader(file, StandardCharsets.ISO_8859_1)).lines();
-            //return (Stream<String>) Files.newBufferedReader((Path) new InputStreamReader(new FileInputStream(file.getPath())), StandardCharsets.ISO_8859_1);
-            //return new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)).lines();
+            Stream<String> lines = Files.lines(Paths.get(file.getPath()), Charset.forName("Cp1252"));
+//            BufferedReader br = new BufferedReader(new FileReader(file));
+            return lines;
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("Sos un boludo FileText:106");
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(FileText.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

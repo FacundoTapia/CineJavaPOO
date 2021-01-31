@@ -48,6 +48,7 @@ public class PeliculaRepository implements I_PeliculaRepository{
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo PeliculaRepository:51");
         }
     }
 

@@ -269,7 +269,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void setClienteAcceso(Cliente clienteAcceso) {
-        this.clienteAcceso = clienteAcceso;
+        Login.clienteAcceso = clienteAcceso;
     }
 
     

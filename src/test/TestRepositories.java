@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Date;
 import repositories.interfaces.I_CarteleraRepository;
 import repositories.interfaces.I_ClienteRepository;
 import repositories.interfaces.I_DetalleRepository;

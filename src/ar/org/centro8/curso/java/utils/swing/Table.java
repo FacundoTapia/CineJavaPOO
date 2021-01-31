@@ -43,7 +43,10 @@ public class Table <E> {
                 //System.out.println(metodo);
                 try {
                     registro[i] = e.getClass().getMethod(metodo).invoke(ee);
-                } catch (Exception ex) {ex.printStackTrace();}
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.println("Sos un boludo Table:48");
+                }
             }
             
             //Agrego el registro en forma de fila a la tabla

@@ -219,6 +219,7 @@ public class Registro extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
             JOptionPane.showMessageDialog(this, "Ocurrio un error con el registro");
+            System.out.println("Sos un boludo Registro:222");
         }
     }//GEN-LAST:event_btnRegistroActionPerformed
 
@@ -228,52 +229,52 @@ public class Registro extends javax.swing.JFrame {
                 + "¡¡IMPORTANTE!!\n"
                 + "Su codigo de recuperacion es " + cl.getCodigoRecuperacion() + "\n"
                 + "Guardelo en un lugar seguro ya que esto le servira para cambiar la contraseña en un futuro\n",
-                "CODIGO DE RECUPERACION",
+                "CODIGO DE RECUPERACION: " + cl.getCodigoRecuperacion(),
                 JOptionPane.YES_OPTION);
         
         //Dependiendo la respuesta procedo...
-        switch(respuesta){
-            case JOptionPane.YES_OPTION:
-                String user = cl.getUsuario();
-                String contra = cl.getPassword();
-                String contenido = 
-                        "Usuario: " + user + "\n"
-                      + "Contraseña: " + contra + "\n"
-                      + "Codigo de recuperacion: " + cl.getCodigoRecuperacion();
-                guardarEntxt(contenido);
-                break;
-            case JOptionPane.NO_OPTION:
-                //Si no se quiere guardar se sale directamnte
-                break;
-            case JOptionPane.CLOSED_OPTION:
-                //si cierra la ventana no hace nada
-                break;
-            default:
-                break;
-        }
+//        switch(respuesta){
+//            case JOptionPane.YES_OPTION:
+//                String user = cl.getUsuario();
+//                String contra = cl.getPassword();
+//                String contenido = 
+//                        "Usuario: " + user + "\n"
+//                      + "Contraseña: " + contra + "\n"
+//                      + "Codigo de recuperacion: " + cl.getCodigoRecuperacion();
+//                guardarEntxt(contenido);
+//                break;
+//            case JOptionPane.NO_OPTION:
+//                //Si no se quiere guardar se sale directamnte
+//                break;
+//            case JOptionPane.CLOSED_OPTION:
+//                //si cierra la ventana no hace nada
+//                break;
+//            default:
+//                break;
+//        }
     }
 
-    private boolean guardarEntxt(String contenido) throws HeadlessException {
-        //abro un File Chooser, ventana para seleccionar el directorio donde quiero guardar
-        JFileChooser fc = new JFileChooser();
-        //filtro para que en el File Chooser aparezcan solo los arhivos con la
-        //extension que indico
-        fc.setFileFilter(new FileNameExtensionFilter("Archivo de texto", "txt"));
-        //indico que tiene que aparecer el boton guardar
-        fc.showSaveDialog(this);
-        //capturo el File que devuelve el FileChooser en una variable
-        File file = fc.getSelectedFile();
-        //Si el usuario decide cancelar y no guardar el archivo, lo que devuelve
-        //FileChooser es un null, por ende al intentar guardar eso de todas
-        //formas se produce una Exception, para evitar esto, pregunto si se
-        //cumple esta condicion, de ser asi, salgo del metodo
-        if (file==null) {
-            return true;
-        }
-        //creo un nuevo archivo con el contenido el txaTexto
-        new FileText(file).setText(contenido);
-        return false;
-    }
+//    private boolean guardarEntxt(String contenido) {
+//        //abro un File Chooser, ventana para seleccionar el directorio donde quiero guardar
+//        JFileChooser fc = new JFileChooser();
+//        //filtro para que en el File Chooser aparezcan solo los arhivos con la
+//        //extension que indico
+//        fc.setFileFilter(new FileNameExtensionFilter("Archivo de texto", "txt"));
+//        //indico que tiene que aparecer el boton guardar
+//        fc.showSaveDialog(this);
+//        //capturo el File que devuelve el FileChooser en una variable
+//        File file = fc.getSelectedFile();
+//        //Si el usuario decide cancelar y no guardar el archivo, lo que devuelve
+//        //FileChooser es un null, por ende al intentar guardar eso de todas
+//        //formas se produce una Exception, para evitar esto, pregunto si se
+//        //cumple esta condicion, de ser asi, salgo del metodo
+//        if (file==null) {
+//            return true;
+//        }
+//        //creo un nuevo archivo con el contenido el txaTexto
+//        new FileText(file).setText(contenido);
+//        return false;
+//    }
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // Evento ir al login
         Login login = new Login();

@@ -30,6 +30,7 @@ public class SalaRepository implements I_SalaRepository{
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la creación de la sala");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo SalaRepository:33");
         }
     }
 
@@ -42,6 +43,7 @@ public class SalaRepository implements I_SalaRepository{
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error. Violacion de llave foranea");
             System.out.println(e.getMessage());
+            System.out.println("Sos un boludo SalaRepository:46");
         }
     }
 
